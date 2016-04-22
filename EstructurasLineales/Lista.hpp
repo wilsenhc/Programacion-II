@@ -603,7 +603,6 @@ int Lista<Item>::mediana() const
         median += aux->getInfo();
         
     return median / length;
-    
-
+}
 
 #endif
