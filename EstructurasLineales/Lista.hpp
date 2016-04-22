@@ -32,6 +32,10 @@ public:
     void ordenar();
     void bubbleSort();
     bool estaOrdenada() const;
+    
+    // Taller 1
+    int mediana() const;
+    // Fin Taller 1
 
     void operator=(const Lista<Item> &);
     bool operator>(const Lista<Item> &) const;
@@ -582,6 +586,24 @@ void Lista<Item>::_desordenar()
         iPivot = iPivot->getSig();
     }
 }
+
+/**
+ * Metodo para Calcular la mediana de una lista de Enteros.
+ * Desarrolada para utilizar en el Taller 1 de Programacion II.
+ * Semestre 1-2016
+ * @returns int La mediana de la Lista de Enteros.
+ * */
+template<class Item>
+int Lista<Item>::mediana() const
+{
+    Nodo<Item> *aux = this->primero;
+    int median = 0;
+    
+    for (int i = 0; i < length; i++, aux = aux->getSig())
+        median += aux->getInfo();
+        
+    return median / length;
+    
 
 
 #endif
