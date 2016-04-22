@@ -38,4 +38,6 @@ template<class T>
 NodoBT<T>::NodoBT<T>(const NodoBT<T>& in)
 	: key(in.key), parent( NULL ), left( NULL ) right( NULL ) { }
 
+
+
 #endif
