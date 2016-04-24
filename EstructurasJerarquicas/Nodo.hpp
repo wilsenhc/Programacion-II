@@ -23,7 +23,6 @@ class NodoBT
 		void setRight(const NodoBT<T>*);
 };
 
-
 /**
  * Key setter
  * */
