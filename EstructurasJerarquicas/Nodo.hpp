@@ -7,20 +7,18 @@ class NodoBT
 {
 	private:
 		T key;
-		NodoBT<T> *parent, *left, *right;
+		NodoBT<T> *left, *right;
 		
 	public:
-		NodoBT() : key(0), parent(NULL), left(NULL), right(NULL) { };
-		NodoBT(const T in) : key(in), parent(NULL), left(NULL), right(NULL) { };
-		NodoBT(const NodoBT<T>& in) : key(in.key), parent(NULL), left(NULL), right(NULL) { };
+		NodoBT() : key(0), left(NULL), right(NULL) { };
+		NodoBT(const T in) : key(in), left(NULL), right(NULL) { };
+		NodoBT(const NodoBT<T>& in) : key(in.key), left(NULL), right(NULL) { };
 	
 		T getKey() const { return key; }
-		NodoBT<T>* getParent() const { return parent; }
 		NodoBT<T>* getLeft() const { return left; }
 		NodoBT<T>* getRight() const { return right; }
 		
 		void setKey(const T);
-		void setParent(const NodoBT<T>*);
 		void setLeft(const NodoBT<T>*);
 		void setRight(const NodoBT<T>*);
 };
@@ -32,15 +30,6 @@ template<class T>
 void NodoBT<T>::setKey(const T item)
 {
 	key = item;
-}
-
-/**
- * Parent setter
- * */
-template<class T>
-void NodoBT<T>::setParent(const NodoBT<T>* p)
-{
-	parent = p;
 }
 
 /**
