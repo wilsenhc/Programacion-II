@@ -17,7 +17,9 @@ class NodoBT
 		T getKey() const { return key; }
 		NodoBT<T>* getLeft() const { return left; }
 		NodoBT<T>* getRight() const { return right; }
-		
+		bool isLeaf() const { return left == NULL && right == NULL; }
+		bool isFullNode() const { return left != NULL || right != NULL; }
+
 		void setKey(const T);
 		void setLeft(const NodoBT<T>*);
 		void setRight(const NodoBT<T>*);
