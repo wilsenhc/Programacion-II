@@ -6,13 +6,13 @@ class NodoN
 {
     private:
         T _key;
-        NodoN<T> *_leftSon, *_rightSilbing;
+        NodoN<T> *_leftChild, *_rightSilbing;
     
     public:
         NodoN();
         
         T getKey() const { return _key; }
-        NodoN<T>* getLeft() const { return _leftSon; }
+        NodoN<T>* getLeft() const { return _leftChild; }
         NodoN<T>* getRight() const { return _rightSilbing; }
         
         void setKey(const T);
@@ -29,7 +29,7 @@ void NodoN<T>::setKey(const T item)
 template<class T>
 void NodoN<T>::setLeft(const NodoN<T>* l)
 {
-    _leftSon = l;
+    _leftChild = l;
 }
 
 template<class T>
