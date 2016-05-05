@@ -1,5 +1,5 @@
-#ifndef _ARBOL_BINARIO_HPP_
-#define _ARBOL_BInARIO_HPP_
+#ifndef _BINARY_TREE_HPP_
+#define _BINARY_TREE_HPP_
 #include "Nodo.hpp"
 
 template<class T>
