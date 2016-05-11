@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Lista.hpp"
-#include "Cola.hpp"
+#include "../EstructurasLineales/Lista.hpp"
+#include "../EstructurasLineales/Cola.hpp"
 
 using namespace std;
 
