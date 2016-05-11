@@ -3,33 +3,33 @@
 #include <iostream>
 
 template<class T>
-class NodoBT
+class NodeBT
 {
 	private:
 		T _key;
-		NodoBT<T> *_left, *_right;
+		NodeBT<T> *_left, *_right;
 		
 	public:
-		NodoBT() : _key(0), _left(NULL), _right(NULL) { };
-		NodoBT(const T in) : _key(in), _left(NULL), _right(NULL) { };
-		NodoBT(const NodoBT<T>& in) : _key(in.key), _left(NULL), _right(NULL) { };
+		NodeBT() : _key(0), _left(NULL), _right(NULL) { };
+		NodeBT(const T in) : _key(in), _left(NULL), _right(NULL) { };
+		NodeBT(const NodeBT<T>& in) : _key(in.key), _left(NULL), _right(NULL) { };
 	
 		T getKey() const { return _key; }
-		NodoBT<T>* getLeft() const { return _left; }
-		NodoBT<T>* getRight() const { return _right; }
+		NodeBT<T>* getLeft() const { return _left; }
+		NodeBT<T>* getRight() const { return _right; }
 		bool isLeaf() const { return _left == NULL && _right == NULL; }
 		bool isFullNode() const { return _left != NULL || _right != NULL; }
 
 		void setKey(const T);
-		void setLeft(const NodoBT<T>*);
-		void setRight(const NodoBT<T>*);
+		void setLeft(const NodeBT<T>*);
+		void setRight(const NodeBT<T>*);
 };
 
 /**
  * Key setter
  * */
 template<class T>
-void NodoBT<T>::setKey(const T item)
+void NodeBT<T>::setKey(const T item)
 {
 	_key = item;
 }
@@ -38,7 +38,7 @@ void NodoBT<T>::setKey(const T item)
  * Left setter
  * */
 template<class T>
-void NodoBT<T>::setLeft(const NodoBT<T>* l)
+void NodeBT<T>::setLeft(const NodeBT<T>* l)
 {
 	_left = l;
 }
@@ -47,7 +47,7 @@ void NodoBT<T>::setLeft(const NodoBT<T>* l)
  * Right setter
  * */
 template<class T>
-void NodoBT<T>::setRight(const NodoBT<T>* r)
+void NodeBT<T>::setRight(const NodeBT<T>* r)
 {
 	_right = r;
 }
