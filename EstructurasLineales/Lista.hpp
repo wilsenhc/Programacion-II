@@ -54,18 +54,18 @@ class Lista
 };
 
 /**
-* Constructor de Lista.
-* Construye una Lista vacia.
-* @constructs Lista
-* */
+ * Constructor de Lista.
+ * Construye una Lista vacia.
+ * @constructs Lista
+ * */
 template<class Item>
 Lista<Item>::Lista()
     : length(0), primero(NULL), ultimo(NULL) { }
 
 /**
-* Constructor copia de Lista.
-* @constructs Lista
-* */
+ * Constructor copia de Lista.
+ * @constructs Lista
+ * */
 template<class Item>
 Lista<Item>::Lista(const Lista<Item>& in)
 {
@@ -90,9 +90,9 @@ Lista<Item>::Lista(const Lista<Item>& in)
 }
 
 /**
-* Destructor de Lista.
-* Primero vacia la Lista y luego destruye.
-* */
+ * Destructor de Lista.
+ * Primero vacia la Lista y luego destruye.
+ * */
 template<class Item>
 Lista<Item>::~Lista()
 {
@@ -100,9 +100,9 @@ Lista<Item>::~Lista()
 }
 
 /**
-* Muestra longitud de la lista.
-* @returns int Longitud de la lista
-* */
+ * Muestra longitud de la lista.
+ * @returns int Longitud de la lista
+ * */
 template<class Item>
 int Lista<Item>::longitud() const
 {
@@ -110,9 +110,9 @@ int Lista<Item>::longitud() const
 }
 
 /**
-* Indica si la lista esta vacia.
-* @returns {bool} TRUE sí esta vacia.
-* */
+ * Indica si la lista esta vacia.
+ * @returns {bool} TRUE sí esta vacia.
+ * */
 template<class Item>
 bool Lista<Item>::esVacia() const
 {
@@ -120,10 +120,10 @@ bool Lista<Item>::esVacia() const
 }
 
 /**
-* Insertar en la lista.
-* @param e El Item a insertar en lista.
-* @param pos Posicion en la lista a insertar.
-* */
+ * Insertar en la lista.
+ * @param e El Item a insertar en lista.
+ * @param pos Posicion en la lista a insertar.
+ * */
 template<class Item>
 void Lista<Item>::insertar(Item e, int pos)
 {
@@ -167,10 +167,10 @@ void Lista<Item>::insertar(Item e, int pos)
 }
 
 /**
-* Consultar elemento de la lista
-* @function
-* @param {int} pos - Posicion a consultar
-* */
+ * Consultar elemento de la lista
+ * @function
+ * @param {int} pos - Posicion a consultar
+ * */
 template<class Item>
 Item Lista<Item>::consultar(int pos) const
 {
@@ -193,6 +193,9 @@ Item Lista<Item>::consultar(int pos) const
     }
 }
 
+/**
+ * Buscar
+ * */
 template<class Item>
 int Lista<Item>::buscar(Item e) const
 {
@@ -216,11 +219,11 @@ int Lista<Item>::buscar(Item e) const
 }
 
 /**
-* Get Primero.
-* Funcion miembro getter de Lista.
-* Retorna el primer Item de la Lista.
-* @returns {Item} Primer Item de la Lista.
-* */
+ * Get Primero.
+ * Funcion miembro getter de Lista.
+ * Retorna el primer Item de la Lista.
+ * @returns {Item} Primer Item de la Lista.
+ * */
 template<class Item>
 Item Lista<Item>::getPrimero() const
 {
@@ -228,11 +231,11 @@ Item Lista<Item>::getPrimero() const
 }
 
 /**
-* Get Ultimo.
-* Funcion miembro getter de Lista.
-* Retorna el ultimo Item de la Lista.
-* @returns {Item} Ultimo Item de la Lista.
-* */
+ * Get Ultimo.
+ * Funcion miembro getter de Lista.
+ * Retorna el ultimo Item de la Lista.
+ * @returns {Item} Ultimo Item de la Lista.
+ * */
 template<class Item>
 Item Lista<Item>::getUltimo() const
 {
@@ -246,10 +249,10 @@ void Lista<Item>::modificar(Item e, int pos)
 }
 
 /**
-* Eliminar de lista
-* @function
-* @param {int} pos - Posicion a eliminar
-* */
+ * Eliminar de lista
+ * @function
+ * @param {int} pos - Posicion a eliminar
+ * */
 template<class Item>
 void Lista<Item>::eliminar(int pos)
 {
@@ -279,8 +282,8 @@ void Lista<Item>::eliminar(int pos)
 }
 
 /**
-* Vaciar lista.
-* */
+ * Vaciar lista.
+ * */
 template<class Item>
 void Lista<Item>::vaciar()
 {
@@ -306,9 +309,9 @@ void Lista<Item>::vaciar()
 
 
 /**
-* Invertir Lista.
-* Invierte los elementos de la Lista.
-* */
+ * Invertir Lista.
+ * Invierte los elementos de la Lista.
+ * */
 template<class Item>
 void Lista<Item>::invertir()
 {
@@ -317,13 +320,13 @@ void Lista<Item>::invertir()
 }
 
 /**
-* @desc Sublista.
-* Genera una Sublista a partir de una Lista inicial.
-* @function
-* @param {int} low - Posicion incial de la Sublista.
-* @param {int} high - Posicion final de la Sublista.
-* @returns {Lista<Item>} Sublista generada.
-* */
+ * @desc Sublista.
+ * Genera una Sublista a partir de una Lista inicial.
+ * @function
+ * @param {int} low - Posicion incial de la Sublista.
+ * @param {int} high - Posicion final de la Sublista.
+ * @returns {Lista<Item>} Sublista generada.
+ * */
 template<class Item>
 Lista<Item> Lista<Item>::sublista(int low, int high)
 {
@@ -365,6 +368,9 @@ Lista<Item> Lista<Item>::sublista(int low, int high)
     return *lista;
 }
 
+/**
+ * Ordernar
+ * */
 template<class Item>
 void Lista<Item>::ordenar()
 {
@@ -372,11 +378,10 @@ void Lista<Item>::ordenar()
 }
 
 /**
-* Ordena los elementos de la lista.
-* Ordena de menor a mayor los elementos de la lista, utilizando
-* el algoritmo de ordenamiento Bubble Sort.
-* */
-
+ * Ordena los elementos de la lista.
+ * Ordena de menor a mayor los elementos de la lista, utilizando
+ * el algoritmo de ordenamiento Bubble Sort.
+ * */
 template<class Item>
 void Lista<Item>::bubbleSort()
 {
@@ -400,10 +405,10 @@ void Lista<Item>::bubbleSort()
 }
 
 /**
-* Indica si la lista esta ordenada.
-* @function
-* @returns {bool} TRUE sí esta ordenada
-* */
+ * Indica si la lista esta ordenada.
+ * @function
+ * @returns {bool} TRUE sí esta ordenada
+ * */
 template<class Item>
 bool Lista<Item>::estaOrdenada() const
 {
@@ -429,11 +434,11 @@ bool Lista<Item>::estaOrdenada() const
 }
 
 /**
-* Sobrecarga de operador de ostream (Out Stream) para Lista.
-* Permite mostrar por pantalla el contenido de la lista mediante el uso del operador '<<'
-* Necesita que el 'Item' a sobrecargar igualmente pueda ser mostrado por pantalla
-* utilizando este mismo operador.
-* */
+ * Sobrecarga de operador de ostream (Out Stream) para Lista.
+ * Permite mostrar por pantalla el contenido de la lista mediante el uso del operador '<<'
+ * Necesita que el 'Item' a sobrecargar igualmente pueda ser mostrado por pantalla
+ * utilizando este mismo operador.
+ * */
 template<class Item>
 std::ostream& operator<<(std::ostream& out, const Lista<Item> &list)
 {
@@ -446,10 +451,10 @@ std::ostream& operator<<(std::ostream& out, const Lista<Item> &list)
 }
 
 /**
-* Sobrecarga de operador de Asignacion para Lista.
-* Permite hacer una copia de una lista mediante el uso del operador '='.
-* Ejemplo: Lista2 = Lista1.sublista(a, b).
-* */
+ * Sobrecarga de operador de Asignacion para Lista.
+ * Permite hacer una copia de una lista mediante el uso del operador '='.
+ * Ejemplo: Lista2 = Lista1.sublista(a, b).
+ * */
 template<class Item>
 void Lista<Item>::operator=(const Lista<Item> & list)
 {
@@ -480,10 +485,10 @@ void Lista<Item>::operator=(const Lista<Item> & list)
 }
 
 /**
-* Sobrecarga de operador de Mayor Que para Lista.
-* Indica si una Lista tiene o no mas elementos que otra, utilizando
-* el operador '>'.
-* */
+ * Sobrecarga de operador de Mayor Que para Lista.
+ * Indica si una Lista tiene o no mas elementos que otra, utilizando
+ * el operador '>'.
+ * */
 template<class Item>
 bool Lista<Item>::operator>(const Lista<Item> &v) const
 {
@@ -494,10 +499,10 @@ bool Lista<Item>::operator>(const Lista<Item> &v) const
 }
 
 /**
-* Sobrecarga de operador de Menor Que para Lista.
-* Indica si una Lista tiene o no menos elementos que otra, utilizando
-* el operador '<'.
-* */
+ * Sobrecarga de operador de Menor Que para Lista.
+ * Indica si una Lista tiene o no menos elementos que otra, utilizando
+ * el operador '<'.
+ * */
 template<class Item>
 bool Lista<Item>::operator<(const Lista<Item> &v) const
 {
@@ -505,10 +510,10 @@ bool Lista<Item>::operator<(const Lista<Item> &v) const
 }
 
 /**
-* Sobrecarga de operador de Igual Que para Lista.
-* Indica si una Lista tiene o no los mismos elementos que otra,
-* utilizando el operador '=='.
-* */
+ * Sobrecarga de operador de Igual Que para Lista.
+ * Indica si una Lista tiene o no los mismos elementos que otra,
+ * utilizando el operador '=='.
+ * */
 template<class Item>
 bool Lista<Item>::operator==(const Lista<Item> &v) const
 {
@@ -538,10 +543,10 @@ bool Lista<Item>::operator==(const Lista<Item> &v) const
 
 
 /**
-* Sobrecarga de operador de Mayor o Igual Que para Lista.
-* Indica si una Lista tiene mas elementos o es igual que otra,
-* utilizando el operador '>='.
-* */
+ * Sobrecarga de operador de Mayor o Igual Que para Lista.
+ * Indica si una Lista tiene mas elementos o es igual que otra,
+ * utilizando el operador '>='.
+ * */
 template<class Item>
 bool Lista<Item>::operator>=(const Lista<Item> &v) const
 {
@@ -553,10 +558,10 @@ bool Lista<Item>::operator>=(const Lista<Item> &v) const
 
 
 /**
-* Sobrecarga de operador de Menor o Igual Que para Lista.
-* Indica si una Lista tiene menos elementos o es igual que otra,
-* utilizando el operador '<='.
-* */
+ * Sobrecarga de operador de Menor o Igual Que para Lista.
+ * Indica si una Lista tiene menos elementos o es igual que otra,
+ * utilizando el operador '<='.
+ * */
 template<class Item>
 bool Lista<Item>::operator<=(const Lista<Item> &v) const
 {
@@ -567,12 +572,12 @@ bool Lista<Item>::operator<=(const Lista<Item> &v) const
 }
 
 /**
-* Invertir lista.
-* Helper Method para Invertir la Lista.
-* Invierte los elementos de la lista recursivamente.
-* Esta funcion debe mantenerse como privada.
-* @private
-* */
+ * Invertir lista.
+ * Helper Method para Invertir la Lista.
+ * Invierte los elementos de la lista recursivamente.
+ * Esta funcion debe mantenerse como privada.
+ * @private
+ * */
 template<class Item>
 Nodo<Item>* Lista<Item>::_invertir(Nodo<Item>*nodo)
 {
@@ -585,11 +590,11 @@ Nodo<Item>* Lista<Item>::_invertir(Nodo<Item>*nodo)
 }
 
 /**
-* Desordenar la lista dada.
-* Helper Method para el Algoritmo de QuickSort.
-* Privado porque no le veo uso fuera del algoritmo de QuickSort.
-* Su nivel de acceso puede ser modificado sí es necesario.
-* @private */
+ * Desordenar la lista dada.
+ * Helper Method para el Algoritmo de QuickSort.
+ * Privado porque no le veo uso fuera del algoritmo de QuickSort.
+ * Su nivel de acceso puede ser modificado sí es necesario.
+ * @private */
 template<class Item>
 void Lista<Item>::_desordenar()
 {
