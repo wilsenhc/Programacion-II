@@ -12,6 +12,7 @@ class NodeBT
 	public:
 		NodeBT() : _key(0), _left(NULL), _right(NULL) { };
 		NodeBT(const T in) : _key(in), _left(NULL), _right(NULL) { };
+		NodeBT(const T in, NodeBT<T>* l, NodeBT<T>* r) : _key(in), _left(l), _right(r) { };
 		NodeBT(const NodeBT<T>& in) : _key(in.key), _left(NULL), _right(NULL) { };
 	
 		T getKey() const { return _key; }
