@@ -1,6 +1,7 @@
 #ifndef _BINARY_TREE_HPP_
 #define _BINARY_TREE_HPP_
 #include "NodeBT.hpp"
+#include "../EstructurasLineales/Lista.hpp"
 
 template<class T>
 class BinaryTree
@@ -12,6 +13,7 @@ class BinaryTree
     // Methods
     public:
         BinaryTree() : _root(NULL) {};
+        BinaryTree(Lista<T>, Lista<T>, Traversal = preorden);
         ~BinaryTree();
         
         bool isNull() const { return _root == NULL; }
@@ -21,6 +23,8 @@ class BinaryTree
         void insert(T);
         NodeBT<T>* search(T);
         void destroy();
+        
+        enum Traversal { preorden, postorden };
     
     // Helper methods
     private:
