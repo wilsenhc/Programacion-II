@@ -22,6 +22,7 @@ class Lista
         bool esVacia() const;
         void insertar(Item, int);
         Item consultar(int) const;
+        int buscar(Item) const;
         Item getPrimero() const;
         Item getUltimo() const;
         void eliminar(int);
@@ -192,6 +193,28 @@ Item Lista<Item>::consultar(int pos) const
     }
 }
 
+template<class Item>
+int Lista<Item>::buscar(Item e) const
+{
+    if (!esVacia())
+    {
+        Nodo<Item> *pivot;
+        int i = 1;
+        
+        pivot = primero;
+        while (pivot != NULL)
+        {
+            if (pivot->getInfo() == e)
+                return i;
+                
+            pivot = pivot->getSig();
+            i++;
+        }
+    }
+    
+    return -1; // No encontrado
+}
+
 /**
 * Get Primero.
 * Funcion miembro getter de Lista.
@@ -219,7 +242,7 @@ Item Lista<Item>::getUltimo() const
 template<class Item>
 void Lista<Item>::modificar(Item e, int pos)
 {
-
+    // TODO: Implementar
 }
 
 /**
