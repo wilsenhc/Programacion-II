@@ -8,48 +8,48 @@
 template<class Item>
 class Lista
 {
-private:
-    int length;
-    Nodo<Item> *primero;
-    Nodo<Item> *ultimo;
+    private:
+        int length;
+        Nodo<Item> *primero;
+        Nodo<Item> *ultimo;
 
-public:
-    Lista();
-    Lista(const Lista<Item>&);
-    ~Lista();
+    public:
+        Lista();
+        Lista(const Lista<Item>&);
+        ~Lista();
 
-    int longitud() const;
-    bool esVacia() const;
-    void insertar(Item, int);
-    Item consultar(int) const;
-    Item getPrimero() const;
-    Item getUltimo() const;
-    void eliminar(int);
-    void modificar(Item, int);      // TODO: Implementar
-    void vaciar();
-    Lista<Item> sublista(int, int);
-    void invertir();
-    void ordenar();
-    void bubbleSort();
-    bool estaOrdenada() const;
-    
-    // Taller 1
-    int mediana() const;
-    // Fin Taller 1
+        int longitud() const;
+        bool esVacia() const;
+        void insertar(Item, int);
+        Item consultar(int) const;
+        Item getPrimero() const;
+        Item getUltimo() const;
+        void eliminar(int);
+        void modificar(Item, int);      // TODO: Implementar
+        void vaciar();
+        Lista<Item> sublista(int, int);
+        void invertir();
+        void ordenar();
+        void bubbleSort();
+        bool estaOrdenada() const;
+        
+        // Taller 1
+        int mediana() const;
+        // Fin Taller 1
 
-    void operator=(const Lista<Item> &);
-    bool operator>(const Lista<Item> &) const;
-    bool operator<(const Lista<Item> &) const;
-    bool operator==(const Lista<Item> &) const;
-    bool operator>=(const Lista<Item> &) const;
-    bool operator<=(const Lista<Item> &) const;
+        void operator=(const Lista<Item> &);
+        bool operator>(const Lista<Item> &) const;
+        bool operator<(const Lista<Item> &) const;
+        bool operator==(const Lista<Item> &) const;
+        bool operator>=(const Lista<Item> &) const;
+        bool operator<=(const Lista<Item> &) const;
 
-    template<class Items>
-    friend std::ostream& operator<<(std::ostream&, const Lista<Items> &);
+        template<class Items>
+        friend std::ostream& operator<<(std::ostream&, const Lista<Items> &);
 
-private:
-    Nodo<Item>* _invertir(Nodo<Item>*);
-    void _desordenar();
+    private:
+        Nodo<Item>* _invertir(Nodo<Item>*);
+        void _desordenar();
 };
 
 /**
