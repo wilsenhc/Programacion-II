@@ -28,6 +28,7 @@ class BinaryTree
     
     // Helper methods
     private:
+        NodeBT<T>* _pre_in(Lista<T>, Lista<T>);
         void _insert(T, NodeBT<T>*);
         void _destroy(NodeBT<T>*);
 };
@@ -40,6 +41,13 @@ BinaryTree<T>::~BinaryTree()
 {
     if (!isNull())
         _destroy(_root);
+}
+
+template<class T>
+BinaryTree(Lista<T> ordenA, Lista<T> ordenB, Traversal e)
+{
+    if (e = preorden)
+        
 }
 
 /**
@@ -58,6 +66,30 @@ void BinaryTree<T>::insert(T key)
 }
 
 // -------------------- Helper methods --------------------
+template<class T>
+NodeBT<T>* BinaryTree<T>::_pre_in(Lista<T> preorden, Lista<T> inorden)
+{
+    // TODO: Test
+    if (preorden.longitud() > 1)
+    {
+        T root = preorden.getPrimero();
+        int pos = inorden.buscar(root)
+        
+        Lista<T> inIz = inorden.sublista(1, pos-1);
+        Lista<T> preIz = preorden.sublista(2, 1+inIz.longitud());
+        Lista<T> inDer = inorden.sublista(pos+1, inorden.longitud());
+        Lista<T> preDer = preorden.sublista(1+inIz.longitud(), preorden.longitud());
+        
+        return new NodeBT<T>(root,
+                            _pre_in(preIz, inIz),
+                            _pre_in(preDer, inDer));
+    }
+    else
+    {
+        return new NodeBT<T>(preorden.getPrimero());
+    }
+}
+
 template<class T>
 void BinaryTree<T>::_insert(T key, NodeBT<T> *leaf)
 {
@@ -87,4 +119,5 @@ void BinaryTree<T>::_destroy(NodeBT<T>* leaf)
         delete leaf;
     }
 }
+
 #endif
