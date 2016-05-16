@@ -20,8 +20,6 @@ class BinaryTree
         BinaryTree getLeft();
         BinaryTree getRight();
         
-        void insert(T);
-        NodeBT<T>* search(T);
         void destroy();
         
         enum Traversal { preorden, postorden };
@@ -49,22 +47,6 @@ BinaryTree(Lista<T> ordenA, Lista<T> ordenB, Traversal e)
     if (e = preorden)
         
 }
-
-/**
- * Insert.
- * Inserts an element in the tree.
- * */
-template<class T>
-void BinaryTree<T>::insert(T key)
-{
-    if (_root != NULL)
-        _insert(key, _root);
-    else
-    {
-        _root = new NodeBT<T>(key);
-    }
-}
-
 // -------------------- Helper methods --------------------
 template<class T>
 NodeBT<T>* BinaryTree<T>::_pre_in(Lista<T> preorden, Lista<T> inorden)
@@ -121,3 +103,24 @@ void BinaryTree<T>::_destroy(NodeBT<T>* leaf)
 }
 
 #endif
+
+/* 
+
+/**
+ * Insert.
+ * Inserts an element in the tree.
+ * 
+template<class T>
+void BinaryTree<T>::insert(T key)
+{
+    if (_root != NULL)
+        _insert(key, _root);
+    else
+    {
+        _root = new NodeBT<T>(key);
+    }
+} 
+
+
+
+*/
