@@ -25,6 +25,10 @@ class Lista
         int buscar(Item) const;
         Item getPrimero() const;
         Item getUltimo() const;
+        void setPrimero(T);
+        void setUltimo(T);
+        T popPrimero();
+        T popUltimo();
         void eliminar(int);
         void modificar(Item, int);      // TODO: Implementar
         void vaciar();
@@ -241,6 +245,49 @@ template<class Item>
 Item Lista<Item>::getUltimo() const
 {
     return this->ultimo->getInfo();
+}
+
+template<class Item>
+void Lista<Item>::setPrimero(Item e)
+{
+    primero->setInfo(e);
+}
+
+template<class Item>
+void Lista<Item>::setUltimo(Item e)
+{
+    ultimo->setInfo(e);
+}
+
+template<class Item>
+Item Lista<Item>::popPrimero()
+{
+    
+        Nodo<Item> *aux;
+        Item e;
+        e = primero->getInfo();
+        aux = primero;
+        primero = aux->getSig();
+        length--;
+        delete aux;
+        return e;   
+    }
+    return 0;
+    
+}
+
+template<class Item>
+Item Lista<Item>::popUltimo()
+{
+    if (!esVacia())
+    {
+        Nodo<Item> *ant, *act;
+        act = primero;
+        for(int i = 0; i < length; i++)
+        {
+            
+        }
+    }
 }
 
 template<class Item>
