@@ -202,7 +202,7 @@ int Lista<Item>::buscar(Item e) const
     if (!esVacia())
     {
         Nodo<Item> *pivot;
-        int i = 1;
+        int i = 0;
         
         pivot = primero;
         while (pivot != NULL)
@@ -212,7 +212,8 @@ int Lista<Item>::buscar(Item e) const
                 
             pivot = pivot->getSig();
             i++;
-        }
+		}
+		return i;
     }
     
     return -1; // No encontrado
@@ -256,28 +257,33 @@ void Lista<Item>::modificar(Item e, int pos)
 template<class Item>
 void Lista<Item>::eliminar(int pos)
 {
-    if (pos < 1 || pos > length + 1)
+    if (pos < 1 || pos > length)
         std::cout << "Posicion invalida" << std::endl;
     else if (this->esVacia())
         std::cout << "Lista vacia" << std::endl;
     else
     {
-        // TODO: Revisar algoritmo
-        Nodo<Item> *last, *now, *next;
-
-        now = primero;
-        next = now->getSig();
-
-        for (int i = 1; i < pos; i++)
-        {
-            last = now;
-            now = last->getSig();
-            next = now->getSig();
-        }
-        last->setSig(next);
-
-        delete now;
-        length--;
+		Nodo<Item> *ant, *act, *sig;
+        if (pos == 1)
+		{
+			act = primero;
+			primero = act->getSig();
+		}
+		else
+		{
+			act = primero;
+			sig = act->getSig();
+			
+			for (int i = 0; i < pos; i++)
+			{
+				ant = act;
+				act = sig;
+				sig = sig->getSig();
+			}
+			ant->setSig(sig);
+		}
+		delete act;
+		length--;
     }
 }
 

@@ -12,8 +12,10 @@ class BinaryTree
         
     // Methods
     public:
+		enum Traversal { preorden, postorden };
+    
         BinaryTree() : _root(NULL) {};
-        BinaryTree(Lista<T>, Lista<T>, Traversal = preorden);
+        BinaryTree(Lista<T>, Lista<T>, Traversal);
         ~BinaryTree();
         
         bool isNull() const { return _root == NULL; }
@@ -21,8 +23,7 @@ class BinaryTree
         BinaryTree getRight();
         
         void destroy();
-        
-        enum Traversal { preorden, postorden };
+                
     
     // Helper methods
     private:
@@ -42,20 +43,24 @@ BinaryTree<T>::~BinaryTree()
 }
 
 template<class T>
-BinaryTree(Lista<T> ordenA, Lista<T> ordenB, Traversal e)
+BinaryTree<T>::BinaryTree(Lista<T> ordenA, Lista<T> ordenB, Traversal e)
 {
-    if (e = preorden)
+    if (e == preorden)
+		_root = _pre_in(ordenA, ordenB);
         
 }
 // -------------------- Helper methods --------------------
+
 template<class T>
 NodeBT<T>* BinaryTree<T>::_pre_in(Lista<T> preorden, Lista<T> inorden)
 {
     // TODO: Test
+    // Test FAILED
     if (preorden.longitud() > 1)
     {
         T root = preorden.getPrimero();
-        int pos = inorden.buscar(root)
+        preorden.eliminar(1);
+        int pos = inorden.buscar(root);
         
         Lista<T> inIz = inorden.sublista(1, pos-1);
         Lista<T> preIz = preorden.sublista(2, 1+inIz.longitud());
@@ -106,7 +111,6 @@ void BinaryTree<T>::_destroy(NodeBT<T>* leaf)
 
 /* 
 
-/**
  * Insert.
  * Inserts an element in the tree.
  * 
