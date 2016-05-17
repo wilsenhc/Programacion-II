@@ -26,7 +26,7 @@ class Lista
         Item getPrimero() const;
         Item getUltimo() const;
         void eliminar(int);
-        void modificar(Item, int);      // TODO: Implementar
+        void modificar(Item, int);
         void vaciar();
         Lista<Item> sublista(int, int);
         void invertir();
@@ -243,10 +243,31 @@ Item Lista<Item>::getUltimo() const
     return this->ultimo->getInfo();
 }
 
+/**
+ * Modificar.
+ * */
 template<class Item>
 void Lista<Item>::modificar(Item e, int pos)
 {
-    // TODO: Implementar
+    if (pos < 1 || pos > length)
+        std::cout << "Posicion invalida" << std::endl;
+    else if (this->esVacia())
+        std::cout << "Lista vacia" << std::endl;
+    else
+    {
+        if (pos == 1)
+            primero->setInfo(e);
+        else if (pos == length)
+            ultimo->setInfo(e);
+        else
+        {
+            Nodo<Item> *act = primero;
+            for (int i = 0; i < pos; i++)
+                act = act->getSig();
+            
+            act->setInfo(e);
+        }
+    }
 }
 
 /**
