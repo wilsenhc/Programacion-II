@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    Lista<int> pre, in;
+    Lista<int> pre, in, post;
     
     pre.insertar(10,1);
     pre.insertar(20,2);
@@ -34,8 +34,22 @@ int main(int argc, char **argv)
     in.insertar(110,11);
     in.insertar(120,12);
     
-    BinaryTree<int> tree(pre, in, BinaryTree<int>::preorden);
-
+    post.insertar(80,1);
+    post.insertar(40,2);
+    post.insertar(90,3);
+    post.insertar(50,4);
+    post.insertar(20,5);
+    post.insertar(60,6);
+    post.insertar(100,7);
+    post.insertar(120,8);
+    post.insertar(110,9);
+    post.insertar(70,10);
+    post.insertar(30,11);
+    post.insertar(10,12);
+    
+    BinaryTree<int> tree(pre, in, false);
+    BinaryTree<int> tree2(post, in, true);
+    
     return 0;
 }
 

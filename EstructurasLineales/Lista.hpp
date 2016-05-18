@@ -23,12 +23,15 @@ class Lista
         void insertar(Item, int);
         Item consultar(int) const;
         int buscar(Item) const;
+        
         Item getPrimero() const;
         Item getUltimo() const;
-        void setPrimero(T);
-        void setUltimo(T);
-        T popPrimero();
-        T popUltimo();
+        void setPrimero(Item);
+        void setUltimo(Item);
+        void pushPrimero(Item);
+        void pushUltimo(Item);
+        Item popPrimero();
+        Item popUltimo();
         void eliminar(int);
         void modificar(Item, int);
         void vaciar();
@@ -247,9 +250,6 @@ Item Lista<Item>::getUltimo() const
     return this->ultimo->getInfo();
 }
 
-/**
- * Modificar.
- * */
 template<class Item>
 void Lista<Item>::setPrimero(Item e)
 {
@@ -263,9 +263,45 @@ void Lista<Item>::setUltimo(Item e)
 }
 
 template<class Item>
+void Lista<Item>::pushPrimero(Item e)
+{
+	Nodo<Item> *nuevo = new Nodo<Item>(e);
+	if (!esVacia())
+	{
+		nuevo->setSig(primero);
+		primero = nuevo;
+	}
+	else
+	{
+		primero = nuevo;
+		ultimo = nuevo;
+	}
+    length++;
+}
+
+template<class Item>
+void Lista<Item>::pushUltimo(Item e)
+{
+	Nodo<Item> *nuevo = new Nodo<Item>(e);
+	if(!esVacia())
+    {
+		
+		ultimo->setSig(nuevo);
+		ultimo = nuevo;
+	}
+	else
+	{
+		 primero = nuevo;
+		 ultimo = nuevo;
+	}
+    length++;
+}
+
+template<class Item>
 Item Lista<Item>::popPrimero()
 {
-    
+    if (!esVacia())
+    {
         Nodo<Item> *aux;
         Item e;
         e = primero->getInfo();
@@ -276,7 +312,6 @@ Item Lista<Item>::popPrimero()
         return e;   
     }
     return 0;
-    
 }
 
 template<class Item>
@@ -288,11 +323,21 @@ Item Lista<Item>::popUltimo()
         act = primero;
         for(int i = 0; i < length; i++)
         {
-            
+            ant = act;
+            act = act->getSig();
         }
+        ant->setSig(NULL);
+        ultimo = ant;
+        Item e = act->getInfo();
+        delete act;
+        return e;
     }
+    return 0;
 }
 
+/**
+ * Modificar
+ * */
 template<class Item>
 void Lista<Item>::modificar(Item e, int pos)
 {

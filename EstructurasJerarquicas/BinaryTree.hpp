@@ -15,7 +15,7 @@ class BinaryTree
 		enum Traversal { preorden, postorden };
     
         BinaryTree() : _root(NULL) {};
-        BinaryTree(Lista<T>, Lista<T>, Traversal);
+        BinaryTree(Lista<T> , Lista<T> , bool);
         ~BinaryTree();
         
         bool isNull() const { return _root == NULL; }
@@ -27,7 +27,8 @@ class BinaryTree
     
     // Helper methods
     private:
-        NodeBT<T>* _pre_in(Lista<T>, Lista<T>);
+        NodeBT<T>* _pre_in(Lista<T>&, Lista<T>&);
+        NodeBT<T>* _post_in(Lista<T>&, Lista<T>&);
         void _insert(T, NodeBT<T>*);
         void _destroy(NodeBT<T>*);
 };
@@ -43,42 +44,59 @@ BinaryTree<T>::~BinaryTree()
 }
 
 template<class T>
-BinaryTree<T>::BinaryTree(Lista<T> ordenA, Lista<T> ordenB, Traversal e)
+BinaryTree<T>::BinaryTree(Lista<T> ordenA, Lista<T> ordenB, bool e)
 {
-    if (e == preorden)
+    if (!e)
 		_root = _pre_in(ordenA, ordenB);
-        
+    else
+    {
+		ordenA.invertir();
+        _root = _post_in(ordenA, ordenB);
+    }   
 }
 // -------------------- Helper methods --------------------
 
 template<class T>
-NodeBT<T>* BinaryTree<T>::_pre_in(Lista<T> preorden, Lista<T> inorden)
+NodeBT<T>* BinaryTree<T>::_pre_in(Lista<T> &pre, Lista<T> &in)
 {
-    // TODO: Test
-    // Test FAILED
-    if (preorden.longitud() > 1)
+    if (!in.esVacia())
     {
-        T root = preorden.getPrimero();
-        preorden.eliminar(1);
-        int pos = inorden.buscar(root);
+        Lista<T> sub;
+        while (pre.getPrimero() != in.getPrimero())
+            sub.pushUltimo(in.popPrimero());
         
-        Lista<T> inIz = inorden.sublista(1, pos-1);
-        Lista<T> preIz = preorden.sublista(2, 1+inIz.longitud());
-        Lista<T> inDer = inorden.sublista(pos+1, inorden.longitud());
-        Lista<T> preDer = preorden.sublista(1+inIz.longitud(), preorden.longitud());
+        in.popPrimero();
+        T e = pre.popPrimero();
         
-        return new NodeBT<T>(root,
-                            _pre_in(preIz, inIz),
-                            _pre_in(preDer, inDer));
+        return new NodeBT<T>(e, _pre_in(pre, sub), _pre_in(pre,in));
     }
-    else
-    {
-        return new NodeBT<T>(preorden.getPrimero());
-    }
+    return NULL;
 }
 
 template<class T>
-void BinaryTree<T>::_insert(T key, NodeBT<T> *leaf)
+NodeBT<T>* BinaryTree<T>::_post_in(Lista<T> &post, Lista<T> &in)
+{
+    if (!in.esVacia())
+    {
+        Lista<T> sub;
+        NodeBT<T> *der;
+        T e;
+        while (post.getPrimero() != in.getPrimero())
+            sub.pushUltimo(in.popPrimero());
+        
+        in.popPrimero();
+        e = post.popPrimero();
+        der = _post_in(post, in);
+        
+        return new NodeBT<T>(e, _post_in(post, sub), der);
+    }
+    return NULL;
+}
+
+// ------------
+/*
+template<class T>
+void BinaryTree<T>::_insert(Item key, NodeBT<T> *leaf)
 {
     if (key < leaf->getKey())
     {
@@ -95,6 +113,7 @@ void BinaryTree<T>::_insert(T key, NodeBT<T> *leaf)
 			leaf->setRight(new NodeBT<T>(key));
 	}
 }
+* */
 
 template<class T>
 void BinaryTree<T>::_destroy(NodeBT<T>* leaf)
@@ -112,7 +131,7 @@ void BinaryTree<T>::_destroy(NodeBT<T>* leaf)
 /* 
 
  * Insert.
- * Inserts an element in the tree.
+ * Inserts an element in the Itree.
  * 
 template<class T>
 void BinaryTree<T>::insert(T key)

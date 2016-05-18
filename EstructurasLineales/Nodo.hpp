@@ -12,6 +12,7 @@ class Nodo
     public:
         Nodo();
         Nodo(const Nodo<Item>&);
+        Nodo(Item);
         //~Nodo();
 
         void setInfo(Item);
@@ -45,6 +46,10 @@ Nodo<Item>::Nodo()
 template<class Item>
 Nodo<Item>::Nodo(const Nodo<Item>& in)
     : info( in.info ),  sig( NULL) { }
+
+template<class Item>
+Nodo<Item>::Nodo(Item e)
+	: info( e ) { }
 
 /**
  * Setter de Info.
