@@ -47,8 +47,8 @@ int main(int argc, char **argv)
     post.insertar(30,11);
     post.insertar(10,12);
     
-    BinaryTree<int> tree(pre, in, false);
-    BinaryTree<int> tree2(post, in, true);
+    BinaryTree<int> tree(pre, in, preorden);
+    BinaryTree<int> tree2(post, in, postorden);
     
     return 0;
 }

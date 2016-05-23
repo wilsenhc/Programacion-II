@@ -285,7 +285,6 @@ void Lista<Item>::pushUltimo(Item e)
 	Nodo<Item> *nuevo = new Nodo<Item>(e);
 	if(!esVacia())
     {
-		
 		ultimo->setSig(nuevo);
 		ultimo = nuevo;
 	}
@@ -564,7 +563,7 @@ std::ostream& operator<<(std::ostream& out, const Lista<Item> &list)
     Nodo<Item> *nodo;
     nodo = list.primero;
     for (int i = 0; i < list.length; i++, nodo = nodo->getSig())
-        out << nodo->getInfo() << std::endl;
+        out << nodo->getInfo() << " ";
 
     return out;
 }

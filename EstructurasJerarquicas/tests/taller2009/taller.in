@@ -1,0 +1,17 @@
+PREORDEN + - * 5 7 3 * 6 + 2 1
+INORDEN 5 * 7 - 3 + 6 * 2 + 1
+
+POSTORDEN 5 7 * 3 - 6 2 1 + * +
+INORDEN 5 * 7 - 3 + 6 * 2 + 1
+
+PREORDEN * + 1 / 2 3 - 4 * 5 6
+INORDEN 1 + 2 / 3 * 4 - 5 * 6
+
+POSTORDEN 1 2 3 / + 4 5 6 * - *
+INORDEN 1 + 2 / 3 * 4 - 5 * 6
+
+PREORDEN - + 2 3 / 8 + 2 3
+INORDEN 2 + 3 - 8 / 2 + 3
+
+POSTORDEN 2 3 + 8 2 3 + / -
+INORDEN 2 + 3 - 8 / 2 + 3
