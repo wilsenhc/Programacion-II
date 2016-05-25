@@ -4,7 +4,9 @@
 template<class T>
 class BST : public BinaryTree<T>
 {
-    
+    void insert(T);
+    bool search(T) const;
+    void del(T);
 };
 
 #endif
