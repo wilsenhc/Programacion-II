@@ -10,7 +10,7 @@ template<class T>
 class BinaryTree
 {
     // Attributes
-    private:
+    protected:
         NodeBT<T> *_root;
         
     // Methods
