@@ -563,7 +563,10 @@ std::ostream& operator<<(std::ostream& out, const Lista<Item> &list)
     Nodo<Item> *nodo;
     nodo = list.primero;
     for (int i = 0; i < list.length; i++, nodo = nodo->getSig())
-        out << nodo->getInfo() << " ";
+		if (nodo != list.ultimo)
+			out << nodo->getInfo() << " ";
+		else
+			out << nodo->getInfo();
 
     return out;
 }
