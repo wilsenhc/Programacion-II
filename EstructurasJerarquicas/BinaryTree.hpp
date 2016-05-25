@@ -16,6 +16,8 @@ class BinaryTree
     // Methods
     public:
         BinaryTree() : _root(NULL) {};
+        BinaryTree(NodeBT<T> *p) : _root(p) {};
+        BinaryTree(const BinaryTree<T> &p) : _root(_copyBinTree(p._root)) { } ;
         BinaryTree(Lista<T> , Lista<T> , Traverse);
         ~BinaryTree();
         
@@ -23,20 +25,25 @@ class BinaryTree
         BinaryTree getLeft();
         BinaryTree getRight();
         
+        void print(Traverse) const;
+        
         void destroy();
         
-        // Parcial 2009 - Arboles Sintaxis
-        int evaluar() const;
+        void operator=(const BinaryTree<T> &);
         
-    
     // Helper methods
     private:
+        // Constructor helper
         NodeBT<T>* _pre_in(Lista<T>&, Lista<T>&);
         NodeBT<T>* _post_in(Lista<T>&, Lista<T>&);
-        void _insert(T, NodeBT<T>*);
+        NodeBT<T>* _copyBinTree(NodeBT<T>*);
+        // Destructor helper
         void _destroy(NodeBT<T>*);
         
-        int _evaluar(NodeBT<T> *) const;
+        // Imprimir helper
+        void print_pre(Lista<T>&, NodeBT<T>*) const;
+        void print_post(Lista<T>&, NodeBT<T>*) const;
+        void print_in(Lista<T>&, NodeBT<T>*) const;
 };
 
 /**
@@ -46,7 +53,10 @@ template<class T>
 BinaryTree<T>::~BinaryTree()
 {
     if (!isNull())
+    {
         _destroy(_root);
+        _root = NULL;
+    }   
 }
 
 template<class T>
@@ -60,8 +70,53 @@ BinaryTree<T>::BinaryTree(Lista<T> ordenA, Lista<T> ordenB, Traverse e)
         _root = _post_in(ordenA, ordenB);
     }   
 }
-// -------------------- Helper methods --------------------
 
+template<class T>
+BinaryTree<T> BinaryTree<T>::getLeft()
+{
+	BinaryTree<T> tree(_copyBinTree(_root->getLeft()));
+	return tree;
+}
+
+template<class T>
+BinaryTree<T> BinaryTree<T>::getRight()
+{
+	BinaryTree<T> tree(_copyBinTree(_root->getRight()));
+	return tree;
+}
+
+template<class T>
+void BinaryTree<T>::print(Traverse e) const
+{
+	Lista<T> L;
+	if (e == preorden) print_pre(L, _root);
+	else if (e == postorden) print_post(L, _root);
+	else if (e == inorden) print_in(L, _root);
+	
+	if (!L.esVacia())
+        std::cout << L << std::endl;
+}
+
+template<class T>
+void BinaryTree<T>::destroy()
+{
+    if (!isNull())
+    {
+        _destroy(_root);
+        _root = NULL;
+    }  
+}
+
+template<class T>
+void BinaryTree<T>::operator=(const BinaryTree<T> & tree)
+{
+    if (this != &tree)
+    {
+        this->_root = _copyBinTree(tree._root);
+    }
+}
+
+// -------------------- Helper methods --------------------
 template<class T>
 NodeBT<T>* BinaryTree<T>::_pre_in(Lista<T> &pre, Lista<T> &in)
 {
@@ -100,27 +155,15 @@ NodeBT<T>* BinaryTree<T>::_post_in(Lista<T> &post, Lista<T> &in)
     return NULL;
 }
 
-// ------------
-/*
 template<class T>
-void BinaryTree<T>::_insert(Item key, NodeBT<T> *leaf)
+NodeBT<T>* BinaryTree<T>::_copyBinTree(NodeBT<T> *p)
 {
-    if (key < leaf->getKey())
-    {
-        if (leaf->getLeft() != NULL)
-            _insert(key, leaf->getLeft());
-        else
-            leaf->setLeft(new NodeBT<T>(key));
-    }
-    else if (key >= leaf->getKey())
-    {
-		if (leaf->getRight() != NULL)
-			_insert(key, leaf->getRight());
-		else
-			leaf->setRight(new NodeBT<T>(key));
-	}
+    if (p != NULL)
+        return new NodeBT<T>(p->getKey(), _copyBinTree(p->getLeft()), _copyBinTree(p->getRight()));
+    
+    return NULL;
+    
 }
-* */
 
 template<class T>
 void BinaryTree<T>::_destroy(NodeBT<T>* leaf)
@@ -133,47 +176,37 @@ void BinaryTree<T>::_destroy(NodeBT<T>* leaf)
     }
 }
 
-// Parcial IV - 2009
 template<class T>
-int BinaryTree<T>::evaluar() const
+void BinaryTree<T>::print_pre(Lista<T> &L, NodeBT<T> *n) const
 {
-    return _evaluar(_root);
+    if (n != NULL)
+    {
+        L.pushUltimo(n->getKey());
+        print_pre(L, n->getLeft());
+        print_pre(L, n->getRight());
+    }
 }
 
 template<class T>
-int BinaryTree<T>::_evaluar(NodeBT<T> *node) const
+void BinaryTree<T>::print_post(Lista<T> &L, NodeBT<T> *n) const
 {
-    if (node != NULL)
+    if (n != NULL)
     {
-		T key = node->getKey();
-        
-        if (key == "+") return _evaluar(node->getLeft()) + _evaluar(node->getRight());
-        else if (key == "-") return _evaluar(node->getLeft()) - _evaluar(node->getRight());
-        else if (key == "*") return _evaluar(node->getLeft()) * _evaluar(node->getRight());
-        else if (key == "/") return _evaluar(node->getLeft()) / _evaluar(node->getRight());
-        else return stoi(key);
-	}
-    return 0;
+        print_post(L, n->getLeft());
+        print_post(L, n->getRight());
+        L.pushUltimo(n->getKey());
+    }
+}
+
+template<class T>
+void BinaryTree<T>::print_in(Lista<T> &L, NodeBT<T> *n) const
+{
+    if (n != NULL)
+    {
+        print_in(L, n->getLeft());
+        L.pushUltimo(n->getKey());
+        print_in(L, n->getRight());
+    }
 }
 
 #endif
-
-/* 
-
- * Insert.
- * Inserts an element in the Itree.
- * 
-template<class T>
-void BinaryTree<T>::insert(T key)
-{
-    if (_root != NULL)
-        _insert(key, _root);
-    else
-    {
-        _root = new NodeBT<T>(key);
-    }
-} 
-
-
-
-*/
