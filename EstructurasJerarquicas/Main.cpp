@@ -48,11 +48,24 @@ int main(int argc, char **argv)
     post.insertar(10,12);
     
     BinaryTree<int> tree(pre, in, preorden);
+    cout << tree.isNull() << endl;
     
-    BinaryTree<int> tree2 = tree.getRight();
+    BinaryTree<int> tree2;
+    
+    
+    cout << tree2.isNull() << endl;
+    
+    tree2 = tree.getRight();
+	cout << tree2.isNull() << endl;
     
     tree2.print(preorden);
     
+    tree.destroy();
+    tree2.destroy();
+    
+    tree2.print(preorden);
+	cout << tree.isNull() << endl;
+	cout << tree2.isNull() << endl;
     
     return 0;
 }

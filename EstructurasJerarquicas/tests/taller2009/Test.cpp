@@ -1,6 +1,6 @@
 #include <iostream>
-
-#include "../../BinaryTree.hpp"
+#include <string>
+#include "../../SintaxTree.hpp"
 
 using namespace std;
 
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
     in.insertar("+",10);
     in.insertar("1",11);
     
-    BinaryTree<string> tree(pre, in, preorden);
+    SintaxTree tree(pre, in, preorden);
 
 	cout << tree.evaluar() << endl;
     
