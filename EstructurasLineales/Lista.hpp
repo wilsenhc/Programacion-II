@@ -78,15 +78,13 @@ Lista<Item>::Lista(const Lista<Item>& in)
 {
     if (in.primero != NULL)
     {
-        primero = new Nodo<Item>();
-        primero->setInfo(in.primero->getInfo());
+        primero = new Nodo<Item>(in.primero->getInfo());
         Nodo<Item> *inaux = in.primero->getSig();
         Nodo<Item> *thisaux = this->primero;
         Nodo<Item> *nuevo;
         while (inaux != NULL)
         {
-            nuevo = new Nodo<Item>();
-            nuevo->setInfo(inaux->getInfo());
+            nuevo = new Nodo<Item>(inaux->getInfo());
             thisaux->setSig(nuevo);
             thisaux = thisaux->getSig();
             inaux = inaux->getSig();
@@ -139,8 +137,7 @@ void Lista<Item>::insertar(Item e, int pos)
     else
     {
         Nodo<Item> *nuevo, *actual, *siguiente;
-        nuevo = new Nodo<Item>();
-        nuevo->setInfo(e);
+        nuevo = new Nodo<Item>(e);
 
         if (length == 0)
         {
