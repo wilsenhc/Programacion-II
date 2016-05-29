@@ -10,9 +10,9 @@ class Nodo
         Nodo<Item> *sig;
 
     public:
-        Nodo();
-        Nodo(const Nodo<Item>&);
-        Nodo(Item);
+        Nodo() : sig(NULL) { };
+        Nodo(const Nodo<Item>& in) : info(in.info), sig(NULL) { };
+        Nodo(Item e) : info(e), sig(NULL) { };
         //~Nodo();
 
         void setInfo(Item);
@@ -30,26 +30,6 @@ class Nodo
 
         static void intercambiar(Nodo<Item> *, Nodo<Item> *);
 };
-
-/**
- * Constructor de Nodo.
- * @constructs Nodo
- * */
-template<class Item>
-Nodo<Item>::Nodo()
-    : info( 0 ), sig( NULL ) { }
-
-/**
- * Constructor copia de Nodo.
- * @constructs Nodo
- * */
-template<class Item>
-Nodo<Item>::Nodo(const Nodo<Item>& in)
-    : info( in.info ),  sig( NULL) { }
-
-template<class Item>
-Nodo<Item>::Nodo(Item e)
-	: info( e ) { }
 
 /**
  * Setter de Info.
