@@ -1,6 +1,5 @@
 #ifndef _BINARY_TREE_HPP_
 #define _BINARY_TREE_HPP_
-#include <cstring>
 #include "NodeBT.hpp"
 #include "../EstructurasLineales/Lista.hpp"
 
@@ -17,7 +16,7 @@ class BinaryTree
     public:
         BinaryTree() : _root(NULL) {};
         BinaryTree(NodeBT<T> *p) : _root(p) {};
-        BinaryTree(const BinaryTree<T> &p) : _root(_copyBinTree(p._root)) { } ;
+        BinaryTree(const BinaryTree<T> &p) : _root(copyBinTree(p._root)) { } ;
         BinaryTree(Lista<T> , Lista<T> , Traverse);
         ~BinaryTree();
         
@@ -34,11 +33,11 @@ class BinaryTree
     // Helper methods
     private:
         // Constructor helper
-        NodeBT<T>* _pre_in(Lista<T>&, Lista<T>&);
-        NodeBT<T>* _post_in(Lista<T>&, Lista<T>&);
-        NodeBT<T>* _copyBinTree(NodeBT<T>*);
+        NodeBT<T>* pre_in(Lista<T>&, Lista<T>&);
+        NodeBT<T>* post_in(Lista<T>&, Lista<T>&);
+        NodeBT<T>* copyBinTree(NodeBT<T>*);
         // Destructor helper
-        void _destroy(NodeBT<T>*);
+        void destroy(NodeBT<T>*);
         
         // Imprimir helper
         void print_pre(Lista<T>&, NodeBT<T>*) const;
@@ -54,7 +53,7 @@ BinaryTree<T>::~BinaryTree()
 {
     if (!isNull())
     {
-        _destroy(_root);
+        destroy(_root);
         _root = NULL;
     }   
 }
@@ -63,25 +62,25 @@ template<class T>
 BinaryTree<T>::BinaryTree(Lista<T> ordenA, Lista<T> ordenB, Traverse e)
 {
     if (e == preorden)
-		_root = _pre_in(ordenA, ordenB);
+		_root = pre_in(ordenA, ordenB);
     else if (e == postorden)
     {
 		ordenA.invertir();
-        _root = _post_in(ordenA, ordenB);
+        _root = post_in(ordenA, ordenB);
     }   
 }
 
 template<class T>
 BinaryTree<T> BinaryTree<T>::getLeft()
 {
-	BinaryTree<T> tree(_copyBinTree(_root->getLeft()));
+	BinaryTree<T> tree(copyBinTree(_root->getLeft()));
 	return tree;
 }
 
 template<class T>
 BinaryTree<T> BinaryTree<T>::getRight()
 {
-	BinaryTree<T> tree(_copyBinTree(_root->getRight()));
+	BinaryTree<T> tree(copyBinTree(_root->getRight()));
 	return tree;
 }
 
@@ -102,7 +101,7 @@ void BinaryTree<T>::destroy()
 {
     if (!isNull())
     {
-        _destroy(_root);
+        destroy(_root);
         _root = NULL;
     }  
 }
@@ -112,13 +111,13 @@ void BinaryTree<T>::operator=(const BinaryTree<T> & tree)
 {
     if (this != &tree)
     {
-        this->_root = _copyBinTree(tree._root);
+        this->_root = copyBinTree(tree._root);
     }
 }
 
 // -------------------- Helper methods --------------------
 template<class T>
-NodeBT<T>* BinaryTree<T>::_pre_in(Lista<T> &pre, Lista<T> &in)
+NodeBT<T>* BinaryTree<T>::pre_in(Lista<T> &pre, Lista<T> &in)
 {
     if (!in.esVacia())
     {
@@ -130,13 +129,13 @@ NodeBT<T>* BinaryTree<T>::_pre_in(Lista<T> &pre, Lista<T> &in)
         in.popPrimero();
         e = pre.popPrimero();
         
-        return new NodeBT<T>(e, _pre_in(pre, sub), _pre_in(pre,in));
+        return new NodeBT<T>(e, pre_in(pre, sub), pre_in(pre,in));
     }
     return NULL;
 }
 
 template<class T>
-NodeBT<T>* BinaryTree<T>::_post_in(Lista<T> &post, Lista<T> &in)
+NodeBT<T>* BinaryTree<T>::post_in(Lista<T> &post, Lista<T> &in)
 {
     if (!in.esVacia())
     {
@@ -148,30 +147,30 @@ NodeBT<T>* BinaryTree<T>::_post_in(Lista<T> &post, Lista<T> &in)
         
         in.popPrimero();
         e = post.popPrimero();
-        der = _post_in(post, in);
+        der = post_in(post, in);
         
-        return new NodeBT<T>(e, _post_in(post, sub), der);
+        return new NodeBT<T>(e, post_in(post, sub), der);
     }
     return NULL;
 }
 
 template<class T>
-NodeBT<T>* BinaryTree<T>::_copyBinTree(NodeBT<T> *p)
+NodeBT<T>* BinaryTree<T>::copyBinTree(NodeBT<T> *p)
 {
-    if (p != NULL)
-        return new NodeBT<T>(p->getKey(), _copyBinTree(p->getLeft()), _copyBinTree(p->getRight()));
+    if (p)
+        return new NodeBT<T>(p->getKey(), copyBinTree(p->getLeft()), copyBinTree(p->getRight()));
     
     return NULL;
     
 }
 
 template<class T>
-void BinaryTree<T>::_destroy(NodeBT<T>* leaf)
+void BinaryTree<T>::destroy(NodeBT<T>* leaf)
 {
     if (leaf != NULL)
     {
-        _destroy(leaf->getLeft());
-        _destroy(leaf->getRight());
+        destroy(leaf->getLeft());
+        destroy(leaf->getRight());
         delete leaf;
     }
 }
@@ -179,7 +178,7 @@ void BinaryTree<T>::_destroy(NodeBT<T>* leaf)
 template<class T>
 void BinaryTree<T>::print_pre(Lista<T> &L, NodeBT<T> *n) const
 {
-    if (n != NULL)
+    if (n)
     {
         L.pushUltimo(n->getKey());
         print_pre(L, n->getLeft());
@@ -190,7 +189,7 @@ void BinaryTree<T>::print_pre(Lista<T> &L, NodeBT<T> *n) const
 template<class T>
 void BinaryTree<T>::print_post(Lista<T> &L, NodeBT<T> *n) const
 {
-    if (n != NULL)
+    if (n)
     {
         print_post(L, n->getLeft());
         print_post(L, n->getRight());
@@ -201,7 +200,7 @@ void BinaryTree<T>::print_post(Lista<T> &L, NodeBT<T> *n) const
 template<class T>
 void BinaryTree<T>::print_in(Lista<T> &L, NodeBT<T> *n) const
 {
-    if (n != NULL)
+    if (n)
     {
         print_in(L, n->getLeft());
         L.pushUltimo(n->getKey());
