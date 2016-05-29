@@ -16,13 +16,43 @@ class BST : public BinaryTree<T>
 };
 
 template<class T>
+void BST<T>::insert(T e)
+{
+    if(_root)
+    {
+        if (!search(e))
+            insert(e, _root);
+    }
+    else
+        _root = new NodeBT<T>(e);
+}
+
+template<class T>
 bool BST<T>::search(T e) const
 {
     return search(e, _root);
 }
 
-
 // ---------------------------------------------------------------------
+
+template<class T>
+void BST<T>::insert(T e, NodeBT<T> *p)
+{
+    if (e < p->getKey())
+    {
+        if (p->getLeft())
+            insert(e, p->getLeft());
+        else
+            p->setLeft(new NodeBT<T>(e));
+    }
+    else 
+    {
+        if (p->getRight())
+            insert(e, p->getRight())
+        else
+            p->setRight(new NodeBT<T>(e));
+    }
+}
 
 template<class T>
 bool BST<T>::search(T e, NodeBT<T> *p)
