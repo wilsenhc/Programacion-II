@@ -216,8 +216,8 @@ int Lista<Item>::buscar(Item e) const
                 
             pivot = pivot->getSig();
             i++;
-		}
-		return i;
+        }
+        return i;
     }
     
     return -1; // No encontrado
@@ -262,34 +262,34 @@ void Lista<Item>::setUltimo(Item e)
 template<class Item>
 void Lista<Item>::pushPrimero(Item e)
 {
-	Nodo<Item> *nuevo = new Nodo<Item>(e);
-	if (!esVacia())
-	{
-		nuevo->setSig(primero);
-		primero = nuevo;
-	}
-	else
-	{
-		primero = nuevo;
-		ultimo = nuevo;
-	}
+    Nodo<Item> *nuevo = new Nodo<Item>(e);
+    if (!esVacia())
+    {
+        nuevo->setSig(primero);
+        primero = nuevo;
+    }
+    else
+    {
+        primero = nuevo;
+        ultimo = nuevo;
+    }
     length++;
 }
 
 template<class Item>
 void Lista<Item>::pushUltimo(Item e)
 {
-	Nodo<Item> *nuevo = new Nodo<Item>(e);
-	if(!esVacia())
+    Nodo<Item> *nuevo = new Nodo<Item>(e);
+    if(!esVacia())
     {
-		ultimo->setSig(nuevo);
-		ultimo = nuevo;
-	}
-	else
-	{
-		 primero = nuevo;
-		 ultimo = nuevo;
-	}
+        ultimo->setSig(nuevo);
+        ultimo = nuevo;
+    }
+    else
+    {
+         primero = nuevo;
+         ultimo = nuevo;
+    }
     length++;
 }
 
@@ -372,27 +372,27 @@ void Lista<Item>::eliminar(int pos)
         std::cout << "Lista vacia" << std::endl;
     else
     {
-		Nodo<Item> *ant, *act, *sig;
+        Nodo<Item> *ant, *act, *sig;
         if (pos == 1)
-		{
-			act = primero;
-			primero = act->getSig();
-		}
-		else
-		{
-			act = primero;
-			sig = act->getSig();
-			
-			for (int i = 0; i < pos; i++)
-			{
-				ant = act;
-				act = sig;
-				sig = sig->getSig();
-			}
-			ant->setSig(sig);
-		}
-		delete act;
-		length--;
+        {
+            act = primero;
+            primero = act->getSig();
+        }
+        else
+        {
+            act = primero;
+            sig = act->getSig();
+            
+            for (int i = 0; i < pos; i++)
+            {
+                ant = act;
+                act = sig;
+                sig = sig->getSig();
+            }
+            ant->setSig(sig);
+        }
+        delete act;
+        length--;
     }
 }
 
@@ -560,10 +560,10 @@ std::ostream& operator<<(std::ostream& out, const Lista<Item> &list)
     Nodo<Item> *nodo;
     nodo = list.primero;
     for (int i = 0; i < list.length; i++, nodo = nodo->getSig())
-		if (nodo != list.ultimo)
-			out << nodo->getInfo() << " ";
-		else
-			out << nodo->getInfo();
+        if (nodo != list.ultimo)
+            out << nodo->getInfo() << " ";
+        else
+            out << nodo->getInfo();
 
     return out;
 }

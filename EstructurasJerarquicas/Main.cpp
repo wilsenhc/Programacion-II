@@ -56,7 +56,7 @@ int main(int argc, char **argv)
     cout << tree2.isNull() << endl;
     
     tree2 = tree.getRight();
-	cout << tree2.isNull() << endl;
+    cout << tree2.isNull() << endl;
     
     tree2.print(preorden);
     
@@ -64,8 +64,8 @@ int main(int argc, char **argv)
     tree2.destroy();
     
     tree2.print(preorden);
-	cout << tree.isNull() << endl;
-	cout << tree2.isNull() << endl;
+    cout << tree.isNull() << endl;
+    cout << tree2.isNull() << endl;
     
     return 0;
 }

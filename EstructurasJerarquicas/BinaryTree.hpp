@@ -8,11 +8,9 @@ enum Traverse { preorden, postorden, inorden };
 template<class T>
 class BinaryTree
 {
-    // Attributes
     protected:
         NodeBT<T> *_root;
         
-    // Methods
     public:
         BinaryTree() : _root(NULL) {};
         BinaryTree(NodeBT<T> *p) : _root(p) {};
@@ -23,26 +21,19 @@ class BinaryTree
         bool isNull() const { return _root == NULL; }
         BinaryTree getLeft();
         BinaryTree getRight();
-        
         void print(Traverse) const;
-        
         void destroy();
         
         void operator=(const BinaryTree<T> &);
         
-    // Helper methods
     private:
-        // Constructor helper
         NodeBT<T>* pre_in(Lista<T>&, Lista<T>&);
         NodeBT<T>* post_in(Lista<T>&, Lista<T>&);
         NodeBT<T>* copyBinTree(NodeBT<T>*);
-        // Destructor helper
-        void destroy(NodeBT<T>*);
-        
-        // Imprimir helper
         void print_pre(Lista<T>&, NodeBT<T>*) const;
         void print_post(Lista<T>&, NodeBT<T>*) const;
         void print_in(Lista<T>&, NodeBT<T>*) const;
+        void destroy(NodeBT<T>*);
 };
 
 /**
@@ -62,10 +53,10 @@ template<class T>
 BinaryTree<T>::BinaryTree(Lista<T> ordenA, Lista<T> ordenB, Traverse e)
 {
     if (e == preorden)
-		_root = pre_in(ordenA, ordenB);
+        _root = pre_in(ordenA, ordenB);
     else if (e == postorden)
     {
-		ordenA.invertir();
+        ordenA.invertir();
         _root = post_in(ordenA, ordenB);
     }   
 }
@@ -73,26 +64,26 @@ BinaryTree<T>::BinaryTree(Lista<T> ordenA, Lista<T> ordenB, Traverse e)
 template<class T>
 BinaryTree<T> BinaryTree<T>::getLeft()
 {
-	BinaryTree<T> tree(copyBinTree(_root->getLeft()));
-	return tree;
+    BinaryTree<T> tree(copyBinTree(_root->getLeft()));
+    return tree;
 }
 
 template<class T>
 BinaryTree<T> BinaryTree<T>::getRight()
 {
-	BinaryTree<T> tree(copyBinTree(_root->getRight()));
-	return tree;
+    BinaryTree<T> tree(copyBinTree(_root->getRight()));
+    return tree;
 }
 
 template<class T>
 void BinaryTree<T>::print(Traverse e) const
 {
-	Lista<T> L;
-	if (e == preorden) print_pre(L, _root);
-	else if (e == postorden) print_post(L, _root);
-	else if (e == inorden) print_in(L, _root);
-	
-	if (!L.esVacia())
+    Lista<T> L;
+    if (e == preorden) print_pre(L, _root);
+    else if (e == postorden) print_post(L, _root);
+    else if (e == inorden) print_in(L, _root);
+    
+    if (!L.esVacia())
         std::cout << L << std::endl;
 }
 

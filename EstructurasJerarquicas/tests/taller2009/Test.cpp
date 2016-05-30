@@ -34,7 +34,7 @@ int main(int argc, char **argv)
     
     SintaxTree tree(pre, in, preorden);
 
-	cout << tree.evaluar() << endl;
+    cout << tree.evaluar() << endl;
     
     return 0;
 }
