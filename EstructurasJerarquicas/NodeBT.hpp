@@ -22,8 +22,8 @@ class NodeBT
         bool isFullNode() const { return _left != NULL || _right != NULL; }
 
         void setKey(const T);
-        void setLeft(const NodeBT<T>*);
-        void setRight(const NodeBT<T>*);
+        void setLeft(NodeBT<T>*);
+        void setRight(NodeBT<T>*);
 };
 
 /**
@@ -39,7 +39,7 @@ void NodeBT<T>::setKey(const T item)
  * Left setter
  * */
 template<class T>
-void NodeBT<T>::setLeft(const NodeBT<T>* l)
+void NodeBT<T>::setLeft(NodeBT<T>* l)
 {
     _left = l;
 }
@@ -48,7 +48,7 @@ void NodeBT<T>::setLeft(const NodeBT<T>* l)
  * Right setter
  * */
 template<class T>
-void NodeBT<T>::setRight(const NodeBT<T>* r)
+void NodeBT<T>::setRight(NodeBT<T>* r)
 {
     _right = r;
 }
