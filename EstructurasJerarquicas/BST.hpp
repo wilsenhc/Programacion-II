@@ -6,9 +6,14 @@ template<class T>
 class BST : public BinaryTree<T>
 {
     public:
+        BST() : BinaryTree<T>() { };
+        BST(NodeBT<T> *p) : BinaryTree<T>(p) { };
+        BST(const BST<T> &p) : BinaryTree<T>(p) { };
+        BST(Lista<T> p, Lista<T> in, Traverse t) : BinaryTree<T>(p, in, t) { };
+    
         void insert(T);
         bool search(T) const;
-        void del(T);                // TODO: Implement
+        void del(T);
     
     private:
         NodeBT<T>* insert(T, NodeBT<T>*);
