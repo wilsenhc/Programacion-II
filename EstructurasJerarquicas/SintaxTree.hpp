@@ -9,6 +9,8 @@ using namespace std;
 class SintaxTree : public BinaryTree<string>
 {
     public:
+        SintaxTree(NodeBT<string> *p) : BinaryTree<string>(p) { };
+        SintaxTree(const SintaxTree &p) : BinaryTree<string>(p) { };
         SintaxTree(Lista<string> p, Lista<string> in, Traverse t) : BinaryTree<string>(p, in, t) { };
         
         float evaluar() const;
@@ -32,7 +34,7 @@ float SintaxTree::evaluar(NodeBT<string>* p) const
         else if (key == "-") return evaluar (p->getLeft()) - evaluar(p->getRight());
         else if (key == "*") return evaluar (p->getLeft()) * evaluar(p->getRight());
         else if (key == "/") return evaluar (p->getLeft()) / evaluar(p->getRight());
-        else return std::stof(key);
+        else return stof(key);
     }
     return 0;
 }
