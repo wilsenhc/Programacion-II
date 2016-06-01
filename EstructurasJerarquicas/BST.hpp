@@ -11,6 +11,7 @@ class BST : public BinaryTree<T>
         BST(const BST<T> &p) : BinaryTree<T>(p) { };
         BST(Lista<T> p, Lista<T> in, Traverse t) : BinaryTree<T>(p, in, t) { };
     
+        bool isBST() const;
         void insert(T);
         bool search(T) const;
         void del(T);
@@ -20,6 +21,15 @@ class BST : public BinaryTree<T>
         bool search(T, NodeBT<T>*) const;
         void del(T, NodeBT<T>*);
 };
+
+template<class T>
+bool BST<T>::isBST() const
+{
+    Lista<T> L;
+    BinaryTree<T>::list_in(L, this->_root);
+    
+    return L.estaOrdenada();
+}
 
 template<class T>
 void BST<T>::insert(T e)
