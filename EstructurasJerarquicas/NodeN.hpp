@@ -9,7 +9,8 @@ class NodeN
         NodeN<T> *_leftChild, *_rightSilbing;
     
     public:
-        NodeN();
+        NodeN() : _leftChild(NULL), _rightSilbing(NULL) { };
+        NodeN(T e) : _key(e), _leftChild(NULL), _rightSilbing(NULL) { };
         
         T getKey() const { return _key; }
         NodeN<T>* getLeft() const { return _leftChild; }
