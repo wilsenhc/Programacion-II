@@ -30,10 +30,12 @@ class BinaryTree
         NodeBT<T>* pre_in(Lista<T>&, Lista<T>&);
         NodeBT<T>* post_in(Lista<T>&, Lista<T>&);
         NodeBT<T>* copyBinTree(NodeBT<T>*);
-        void print_pre(Lista<T>&, NodeBT<T>*) const;
-        void print_post(Lista<T>&, NodeBT<T>*) const;
-        void print_in(Lista<T>&, NodeBT<T>*) const;
         void destroy(NodeBT<T>*);
+        
+    protected:
+        void list_pre(Lista<T>&, NodeBT<T>*) const;
+        void list_post(Lista<T>&, NodeBT<T>*) const;
+        void list_in(Lista<T>&, NodeBT<T>*) const;
 };
 
 /**
@@ -79,9 +81,9 @@ template<class T>
 void BinaryTree<T>::print(Traverse e) const
 {
     Lista<T> L;
-    if (e == preorden) print_pre(L, _root);
-    else if (e == postorden) print_post(L, _root);
-    else if (e == inorden) print_in(L, _root);
+    if (e == preorden) list_pre(L, _root);
+    else if (e == postorden) list_post(L, _root);
+    else if (e == inorden) list_in(L, _root);
     
     if (!L.esVacia())
         std::cout << L << std::endl;
@@ -167,35 +169,35 @@ void BinaryTree<T>::destroy(NodeBT<T>* leaf)
 }
 
 template<class T>
-void BinaryTree<T>::print_pre(Lista<T> &L, NodeBT<T> *n) const
+void BinaryTree<T>::list_pre(Lista<T> &L, NodeBT<T> *n) const
 {
     if (n)
     {
         L.pushUltimo(n->getKey());
-        print_pre(L, n->getLeft());
-        print_pre(L, n->getRight());
+        list_pre(L, n->getLeft());
+        list_pre(L, n->getRight());
     }
 }
 
 template<class T>
-void BinaryTree<T>::print_post(Lista<T> &L, NodeBT<T> *n) const
+void BinaryTree<T>::list_post(Lista<T> &L, NodeBT<T> *n) const
 {
     if (n)
     {
-        print_post(L, n->getLeft());
-        print_post(L, n->getRight());
+        list_post(L, n->getLeft());
+        list_post(L, n->getRight());
         L.pushUltimo(n->getKey());
     }
 }
 
 template<class T>
-void BinaryTree<T>::print_in(Lista<T> &L, NodeBT<T> *n) const
+void BinaryTree<T>::list_in(Lista<T> &L, NodeBT<T> *n) const
 {
     if (n)
     {
-        print_in(L, n->getLeft());
+        list_in(L, n->getLeft());
         L.pushUltimo(n->getKey());
-        print_in(L, n->getRight());
+        list_in(L, n->getRight());
     }
 }
 
