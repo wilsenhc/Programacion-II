@@ -13,7 +13,9 @@ class BinaryTree
         
     public:
         BinaryTree() : _root(NULL) {};
+        BinaryTree(T e) : _root(new NodeBT<T>(e)) { };
         BinaryTree(NodeBT<T> *p) : _root(p) {};
+        BinaryTree(T, BinaryTree<T>, BinaryTree<T>);
         BinaryTree(const BinaryTree<T> &p) : _root(copyBinTree(p._root)) { } ;
         BinaryTree(Lista<T> , Lista<T> , Traverse);
         ~BinaryTree();
@@ -37,6 +39,14 @@ class BinaryTree
         void list_post(Lista<T>&, NodeBT<T>*) const;
         void list_in(Lista<T>&, NodeBT<T>*) const;
 };
+
+template<class T>
+BinaryTree<T>::BinaryTree(T e, BinaryTree<T> l, BinaryTree<T> r)
+{
+    _root = new NodeBT<T>(e);
+    _root->setLeft(copyBinTree(l._root));
+    _root->setRight(copyBinTree(r._root));
+}
 
 /**
  * Tree Destructor.
