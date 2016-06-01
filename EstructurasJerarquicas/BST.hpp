@@ -1,5 +1,6 @@
 #ifndef _BINARY_SEARCH_TREE_HPP_
 #define _BINARY_SEARCH_TREE_HPP_
+#include "../EstructurasLineales/Lista.hpp"
 #include "BinaryTree.hpp"
 
 template<class T>
@@ -48,7 +49,6 @@ void BST<T>::del(T e)
 {
     if (search(e))
         del(e, this->_root);
-        
 }
 
 // ---------------------------------------------------------------------
