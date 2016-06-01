@@ -15,7 +15,9 @@ int main(int argc, char **argv)
     arbol.insert(3);
     arbol.insert(5);
     
-    arbol.print(preorden);
+    arbol.print(inorden);
+    
+    cout << arbol.isBST() << endl;
     
     return 0;
 }
