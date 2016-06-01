@@ -26,6 +26,7 @@
 *.exe
 *.out
 *.app
+Main
 
 # Carpeta de Visual Studio Code
 .vscode
