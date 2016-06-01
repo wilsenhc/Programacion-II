@@ -9,6 +9,7 @@ using namespace std;
 class SintaxTree : public BinaryTree<string>
 {
     public:
+		SintaxTree() : BinaryTree<string>() { };
         SintaxTree(NodeBT<string> *p) : BinaryTree<string>(p) { };
         SintaxTree(const SintaxTree &p) : BinaryTree<string>(p) { };
         SintaxTree(Lista<string> p, Lista<string> in, Traverse t) : BinaryTree<string>(p, in, t) { };
