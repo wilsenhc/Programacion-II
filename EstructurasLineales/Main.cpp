@@ -4,6 +4,17 @@
 
 using namespace std;
 
+void a(Lista<int> b)
+{
+	cout << "ENTRADA A VOID" << endl << endl;
+	cout << b << endl;
+	
+	b.vaciar();
+	
+	cout << b << endl;
+	cout << "SALE VOID" << endl << endl;
+}
+
 int main(int argc, char **argv)
 {
     Lista<int> l;
@@ -12,9 +23,13 @@ int main(int argc, char **argv)
         l.insertar(i, i);
 
     l.invertir();
-    l.quickSort();
+    l.ordenar();
 
     cout << l << endl;
+
+	a(l);
+	
+	cout << l << endl;
 
     return 0;
 }
