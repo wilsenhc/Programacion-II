@@ -1,6 +1,7 @@
 #ifndef _SINTAX_TREE_HPP_
 #define _SINTAX_TREE_HPP_
 #include <string>
+#include <sstream>
 #include "../EstructurasLineales/Lista.hpp"
 #include "BinaryTree.hpp"
 
@@ -31,13 +32,20 @@ float SintaxTree::evaluar(NodeBT<string>* p) const
     {
         string key = p->getKey();
     
-        if (key == "+") return evaluar (p->getLeft()) + evaluar(p->getRight());
-        else if (key == "-") return evaluar (p->getLeft()) - evaluar(p->getRight());
-        else if (key == "*") return evaluar (p->getLeft()) * evaluar(p->getRight());
-        else if (key == "/") return evaluar (p->getLeft()) / evaluar(p->getRight());
+        if (key == "+") return evaluar(p->getLeft()) + evaluar(p->getRight());
+        else if (key == "-") return evaluar(p->getLeft()) - evaluar(p->getRight());
+        else if (key == "*") return evaluar(p->getLeft()) * evaluar(p->getRight());
+        else if (key == "/") return evaluar(p->getLeft()) / evaluar(p->getRight());
         else return stof(key);
     }
     return 0;
 }
+
+// In case everything fails..
+// Everything == -std=c++11
+//~ stringstream ss("string");
+//~ float number;
+//~ ss >> number;
+
 
 #endif
