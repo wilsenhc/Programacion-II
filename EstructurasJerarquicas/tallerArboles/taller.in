@@ -1,0 +1,13 @@
+4
+9 1 2
+PREORDEN a b d e h c f i g
+INORDEN d b h e a f i c g
+7 2 3
+POSTORDEN d b f g e c a
+INORDEN d b a f e g c
+4 0 3
+POSTORDEN d c b a
+INORDEN d c b a
+4 3 3
+PREORDEN a b c d
+INORDEN a c d b

@@ -7,25 +7,42 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    Lista<string> POST, IN;
-    
-    POST.pushUltimo("d");
-    POST.pushUltimo("b");
-    POST.pushUltimo("f");
-    POST.pushUltimo("g");
-    POST.pushUltimo("e");
-    POST.pushUltimo("c");
-    POST.pushUltimo("a");
-    
-    IN.pushUltimo("d");
-    IN.pushUltimo("b");
-    IN.pushUltimo("a");
-    IN.pushUltimo("f");
-    IN.pushUltimo("e");
-    IN.pushUltimo("g");
-    IN.pushUltimo("c");
-    
-    BinaryTree<string> tree(POST, IN, postorden);
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        int m, j, k;
+        char c;
+        string porden;
+        Traverse orden;
+        Lista<char> P, IN;
+        cin >> m >> j >> k;
+        cin >> porden;
+        
+        if (porden == "PREORDEN")
+            orden = preorden;
+        else if (porden == "POSTORDEN")
+            orden = postorden;
+        
+        for (int l = 0; l < m; l++)
+        {
+            cin >> c;
+            P.pushUltimo(c);
+        }
+        
+        cin >> porden;
+        
+        for (int l = 0; l < m; l++)
+        {
+            cin >> c;
+            IN.pushUltimo(c);
+        }
+        
+        BinaryTree<char> tree(P, IN, orden);
+        
+        tree.print(levels);
+        cout << endl;
+    }
     
     return 0;
 }
