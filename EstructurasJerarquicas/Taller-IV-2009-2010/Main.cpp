@@ -42,12 +42,11 @@ int main(int argc, char **argv)
         tree = new SintaxTree(porden, inorden, orden);
         
 		cout << "Caso #" << i++ << ":" << endl 
-		<< tree->evaluar() << endl;
+		<< tree->solve() << endl;
 		
 		porden.vaciar();
 		inorden.vaciar();
 		delete tree;
-		
     }
     
     return 0;

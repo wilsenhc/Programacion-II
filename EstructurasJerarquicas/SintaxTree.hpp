@@ -15,27 +15,27 @@ class SintaxTree : public BinaryTree<string>
         SintaxTree(const SintaxTree &p) : BinaryTree<string>(p) { };
         SintaxTree(Lista<string> p, Lista<string> in, Traverse t) : BinaryTree<string>(p, in, t) { };
         
-        float evaluar() const;
+        float solve() const;
         
     private:
-        float evaluar(NodeBT<string>*) const;
+        float solve(NodeBT<string>*) const;
 };
 
-float SintaxTree::evaluar() const
+float SintaxTree::solve() const
 {
-    return evaluar(_root);
+    return solve(_root);
 }
 
-float SintaxTree::evaluar(NodeBT<string>* p) const
+float SintaxTree::solve(NodeBT<string>* p) const
 {
     if(p)
     {
         string key = p->getKey();
     
-        if (key == "+") return evaluar(p->getLeft()) + evaluar(p->getRight());
-        else if (key == "-") return evaluar(p->getLeft()) - evaluar(p->getRight());
-        else if (key == "*") return evaluar(p->getLeft()) * evaluar(p->getRight());
-        else if (key == "/") return evaluar(p->getLeft()) / evaluar(p->getRight());
+        if (key == "+") return solve(p->getLeft()) + solve(p->getRight());
+        else if (key == "-") return solve(p->getLeft()) - solve(p->getRight());
+        else if (key == "*") return solve(p->getLeft()) * solve(p->getRight());
+        else if (key == "/") return solve(p->getLeft()) / solve(p->getRight());
         else return stof(key);
     }
     return 0;
@@ -46,6 +46,5 @@ float SintaxTree::evaluar(NodeBT<string>* p) const
 //~ stringstream ss("string");
 //~ float number;
 //~ ss >> number;
-
 
 #endif
