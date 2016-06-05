@@ -20,10 +20,15 @@ class NodeBT
         NodeBT<T>* getRight() const { return _right; }
         bool isLeaf() const { return _left == NULL && _right == NULL; }
         bool isFullNode() const { return _left != NULL && _right != NULL; }
-
+        int height() const { return max(height(_left), height(_right)); }
+        
         void setKey(const T);
         void setLeft(NodeBT<T>*);
         void setRight(NodeBT<T>*);
+        
+    private:
+        int height(NodeBT<T>*) const;
+        int max(int, int) const;
 };
 
 /**
@@ -51,6 +56,26 @@ template<class T>
 void NodeBT<T>::setRight(NodeBT<T>* r)
 {
     _right = r;
+}
+
+// =====================================================================
+
+template<class T>
+int NodeBT<T>::height(NodeBT<T>* p) const
+{
+    if (p != NULL)
+    {
+        if (p->isLeaf()) return 0;
+        
+        return 1 + max(height(p->getLeft()), height(p->getRight()));
+    }
+    return 0; 
+}
+
+template<class T>
+int NodeBT<T>::max(int a, int b) const
+{
+    return a > b ? a : b;
 }
 
 #endif
