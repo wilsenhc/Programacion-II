@@ -3,7 +3,7 @@
 #include "NodeBT.hpp"
 #include "../EstructurasLineales/Lista.hpp"
 
-enum Traverse { preorden, postorden, inorden };
+enum Traverse { preorden, postorden, inorden, levels };
 
 template<class T>
 class BinaryTree
@@ -13,31 +13,39 @@ class BinaryTree
         
     public:
         BinaryTree() : _root(NULL) {};
-        BinaryTree(T e) : _root(new NodeBT<T>(e)) { };
         BinaryTree(NodeBT<T> *p) : _root(p) {};
+        BinaryTree(T e) : _root(new NodeBT<T>(e)) { };
         BinaryTree(T, BinaryTree<T>, BinaryTree<T>);
         BinaryTree(const BinaryTree<T> &p) : _root(copyBinTree(p._root)) { } ;
         BinaryTree(Lista<T> , Lista<T> , Traverse);
-        ~BinaryTree();
+        ~BinaryTree() { _root = destroy(_root); }
         
         bool isNull() const { return _root == NULL; }
+        bool isFullTree() const;
         BinaryTree getLeft();
         BinaryTree getRight();
+        void mirror() { mirror(_root); }
         void print(Traverse) const;
-        void destroy();
+        int height() const { return _root->height() - 1; }
+        void destroy() { _root = destroy(_root); }
         
         void operator=(const BinaryTree<T> &);
+        bool operator==(const BinaryTree<T> &) const;
         
     private:
+        bool isFullTree(NodeBT<T>*) const;
+        void mirror(NodeBT<T>*);
         NodeBT<T>* pre_in(Lista<T>&, Lista<T>&);
         NodeBT<T>* post_in(Lista<T>&, Lista<T>&);
         NodeBT<T>* copyBinTree(NodeBT<T>*);
-        void destroy(NodeBT<T>*);
+        bool isEqual(NodeBT<T>* p, NodeBT<T>* q) const;
+        NodeBT<T>* destroy(NodeBT<T>*);
         
     protected:
         void list_pre(Lista<T>&, NodeBT<T>*) const;
         void list_post(Lista<T>&, NodeBT<T>*) const;
         void list_in(Lista<T>&, NodeBT<T>*) const;
+        void list_lvl(Lista<T>&) const;
 };
 
 template<class T>
@@ -48,17 +56,10 @@ BinaryTree<T>::BinaryTree(T e, BinaryTree<T> l, BinaryTree<T> r)
     _root->setRight(copyBinTree(r._root));
 }
 
-/**
- * Tree Destructor.
- * */
 template<class T>
-BinaryTree<T>::~BinaryTree()
+bool BinaryTree<T>::isFullTree() const
 {
-    if (!isNull())
-    {
-        destroy(_root);
-        _root = NULL;
-    }   
+    return isFullTree(_root);
 }
 
 template<class T>
@@ -70,7 +71,9 @@ BinaryTree<T>::BinaryTree(Lista<T> ordenA, Lista<T> ordenB, Traverse e)
     {
         ordenA.invertir();
         _root = post_in(ordenA, ordenB);
-    }   
+    }
+    else
+        _root = NULL;
 }
 
 template<class T>
@@ -94,19 +97,10 @@ void BinaryTree<T>::print(Traverse e) const
     if (e == preorden) list_pre(L, _root);
     else if (e == postorden) list_post(L, _root);
     else if (e == inorden) list_in(L, _root);
+    else if (e == levels) list_lvl(L);
     
     if (!L.esVacia())
         std::cout << L << std::endl;
-}
-
-template<class T>
-void BinaryTree<T>::destroy()
-{
-    if (!isNull())
-    {
-        destroy(_root);
-        _root = NULL;
-    }  
 }
 
 template<class T>
@@ -114,11 +108,47 @@ void BinaryTree<T>::operator=(const BinaryTree<T> & tree)
 {
     if (this != &tree)
     {
+        this->_root = destroy(this->_root);
         this->_root = copyBinTree(tree._root);
     }
 }
 
+template<class T>
+bool BinaryTree<T>::operator==(const BinaryTree<T> & tree) const
+{
+    if (this != &tree)
+    {
+        return isEqual(this->_root, tree._root);
+    }
+    return true;
+}
+
 // -------------------- Helper methods --------------------
+template<class T>
+bool BinaryTree<T>::isFullTree(NodeBT<T> *p) const
+{
+    if (p->isFullNode())
+        return isFullTree(p->getLeft()) && isFullTree(p->getRight());
+    else if (p->isLeaf())
+        return true;
+        
+    return false;
+}
+
+template<class T>
+void BinaryTree<T>::mirror(NodeBT<T>* p)
+{
+    if (p != NULL)
+    {
+        mirror(p->getLeft());
+        mirror(p->getRight());
+        
+        NodeBT<T>* t = p->getLeft();
+        p->setLeft(p->getRight());
+        p->setRight(t);
+    }
+}
+
 template<class T>
 NodeBT<T>* BinaryTree<T>::pre_in(Lista<T> &pre, Lista<T> &in)
 {
@@ -164,18 +194,33 @@ NodeBT<T>* BinaryTree<T>::copyBinTree(NodeBT<T> *p)
         return new NodeBT<T>(p->getKey(), copyBinTree(p->getLeft()), copyBinTree(p->getRight()));
     
     return NULL;
-    
 }
 
 template<class T>
-void BinaryTree<T>::destroy(NodeBT<T>* leaf)
+bool BinaryTree<T>::isEqual(NodeBT<T>* p, NodeBT<T>* q) const
+{
+    if (p == NULL && q == NULL) return true;
+    
+    if (p != NULL && q != NULL)
+    {
+        return p->getKey() == q->getKey()
+               && isEqual(p->getLeft(), q->getLeft())
+               && isEqual(p->getRight(), q->getRight());
+    }
+    
+    return false;
+}
+
+template<class T>
+NodeBT<T>* BinaryTree<T>::destroy(NodeBT<T>* leaf)
 {
     if (leaf != NULL)
     {
-        destroy(leaf->getLeft());
-        destroy(leaf->getRight());
+        leaf->setLeft(destroy(leaf->getLeft()));
+        leaf->setRight(destroy(leaf->getRight()));
         delete leaf;
     }
+    return NULL;
 }
 
 template<class T>
@@ -208,6 +253,30 @@ void BinaryTree<T>::list_in(Lista<T> &L, NodeBT<T> *n) const
         list_in(L, n->getLeft());
         L.pushUltimo(n->getKey());
         list_in(L, n->getRight());
+    }
+}
+
+template<class T>
+void BinaryTree<T>::list_lvl(Lista<T> &L) const
+{
+    if (!isNull())
+    {
+        Lista<NodeBT<T>*> lvl;
+        
+        lvl.pushUltimo(_root);
+        
+        while(!lvl.esVacia())
+        {
+            NodeBT<T>* n = lvl.popPrimero();
+            
+            if (n->getLeft())
+                lvl.pushUltimo(n->getLeft());
+            
+            if (n->getRight())
+                lvl.pushUltimo(n->getRight());
+                
+            L.pushUltimo(n->getKey());
+        }
     }
 }
 
