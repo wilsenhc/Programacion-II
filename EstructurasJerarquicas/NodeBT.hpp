@@ -20,7 +20,7 @@ class NodeBT
         NodeBT<T>* getRight() const { return _right; }
         bool isLeaf() const { return _left == NULL && _right == NULL; }
         bool isFullNode() const { return _left != NULL && _right != NULL; }
-        int height() const { return max(height(_left), height(_right)); }
+        int height() const;
         
         void setKey(const T);
         void setLeft(NodeBT<T>*);
@@ -30,6 +30,15 @@ class NodeBT
         int height(NodeBT<T>*) const;
         int max(int, int) const;
 };
+
+template<class T>
+int NodeBT<T>::height() const
+{
+    if (this != NULL)
+        return max(height(_left), height(_right));
+    
+    return 0;
+}
 
 /**
  * Key setter
@@ -65,7 +74,7 @@ int NodeBT<T>::height(NodeBT<T>* p) const
 {
     if (p != NULL)
     {
-        if (p->isLeaf()) return 0;
+        if (p->isLeaf()) return 1;
         
         return 1 + max(height(p->getLeft()), height(p->getRight()));
     }
