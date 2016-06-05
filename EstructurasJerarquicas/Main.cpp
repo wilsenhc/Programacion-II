@@ -1,30 +1,29 @@
 #include <iostream>
+#include <cstdlib>
 #include <string>
+#include "../EstructurasLineales/Lista.hpp"
 #include "SintaxTree.hpp"
 #include "BinaryTree.hpp"
+#include "Tree.hpp"
 #include "BST.hpp"
 
 using namespace std;
 
 int main(int argc, char **argv)
 {
-    BST<string> tree;
+    BST<int> tree, tree2;
     
-    tree.insert("S");
-    tree.insert("E");
-    tree.insert("X");
-    tree.insert("A");
-    tree.insert("R");
-    tree.insert("C");
-    tree.insert("H");
-    tree.insert("M");
-    tree.insert("W");
+    srand(time(NULL));
+    for (int i = 0; i < 10; i++)
+    {
+        tree.insert(rand() % 1000);
+        tree2.insert(rand() % 100);
+    }
     
-    cout << tree.min() << endl;
-    cout << tree.max() << endl;
-    
-    tree.del("S");
-    tree.del("E");
+    cout << (tree == tree2) << endl;
+    tree2 = tree;
+    cout << (tree == tree2) << endl;
+    tree.mirror();
     
     return 0;
 }
