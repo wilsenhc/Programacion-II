@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
-#include "../../SintaxTree.hpp"
-#include "../../BinaryTree.hpp"
-#include "../../BST.hpp"
+#include "../SintaxTree.hpp"
+#include "../BinaryTree.hpp"
+#include "../BST.hpp"
 
 using namespace std;
 

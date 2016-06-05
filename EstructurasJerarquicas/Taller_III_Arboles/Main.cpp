@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
-#include "../../../EstructurasLineales/Lista.hpp"
-#include "../../SintaxTree.hpp"
-#include "../../BinaryTree.hpp"
-#include "../../BST.hpp"
+#include "../../EstructurasLineales/Lista.hpp"
+#include "../SintaxTree.hpp"
+#include "../BinaryTree.hpp"
+#include "../BST.hpp"
 
 using namespace std;
 
