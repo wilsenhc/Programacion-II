@@ -81,18 +81,16 @@ bool BST<T>::isBST(NodeBT<T> *p) const
         bool max = true;
         bool min = true;
         
-        if (p->getRight())
+        if (p->getLeft())
             max = this->max(p->getLeft()) < p->getKey();
         
-        if (p->getLeft())
+        if (p->getRight())
             min = this->min(p->getRight()) > p->getKey();
             
         return max && min
                 && isBST(p->getLeft())
                 && isBST(p->getRight());
     }
-        
-        
     return true;
 }
 
