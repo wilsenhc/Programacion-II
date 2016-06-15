@@ -1,0 +1,66 @@
+/* WILSEN HERNANDEZ
+ * C.I: 24.993.998
+ * 15/06/2016
+ * CAO403 Programacion II
+ * Seccion 02
+ * Taller II - Estructuras Jerarquicas - Arboles
+ * Comprobar si un Arbol es Arbol Binario de Busqueda
+ * */
+ 
+#include <iostream>
+#include <string>
+#include "../EstructurasLineales/Lista.hpp"
+#include "../EstructurasJerarquicas/BST.hpp"
+
+using namespace std;
+
+int main(int argc, char **argv)
+{
+    Lista<int> porden, inorden;
+    Traverse orden;
+    string s;
+    bool enter = false;
+    BST<int> *tree;
+    int numeroIn, N;
+        
+    while (cin >> s)
+    {
+        if (enter)
+            cout << endl;
+        else
+            enter = true;
+        
+        if (s == "PREORDEN")
+            orden = preorden;
+        else if (s == "POSTORDEN")
+            orden = postorden;
+            
+        cin >> N;
+        for (int i = 0; i < N; i++)
+        {
+            cin >> numeroIn;
+            porden.pushUltimo(numeroIn);
+        }
+        cin >> s;
+        
+        cin >> N;
+        for (int i = 0; i < N; i++)
+        {
+            cin >> numeroIn;
+            inorden.pushUltimo(numeroIn);
+        }
+        
+        tree = new BST<int>(porden, inorden, orden);
+        
+        if (tree->isBST())
+            cout << "ES binario de busqueda.";
+        else
+            cout << "NO es binario de busqueda.";
+        
+        porden.vaciar();
+        inorden.vaciar();
+        delete tree;
+    }
+    
+    return 0;
+}

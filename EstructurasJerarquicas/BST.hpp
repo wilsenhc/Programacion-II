@@ -24,6 +24,7 @@ class BST : public BinaryTree<T>
         void delMax();
         
     private:
+        bool isBST(NodeBT<T>*) const;
         T floor(T, NodeBT<T>*) const;   // TODO
         T min(NodeBT<T>*) const;
         T max(NodeBT<T>*) const;
@@ -37,9 +38,7 @@ class BST : public BinaryTree<T>
 template<class T>
 bool BST<T>::isBST() const
 {
-    Lista<T> L;
-    BinaryTree<T>::list_in(L, this->_root);
-    return L.estaOrdenada();
+    return isBST(this->_root);
 }
 
 template<class T>
@@ -74,6 +73,28 @@ void BST<T>::delMax()
 }
 
 // =====================================================================
+template<class T>
+bool BST<T>::isBST(NodeBT<T> *p) const
+{
+    if (p != NULL)
+    {
+        bool max = true;
+        bool min = true;
+        
+        if (p->getRight())
+            max = this->max(p->getLeft()) < p->getKey();
+        
+        if (p->getLeft())
+            min = this->min(p->getRight()) > p->getKey();
+            
+        return max && min
+                && isBST(p->getLeft())
+                && isBST(p->getRight());
+    }
+        
+        
+    return true;
+}
 
 template<class T>
 T BST<T>::floor(T e, NodeBT<T> *p) const
