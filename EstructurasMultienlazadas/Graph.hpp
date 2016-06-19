@@ -1,10 +1,13 @@
 #ifndef _GRAPH_HPP_
 #define _GRAPH_HPP_
-#include <iostream>
+#include "NodeA.hpp"
+#include "NodeV.hpp"
 
-template<class T>
+template<class T, class C>
 class Graph
 {
+    private:
+        NodeV<T,C> graph;
     public:
         Graph();
         ~Graph();

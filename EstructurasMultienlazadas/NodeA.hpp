@@ -10,16 +10,16 @@ class NodeA
         NodoA<T,C> *next;
 
     public:
-        NodoA();
+        NodoA() : next(NULL);
         NodoA(T info, C costo) : key(info), cost(cost), next(NULL) { };
 
-        T getKey() const;
-        C getCost() const;
-        NodoA<T,C>* getNext() const;
+        T getKey() const { return key; };
+        C getCost() const { return cost; };
+        NodoA<T,C>* getNext() const { return next; };
 
-        void setKey(T);
-        void setCost(C);
-        void setNext(NodoA<T,C>*);
+        void setKey(T k) { key = k; };
+        void setCost(C c) { cost = c; };
+        void setNext(NodoA<T,C>* p) { next = p; };
 };
 
 #endif

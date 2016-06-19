@@ -11,7 +11,7 @@ class NodeV
         NodoA<T,C> *ady;
 
     public:
-        NodoV();
+        NodoV() : next(NULL), ady(NULL) { };
         
 };
 
