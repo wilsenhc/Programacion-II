@@ -9,10 +9,12 @@ class Graph
     private:
         NodeV<T,C> graph;
     public:
-        Graph();
+        Graph() : graph(NULL) { };
         ~Graph();
 
-        bool isNull();
+        bool isNull() const { return graph == NULL; };
+        void insertV(T);
+        void insertE(T, T, C);
 
 };
 
