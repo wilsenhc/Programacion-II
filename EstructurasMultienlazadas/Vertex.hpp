@@ -4,6 +4,9 @@
 #include "Arc.hpp"
 
 template<class T, class C>
+class Arc;
+
+template<class T, class C>
 class Vertex
 {
     private:
@@ -23,33 +26,31 @@ template<class T, class C>
 void Vertex<T,C>::insertArc(Vertex<T,C> *w, C cost)
 {
     Arc<T,C> *pivot = this->ady;
+    Arc<T,C> *pivotL = NULL;
     bool connected = false;
 
     while (pivot != NULL && !connected)
     {
         connected = (pivot->getKey() == w->getKey());
+        pivotL = pivot;
         pivot = pivot->getNext();
     }
 
     if (!connected)
     {
-        pivot = this->ady;
-        Arc<T,C> *v = new Arc<T,C>(cost, w, pivot);
-        this->ady = v;
+        if (!pivotL && !pivot)
+        {
+            pivot = this->ady;
+            Arc<T,C> *v;
+            v = new Arc<T,C>();
+            v->setCost(cost);
+            v->setVertex(w);
+            v->setNext(pivot);
+            this->ady = v;
+        }
+        else
+            pivotL->setNext(new Arc<T,C>(cost, w, NULL));
     }
 }
 
-int main(int argc, char **argv)
-{
-    Vertex<int, int> *v, *w, *z;
-    v = new Vertex<int,int>(1);
-    w = new Vertex<int,int>(2);
-    z = new Vertex<int,int>(3);
-    
-    v->insertArc(w, 0);
-    
-    return 0;
-}
-
 #endif
-
