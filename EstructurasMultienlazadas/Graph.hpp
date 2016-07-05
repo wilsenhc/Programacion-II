@@ -12,6 +12,8 @@ class Graph
     public:
         Graph() : graph(NULL) { };
         Graph(const Graph &g);
+
+        Vertex<T,C>* findVertex(T) const;
 };
 
 template<class T, class C>
@@ -42,6 +44,22 @@ Graph<T,C>::Graph(const Graph &g)
             }
         }
     }
+}
+
+template<class T, class C>
+Vertex<T,C>* Graph<T,C>::findVertex(T e) const
+{
+    Vertex<T,C>* pivot = graph;
+
+    while (pivot)
+    {
+        if (pivot->getKey() == e)
+            return pivot;
+        
+        pivot = pivot->getNext();
+    }
+
+    return NULL;
 }
 
 #endif
