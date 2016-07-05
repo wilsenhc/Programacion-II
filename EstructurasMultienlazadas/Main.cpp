@@ -1,30 +1,27 @@
 #include <iostream>
-#include "Vertex.hpp"
+#include <cstdlib>
+#include "Graph.hpp"
 
 using namespace std;
 
+void a(Graph<int,int> valor, Graph<int,int> referencia)
+{
+    int a = 10;
+    a *= 10;
+}
+
 int main(int argc, char **argv)
 {
-    Vertex<int, int> *v, *w, *z, *j, *k;
-    v = new Vertex<int,int>(1);
-    w = new Vertex<int,int>(2);
-    z = new Vertex<int,int>(3);
-    j = new Vertex<int,int>(4);
-    k = new Vertex<int,int>(5);
+    Graph<int,int> G;
     
-    v->insertArc(w, 0);
-    v->insertArc(z, 1);
-    v->insertArc(j, 2);
-    v->insertArc(k, 3);
+    srand(time(NULL));
+    for (int i = 0; i < 10; i++)
+        G.insertVertex(abs(rand() % 10));
+        
+    for (int i = 0; i < 40; i++)
+        G.insertArc(abs(rand() % 10), abs(rand() % 10), 0);
     
-    w->insertArc(v, 4);
-    w->insertArc(j, 5);
-    
-    z->insertArc(w, 6);
-    z->insertArc(k, 7);
-    
-    k->insertArc(v, 8);
-    k->insertArc(w, 9);
+    a(G, G);
     
     return 0;
 }
