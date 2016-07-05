@@ -15,6 +15,7 @@ class Graph
 
         Vertex<T,C>* findVertex(T) const;
         void insertVertex(T);
+        void insertArc(T, T, C);
 };
 
 template<class T, class C>
@@ -96,6 +97,19 @@ void Graph<T,C>::insertVertex(T v)
             before->setNext(new Vertex<T,C>(v));
             before->getNext()->setNext(pivot);
         }
+    }
+}
+
+template<class T, class C>
+void Graph<T,C>::insertArc(T v, T w, C c)
+{
+    if (v != w)
+    {
+        Vertex<T,C> *V = findVertex(v);
+        Vertex<T,C> *W = findVertex(w);
+
+        if (V != NULL && W != NULL)
+            V->insertArc(W, c);
     }
 }
 
