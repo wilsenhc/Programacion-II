@@ -14,6 +14,7 @@ class Graph
         Graph(const Graph &g);
 
         Vertex<T,C>* findVertex(T) const;
+        void insertVertex(T);
 };
 
 template<class T, class C>
@@ -60,6 +61,42 @@ Vertex<T,C>* Graph<T,C>::findVertex(T e) const
     }
 
     return NULL;
+}
+
+template<class T, class C>
+void Graph<T,C>::insertVertex(T v)
+{
+    if (graph == NULL)
+        graph = new Vertex<T,C>(v);
+    else if (graph->getKey() > v)
+    {
+        Vertex<T,C> *n = new Vertex<T,C>(v);
+        n->setNext(graph);
+        graph = n;
+    }
+    else
+    {
+        Vertex<T,C> *pivot = graph;
+        Vertex<T,C> *before;
+
+        while (pivot && pivot->getKey() <= v)
+        {
+            if (pivot)
+            {
+                if (pivot->getKey() == v)
+                    before = NULL;
+                else
+                    before = pivot;
+            }
+            pivot = pivot->getNext();
+        }
+
+        if (before)
+        {
+            before->setNext(new Vertex<T,C>(v));
+            before->getNext()->setNext(pivot);
+        }
+    }
 }
 
 #endif
