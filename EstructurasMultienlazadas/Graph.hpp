@@ -14,6 +14,7 @@ class Graph
         Graph(const Graph &g);
         ~Graph();
 
+        int order() const;
         Vertex<T,C>* findVertex(T) const;
         void insertVertex(T);
         void insertArc(T, T, C);
@@ -60,6 +61,19 @@ Graph<T,C>::~Graph()
         graph = graph->getNext();
         delete p;
     }
+}
+
+template<class T, class C>
+int Graph<T,C>::order() const
+{
+    Vertex<T,C> *pivot = graph;
+    int cont = 0;
+    while (graph)
+    {
+        pivot = pivot->getNext();
+        cont++;
+    }
+    return cont;
 }
 
 template<class T, class C>
