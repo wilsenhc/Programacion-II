@@ -17,15 +17,18 @@ class Vertex
         T key;
         Arc<T,C>* ady;
         Vertex* next;
+        bool visited;
 
     public:
-        Vertex() : ady(NULL), next(NULL) { };
-        Vertex(T info) : key(info), ady(NULL), next(NULL) { };
+        Vertex() : ady(NULL), next(NULL), visited(false) { };
+        Vertex(T info) : key(info), ady(NULL), next(NULL), visited(false) { };
         ~Vertex();
 
         T getKey() const { return key; };
+        bool getVisited() const { return visited; };
         Vertex* getNext() const { return next; };
 
+        void setVisited(bool v) { visited = v; };
         void setKey(T k) { key = k; };
         void setNext(Vertex* p) { next = p; };
 
@@ -42,7 +45,6 @@ Vertex<T,C>::~Vertex()
         p = ady;
         ady = p->getNext();
         delete p;
-
     }
 }
 
