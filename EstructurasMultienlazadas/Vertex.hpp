@@ -34,6 +34,19 @@ class Vertex
 };
 
 template<class T, class C>
+Vertex<T,C>::~Vertex()
+{
+    Arc<T,C> *p;
+    while (ady)
+    {   
+        p = ady;
+        ayd = p->getNext();
+        delete p;
+
+    }
+}
+
+template<class T, class C>
 void Vertex<T,C>::insertArc(Vertex *w, C cost)
 {
     if (this != w)
