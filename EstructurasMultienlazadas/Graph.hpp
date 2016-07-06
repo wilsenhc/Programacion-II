@@ -17,6 +17,7 @@ class Graph
         Vertex<T,C>* findVertex(T) const;
         void insertVertex(T);
         void insertArc(T, T, C);
+        void deleteVertex(T);
 };
 
 template<class T, class C>
@@ -123,6 +124,31 @@ void Graph<T,C>::insertArc(T v, T w, C c)
 
         if (V != NULL && W != NULL)
             V->insertArc(W, c);
+    }
+}
+
+template<class T, class C>
+void Graph<T,C>::deleteVertex(T v)
+{
+    Vertex<T,C> *V = findVertex(v);
+    if (V)
+    {
+        Vertex<T,C> *pivot;
+        for (pivot = graph; pivot; pivot = pivot->getNext())
+            pivot->deleteArc(V);
+        
+        if (V != graph)
+        {
+            pivot = graph;
+            while (pivot->getNext() != V)
+                pivot = pivot->getNext();
+            
+            pivot->setNext(V->getNext());
+        }
+        else
+            graph = graph->getNext();
+        
+        delete V;
     }
 }
 
