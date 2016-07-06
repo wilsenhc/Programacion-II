@@ -30,7 +30,7 @@ class Vertex
         void setNext(Vertex* p) { next = p; };
 
         void insertArc(Vertex*, C);
-        
+        void deleteArc(Vertex*);
 };
 
 template<class T, class C>
@@ -40,7 +40,7 @@ Vertex<T,C>::~Vertex()
     while (ady)
     {   
         p = ady;
-        ayd = p->getNext();
+        ady = p->getNext();
         delete p;
 
     }
@@ -80,4 +80,26 @@ void Vertex<T,C>::insertArc(Vertex *w, C cost)
     }
 }
 
+template<class T, class C>
+void Vertex<T,C>::deleteArc(Vertex* s)
+{
+    Arc<T,C> *pivot = ady;
+    Arc<T,C> *aPivot = NULL;
+
+    while (pivot)
+    {
+        if (pivot->getVertex() == s)
+        {
+            if (aPivot)
+                aPivot->setNext(pivot->getNext());
+            else
+                ady = pivot->getNext();
+                
+            delete pivot;
+
+        }
+        aPivot = pivot;
+        pivot = pivot->getNext();
+    }    
+}
 #endif
