@@ -1,7 +1,10 @@
 #ifndef _VERTEX_HPP_
 #define _VERTEX_HPP_
 #include <iostream>
+#include <vector>
 #include "Arc.hpp"
+
+using std::vector;
 
 template<class T, class C>
 class Graph;
@@ -27,6 +30,7 @@ class Vertex
         T getKey() const { return key; };
         bool getVisited() const { return visited; };
         Vertex* getNext() const { return next; };
+        vector<T> successors() const;
 
         void setVisited(bool v) { visited = v; };
         void setKey(T k) { key = k; };
@@ -46,6 +50,23 @@ Vertex<T,C>::~Vertex()
         ady = p->getNext();
         delete p;
     }
+}
+
+template<class T, class C>
+vector<T> Vertex<T,C>::successors() const
+{   
+    vector<T> out;
+    if(this)
+    {
+        Arc<T,C> *pivot = ady;
+        while (pivot)
+        {
+            out.push_back(pivot->getKey());
+            pivot = pivot->getNext();
+        }
+    }
+    return out;
+
 }
 
 template<class T, class C>
