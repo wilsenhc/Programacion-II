@@ -23,5 +23,9 @@ int main(int argc, char **argv)
     
     a(G, G);
     
+    int a;
+    cin >> a;
+    G.deleteVertex(a);
+    
     return 0;
 }
