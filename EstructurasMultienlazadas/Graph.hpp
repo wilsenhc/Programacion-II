@@ -12,6 +12,7 @@ class Graph
     public:
         Graph() : graph(NULL) { };
         Graph(const Graph &g);
+        ~Graph();
 
         Vertex<T,C>* findVertex(T) const;
         void insertVertex(T);
@@ -45,6 +46,18 @@ Graph<T,C>::Graph(const Graph &g)
                 a = a->getNext();
             }
         }
+    }
+}
+
+template<class T, class C>
+Graph<T,C>::~Graph()
+{
+    Vertex<T,C> *p;
+    while (graph)
+    {
+        p = graph;
+        graph = graph->getNext();
+        delete p;
     }
 }
 
