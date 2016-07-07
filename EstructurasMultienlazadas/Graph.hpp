@@ -115,10 +115,11 @@ int Graph<T,C>::order() const
 {
     Vertex<T,C> *pivot = graph;
     int cont = 0;
-    while (graph)
+    while (pivot)
     {
-        pivot = pivot->getNext();
         cont++;
+        pivot = pivot->getNext();
+        
     }
     return cont;
 }
