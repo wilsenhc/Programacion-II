@@ -22,6 +22,7 @@ class Graph
 
         int order() const;
         bool adjacent(T, T) const;
+        bool findArc(T, T) const;
         vector<T> successors(T) const;
         vector<T> predecessors(T) const;
         vector<T> sourceVertices() const;
@@ -105,6 +106,26 @@ bool Graph<T,C>::adjacent(T v, T w) const
             pivot = pivot->getNext();
         }
     }
+    return false;
+}
+
+template<class T, class C>
+bool findArc(T v, T w) const
+{
+    Vertex<T,C> *V = findVertex(v);
+    Vertex<T,C> *W = findVertex(w);
+
+    if (V && W)
+    {
+        Arc<T,C> *pivot = V->ady;
+        while (pivot)
+        {
+            if (pivot->getVertex() == W)
+                return true;
+            pivot = pivot->getNext();
+        }
+    }
+
     return false;
 }
 
