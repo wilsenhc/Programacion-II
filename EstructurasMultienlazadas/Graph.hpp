@@ -2,10 +2,12 @@
 #define _GRAPH_HPP_
 #include <iostream>
 #include <vector>
+#include <stack>
 #include "Arc.hpp"
 #include "Vertex.hpp"
 
 using std::vector;
+using std::stack;
 using std::cout;
 using std::endl;
 
@@ -23,6 +25,7 @@ class Graph
         int order() const;
         bool adjacent(T, T) const;
         bool findArc(T, T) const;
+        C arcCost(T, T) const;
         vector<T> successors(T) const;
         vector<T> predecessors(T) const;
         vector<T> sourceVertices() const;
@@ -36,7 +39,8 @@ class Graph
         friend std::ostream& operator<<(std::ostream&, const Graph<E,F>&);
         
     private:
-        Vertex<T,C>* findVertex(T) const;
+        Arc<T,C>* getArc(T, T) const;
+        Vertex<T,C>* getVertexs(T) const;
 };
 
 template<class T, class C>
@@ -85,8 +89,8 @@ template<class T, class C>
 bool Graph<T,C>::adjacent(T v, T w) const
 {
     Vertex<T,C> *V, *W;
-    V = findVertex(v);
-    W = findVertex(w);
+    V = getVertexs(v);
+    W = getVertexs(w);
 
     if (V && W)
     {
@@ -110,10 +114,10 @@ bool Graph<T,C>::adjacent(T v, T w) const
 }
 
 template<class T, class C>
-bool findArc(T v, T w) const
+bool Graph<T,C>::findArc(T v, T w) const
 {
-    Vertex<T,C> *V = findVertex(v);
-    Vertex<T,C> *W = findVertex(w);
+    Vertex<T,C> *V = getVertexs(v);
+    Vertex<T,C> *W = getVertexs(w);
 
     if (V && W)
     {
@@ -130,9 +134,20 @@ bool findArc(T v, T w) const
 }
 
 template<class T, class C>
+C Graph<T,C>::arcCost(T v, T w) const
+{
+    C a;
+    Arc<T,C> out = getArc(v, w);
+    if (out)
+        return out->getCost();
+    
+    return a;
+}
+
+template<class T, class C>
 vector<T> Graph<T,C>::successors(T e) const
 {
-    Vertex<T,C> *p = findVertex(e);
+    Vertex<T,C> *p = getVertexs(e);
     if (p)
         return p->successors;
 }
@@ -142,7 +157,7 @@ vector<T> Graph<T,C>::predecessors(T e) const
 {
     Vertex<T,C> *p, *pivot;
     vector<T> out;
-    p = findVertex(e);
+    p = getVertexs(e);
     if (p)
     {
         pivot = graph;
@@ -208,7 +223,7 @@ int Graph<T,C>::order() const
 }
 
 template<class T, class C>
-Vertex<T,C>* Graph<T,C>::findVertex(T e) const
+Vertex<T,C>* Graph<T,C>::getVertexs(T e) const
 {
     Vertex<T,C>* pivot = graph;
 
@@ -264,8 +279,8 @@ void Graph<T,C>::insertArc(T v, T w, C c)
 {
     if (v != w)
     {
-        Vertex<T,C> *V = findVertex(v);
-        Vertex<T,C> *W = findVertex(w);
+        Vertex<T,C> *V = getVertexs(v);
+        Vertex<T,C> *W = getVertexs(w);
 
         if (V != NULL && W != NULL)
             V->insertArc(W, c);
@@ -275,7 +290,7 @@ void Graph<T,C>::insertArc(T v, T w, C c)
 template<class T, class C>
 void Graph<T,C>::deleteVertex(T v)
 {
-    Vertex<T,C> *V = findVertex(v);
+    Vertex<T,C> *V = getVertexs(v);
     if (V)
     {
         Vertex<T,C> *pivot;
