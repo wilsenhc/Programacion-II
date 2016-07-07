@@ -17,14 +17,16 @@ class Vertex
 {
     private:
         friend class Graph<T,C>;
+        friend class Arc<T,C>;
         T key;
         Arc<T,C>* ady;
         Vertex* next;
         bool visited;
+        int inDegree, outDegree;
 
     public:
-        Vertex() : ady(NULL), next(NULL), visited(false) { };
-        Vertex(T info) : key(info), ady(NULL), next(NULL), visited(false) { };
+        Vertex() : ady(NULL), next(NULL), visited(false), inDegree(0), outDegree(0) { };
+        Vertex(T info) : key(info), ady(NULL), next(NULL), visited(false), inDegree(0), outDegree(0) { };
         ~Vertex();
 
         T getKey() const { return key; };
@@ -49,6 +51,7 @@ Vertex<T,C>::~Vertex()
     {   
         p = ady;
         ady = p->getNext();
+        p->getVertex()->inDegree--;
         delete p;
     }
 }
@@ -87,11 +90,11 @@ void Vertex<T,C>::insertArc(Vertex *w, C cost)
         }
 
         if (!connected)
-        {
+        {   
+            Arc<T,C> *v;
             if (!pivotL && !pivot)
             {
                 pivot = this->ady;
-                Arc<T,C> *v;
                 v = new Arc<T,C>();
                 v->setCost(cost);
                 v->setVertex(w);
@@ -99,7 +102,14 @@ void Vertex<T,C>::insertArc(Vertex *w, C cost)
                 this->ady = v;
             }
             else
-                pivotL->setNext(new Arc<T,C>(cost, w, NULL));
+            {
+                v = new Arc<T,C>(cost, w, NULL);
+                pivotL->setNext(v);
+            }
+                
+            v->getVertex()->inDegree++;
+            this->outDegree++;
+
         }           
     }
 }
@@ -118,7 +128,10 @@ void Vertex<T,C>::deleteArc(Vertex* s)
                 aPivot->setNext(pivot->getNext());
             else
                 ady = pivot->getNext();
-                
+
+            pivot->getVertex()->inDegree--;
+            this->outDegree--;
+                            
             delete pivot;
 
         }
@@ -126,4 +139,5 @@ void Vertex<T,C>::deleteArc(Vertex* s)
         pivot = pivot->getNext();
     }    
 }
+
 #endif

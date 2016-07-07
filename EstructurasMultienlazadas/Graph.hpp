@@ -23,6 +23,7 @@ class Graph
         int order() const;
         vector<T> successors(T) const;
         vector<T> predecessors(T) const;
+        vector<T> sourceVertices() const;
         Vertex<T,C>* findVertex(T) const;
         void insertVertex(T);
         void insertArc(T, T, C);
@@ -106,6 +107,20 @@ vector<T> Graph<T,C>::predecessors(T e) const
             }
             pivot = pivot->getNext();
         }
+    }
+    return out;
+}
+
+template<class T, class C>
+vector<T> Graph<T,C>::sourceVertices() const
+{
+    Vertex<T,C> *pivot = graph;
+    vector<T> out;
+    while (pivot)
+    {
+        if (pivot->inDegree == 0)
+            out.push_back(pivot->getKey());
+        pivot = pivot->getNext();
     }
     return out;
 }
