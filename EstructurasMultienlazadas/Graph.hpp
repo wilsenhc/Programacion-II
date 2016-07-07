@@ -33,6 +33,7 @@ class Graph
         vector<T> sourceVertices() const;
         vector<T> sinkVertices() const;
         vector<T> breadthFirstSearch() const;
+        vector<T> breadthFirstSearch(T) const;
         
         void insertVertex(T);
         void insertArc(T, T, C);
@@ -245,7 +246,6 @@ vector<T> Graph<T,C>::breadthFirstSearch() const
         }
         pivot = pivot->getNext();
     }
-    //
     pivot = graph;
     while (pivot)
     {
@@ -253,6 +253,46 @@ vector<T> Graph<T,C>::breadthFirstSearch() const
         pivot = pivot->getNext();
     }
 
+    return out;
+}
+
+template<class T, class C>
+vector<T> Graph<T,C>::breadthFirstSearch(T v) const
+{
+    Vertex<T,C> *w = getVertex(v);
+    vector<T> out;
+    queue<Vertex<T,C>*> q;
+    
+    if (w)
+    {
+        q.push(w);
+        w->visited = true;
+        out.push_back(w->getKey());
+
+        while (!q.empty())
+        {
+            Vertex<T,C> *p = q.front();
+            q.pop();
+            Arc<T,C> *pivot = p->ady;
+            while (pivot)
+            {
+                Vertex<T,C> *u = pivot->getVertex();
+                if (!u->visited)
+                {
+                    q.push(w);
+                    u->visited = true;
+                    out.push_back(u->getKey());
+                }
+                pivot = pivot->getNext();
+            }
+        }
+    }
+    w = graph;
+    while (w)
+    {
+        w->visited = false;
+        w = w->getNext();
+    }
     return out;
 }
 
