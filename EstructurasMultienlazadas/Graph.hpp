@@ -21,16 +21,21 @@ class Graph
         ~Graph();
 
         int order() const;
+        bool adjacent(T, T) const;
         vector<T> successors(T) const;
         vector<T> predecessors(T) const;
         vector<T> sourceVertices() const;
-        Vertex<T,C>* findVertex(T) const;
+        vector<T> sinkVertices() const;
+        
         void insertVertex(T);
         void insertArc(T, T, C);
         void deleteVertex(T);
 
         template<class E, class F>
         friend std::ostream& operator<<(std::ostream&, const Graph<E,F>&);
+        
+    private:
+        Vertex<T,C>* findVertex(T) const;
 };
 
 template<class T, class C>
@@ -73,6 +78,34 @@ Graph<T,C>::~Graph()
         graph = graph->getNext();
         delete p;
     }
+}
+
+template<class T, class C>
+bool Graph<T,C>::adjacent(T v, T w) const
+{
+    Vertex<T,C> *V, *W;
+    V = findVertex(v);
+    W = findVertex(w);
+
+    if (V && W)
+    {
+        Arc<T,C> *pivot = V->ady;
+        while (pivot)
+        {
+            if (pivot->getVertex() == W)
+                return true;
+            pivot = pivot->getNext();
+        }
+
+        pivot = W->ady;
+        while (pivot)
+        {
+            if (pivot->getVertex() == V)
+                return true;
+            pivot = pivot->getNext();
+        }
+    }
+    return false;
 }
 
 template<class T, class C>
@@ -119,6 +152,20 @@ vector<T> Graph<T,C>::sourceVertices() const
     while (pivot)
     {
         if (pivot->inDegree == 0)
+            out.push_back(pivot->getKey());
+        pivot = pivot->getNext();
+    }
+    return out;
+}
+
+template<class T, class C>
+vector<T> Graph<T,C>::sinkVertices() const
+{
+    Vertex<T,C> *pivot = graph;
+    vector<T> out;
+    while (pivot)
+    {
+        if (pivot->outDegree == 0)
             out.push_back(pivot->getKey());
         pivot = pivot->getNext();
     }
