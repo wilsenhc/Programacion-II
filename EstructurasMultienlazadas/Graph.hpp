@@ -2,11 +2,13 @@
 #define _GRAPH_HPP_
 #include <iostream>
 #include <vector>
+#include <queue>
 #include <stack>
 #include "Arc.hpp"
 #include "Vertex.hpp"
 
 using std::vector;
+using std::queue;
 using std::stack;
 using std::cout;
 using std::endl;
@@ -30,6 +32,7 @@ class Graph
         vector<T> predecessors(T) const;
         vector<T> sourceVertices() const;
         vector<T> sinkVertices() const;
+        vector<T> breadthFirstSearch() const;
         
         void insertVertex(T);
         void insertArc(T, T, C);
@@ -40,7 +43,7 @@ class Graph
         
     private:
         Arc<T,C>* getArc(T, T) const;
-        Vertex<T,C>* getVertexs(T) const;
+        Vertex<T,C>* getVertex(T) const;
 };
 
 template<class T, class C>
@@ -89,8 +92,8 @@ template<class T, class C>
 bool Graph<T,C>::adjacent(T v, T w) const
 {
     Vertex<T,C> *V, *W;
-    V = getVertexs(v);
-    W = getVertexs(w);
+    V = getVertex(v);
+    W = getVertex(w);
 
     if (V && W)
     {
@@ -116,8 +119,8 @@ bool Graph<T,C>::adjacent(T v, T w) const
 template<class T, class C>
 bool Graph<T,C>::findArc(T v, T w) const
 {
-    Vertex<T,C> *V = getVertexs(v);
-    Vertex<T,C> *W = getVertexs(w);
+    Vertex<T,C> *V = getVertex(v);
+    Vertex<T,C> *W = getVertex(w);
 
     if (V && W)
     {
@@ -147,7 +150,7 @@ C Graph<T,C>::arcCost(T v, T w) const
 template<class T, class C>
 vector<T> Graph<T,C>::successors(T e) const
 {
-    Vertex<T,C> *p = getVertexs(e);
+    Vertex<T,C> *p = getVertex(e);
     if (p)
         return p->successors;
 }
@@ -157,7 +160,7 @@ vector<T> Graph<T,C>::predecessors(T e) const
 {
     Vertex<T,C> *p, *pivot;
     vector<T> out;
-    p = getVertexs(e);
+    p = getVertex(e);
     if (p)
     {
         pivot = graph;
@@ -209,6 +212,51 @@ vector<T> Graph<T,C>::sinkVertices() const
 }
 
 template<class T, class C>
+vector<T> Graph<T,C>::breadthFirstSearch() const
+{
+    Vertex<T,C> *pivot = graph;
+    vector<T> out;
+    queue<Vertex<T,C>*> q;
+    while (pivot)
+    {
+        if (!pivot->visited)
+        {
+            q.push(pivot);
+            pivot->visited = true;
+            out.push_back(pivot->getKey());
+
+            while (!q.empty())
+            {
+                Vertex<T,C> *u = q.front();
+                q.pop();
+                Arc<T,C> *a = u->ady;
+                while (a)
+                {
+                    Vertex<T,C> *w = a->getVertex();
+                    if (!w->visited)
+                    {
+                        q.push(w);
+                        w->visited = true;
+                        out.push_back(w->getKey());
+                    }
+                    a = a->getNext();
+                }
+            }
+        }
+        pivot = pivot->getNext();
+    }
+    //
+    pivot = graph;
+    while (pivot)
+    {
+        pivot->visited = false;
+        pivot = pivot->getNext();
+    }
+
+    return out;
+}
+
+template<class T, class C>
 int Graph<T,C>::order() const
 {
     Vertex<T,C> *pivot = graph;
@@ -223,7 +271,7 @@ int Graph<T,C>::order() const
 }
 
 template<class T, class C>
-Vertex<T,C>* Graph<T,C>::getVertexs(T e) const
+Vertex<T,C>* Graph<T,C>::getVertex(T e) const
 {
     Vertex<T,C>* pivot = graph;
 
@@ -279,8 +327,8 @@ void Graph<T,C>::insertArc(T v, T w, C c)
 {
     if (v != w)
     {
-        Vertex<T,C> *V = getVertexs(v);
-        Vertex<T,C> *W = getVertexs(w);
+        Vertex<T,C> *V = getVertex(v);
+        Vertex<T,C> *W = getVertex(w);
 
         if (V != NULL && W != NULL)
             V->insertArc(W, c);
@@ -290,7 +338,7 @@ void Graph<T,C>::insertArc(T v, T w, C c)
 template<class T, class C>
 void Graph<T,C>::deleteVertex(T v)
 {
-    Vertex<T,C> *V = getVertexs(v);
+    Vertex<T,C> *V = getVertex(v);
     if (V)
     {
         Vertex<T,C> *pivot;
