@@ -1,5 +1,7 @@
 #ifndef _GRAPH_HPP_
 #define _GRAPH_HPP_
+#include <iostream>
+#include <vector>
 #include "Arc.hpp"
 #include "Vertex.hpp"
 
@@ -15,6 +17,7 @@ class Graph
         ~Graph();
 
         int order() const;
+        vector<T> successors (T) const;
         Vertex<T,C>* findVertex(T) const;
         void insertVertex(T);
         void insertArc(T, T, C);
@@ -61,6 +64,14 @@ Graph<T,C>::~Graph()
         graph = graph->getNext();
         delete p;
     }
+}
+
+template<class T, class C>
+vector<T> Graph<T,C>::successors (T e) const
+{
+    Vertex<T,C> *p = findVertex(T);
+    if (p)
+        return p->successors;
 }
 
 template<class T, class C>
