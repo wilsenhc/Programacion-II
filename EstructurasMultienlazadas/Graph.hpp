@@ -5,6 +5,10 @@
 #include "Arc.hpp"
 #include "Vertex.hpp"
 
+using std::vector;
+using std::cout;
+using std::endl;
+
 template<class T, class C>
 class Graph
 {
@@ -23,6 +27,9 @@ class Graph
         void insertVertex(T);
         void insertArc(T, T, C);
         void deleteVertex(T);
+
+        template<class E, class F>
+        friend std::ostream& operator<<(std::ostream&, const Graph<E,F>&);
 };
 
 template<class T, class C>
@@ -204,6 +211,25 @@ void Graph<T,C>::deleteVertex(T v)
         
         delete V;
     }
+}
+
+template<class E, class F>
+std::ostream& operator<<(std::ostream& out, const Graph<E,F> &g)
+{
+    Vertex<E,F> *pivot = g.graph;
+    while (pivot)
+    {
+        out << pivot->getKey();
+        Arc<E,F> *a = pivot->getAdy();
+        while (a)
+        {
+            out << " " << a->getKey();
+            a = a->getNext();
+        }
+        out << endl;
+        pivot = pivot->getNext();
+    }
+    return out;
 }
 
 #endif

@@ -30,6 +30,7 @@ class Vertex
         T getKey() const { return key; };
         bool getVisited() const { return visited; };
         Vertex* getNext() const { return next; };
+        Arc<T,C>* getAdy() const { return ady; };
         vector<T> successors() const;
 
         void setVisited(bool v) { visited = v; };
