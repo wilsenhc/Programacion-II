@@ -34,6 +34,8 @@ class Graph
         vector<T> sinkVertices() const;
         vector<T> breadthFirstSearch() const;
         vector<T> breadthFirstSearch(T) const;
+        vector<T> depthFirstSearch() const;
+        vector<T> depthFirstSearch(T) const;
         
         void insertVertex(T);
         void insertArc(T, T, C);
@@ -45,6 +47,7 @@ class Graph
     private:
         Arc<T,C>* getArc(T, T) const;
         Vertex<T,C>* getVertex(T) const;
+        void depthFirstSearch(Vertex<T,C>*, vector<T>&) const;
 };
 
 template<class T, class C>
@@ -294,6 +297,51 @@ vector<T> Graph<T,C>::breadthFirstSearch(T v) const
         w = w->getNext();
     }
     return out;
+}
+
+template<class T, class C>
+vector<T> Graph<T,C>::depthFirstSearch() const
+{
+    Vertex<T,C> *pivot = graph;
+    vector<T> out;
+    while (pivot)
+    {
+        depthFirstSearch(pivot, out);
+        pivot = pivot->getNext();
+    }
+    pivot = graph;
+    while (pivot)
+    {
+        pivot->visited = false;
+        pivot = pivot->getNext();
+    }
+    return out;
+}
+
+template<class T, class C>
+vector<T> Graph<T,C>::depthFirstSearch(T v) const
+{
+    Vertex<T,C> *p = getVertex(v);
+    vector<T> out;
+    if (p)
+        depthFirstSearch(p, out);
+    return out;
+}
+
+template<class T, class C>
+void Graph<T,C>::depthFirstSearch(Vertex<T,C> *v, vector<T> &out) const
+{
+    if (!v->visited)
+    {
+        Arc<T,C> *pivot = v->ady;
+        v->visited = true;
+        while (pivot)
+        {
+            depthFirstSearch(pivot->getVertex(), out);
+            pivot = pivot->getNext();
+        }
+        out.push_back(v->getKey());
+    }
 }
 
 template<class T, class C>
