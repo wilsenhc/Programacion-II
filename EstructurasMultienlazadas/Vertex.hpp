@@ -6,13 +6,13 @@
 
 using std::vector;
 
-template<class T, class C>
+template<class T, typename C>
 class Graph;
 
-template<class T, class C>
+template<class T, typename C>
 class Arc;
 
-template<class T, class C>
+template<class T, typename C>
 class Vertex
 {
     private:
@@ -43,7 +43,7 @@ class Vertex
         void deleteArc(Vertex*);
 };
 
-template<class T, class C>
+template<class T, typename C>
 Vertex<T,C>::~Vertex()
 {
     Arc<T,C> *p;
@@ -56,7 +56,7 @@ Vertex<T,C>::~Vertex()
     }
 }
 
-template<class T, class C>
+template<class T, typename C>
 vector<T> Vertex<T,C>::successors() const
 {   
     vector<T> out;
@@ -73,7 +73,7 @@ vector<T> Vertex<T,C>::successors() const
 
 }
 
-template<class T, class C>
+template<class T, typename C>
 void Vertex<T,C>::insertArc(Vertex *w, C cost)
 {
     if (this != w)
@@ -114,7 +114,7 @@ void Vertex<T,C>::insertArc(Vertex *w, C cost)
     }
 }
 
-template<class T, class C>
+template<class T, typename C>
 void Vertex<T,C>::deleteArc(Vertex* s)
 {
     Arc<T,C> *pivot = ady;

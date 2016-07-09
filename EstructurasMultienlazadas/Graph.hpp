@@ -13,7 +13,7 @@ using std::stack;
 using std::cout;
 using std::endl;
 
-template<class T, class C>
+template<class T, typename C>
 class Graph
 {
     private:
@@ -25,6 +25,7 @@ class Graph
         ~Graph();
 
         int order() const;
+        bool hasCycle() const;
         bool adjacent(T, T) const;
         bool findArc(T, T) const;
         C arcCost(T, T) const;
@@ -41,7 +42,7 @@ class Graph
         void insertArc(T, T, C);
         void deleteVertex(T);
 
-        template<class E, class F>
+        template<class E, typename F>
         friend std::ostream& operator<<(std::ostream&, const Graph<E,F>&);
         
     private:
@@ -50,7 +51,7 @@ class Graph
         void depthFirstSearch(Vertex<T,C>*, vector<T>&) const;
 };
 
-template<class T, class C>
+template<class T, typename C>
 Graph<T,C>::Graph(const Graph &g)
 {
     if (g.graph != NULL)
@@ -80,7 +81,7 @@ Graph<T,C>::Graph(const Graph &g)
     }
 }
 
-template<class T, class C>
+template<class T, typename C>
 Graph<T,C>::~Graph()
 {
     Vertex<T,C> *p;
@@ -92,7 +93,7 @@ Graph<T,C>::~Graph()
     }
 }
 
-template<class T, class C>
+template<class T, typename C>
 bool Graph<T,C>::adjacent(T v, T w) const
 {
     Vertex<T,C> *V, *W;
@@ -120,7 +121,7 @@ bool Graph<T,C>::adjacent(T v, T w) const
     return false;
 }
 
-template<class T, class C>
+template<class T, typename C>
 bool Graph<T,C>::findArc(T v, T w) const
 {
     Vertex<T,C> *V = getVertex(v);
@@ -140,7 +141,7 @@ bool Graph<T,C>::findArc(T v, T w) const
     return false;
 }
 
-template<class T, class C>
+template<class T, typename C>
 C Graph<T,C>::arcCost(T v, T w) const
 {
     C a;
@@ -151,7 +152,7 @@ C Graph<T,C>::arcCost(T v, T w) const
     return a;
 }
 
-template<class T, class C>
+template<class T, typename C>
 vector<T> Graph<T,C>::successors(T e) const
 {
     Vertex<T,C> *p = getVertex(e);
@@ -159,7 +160,7 @@ vector<T> Graph<T,C>::successors(T e) const
         return p->successors;
 }
 
-template<class T, class C>
+template<class T, typename C>
 vector<T> Graph<T,C>::predecessors(T e) const
 {
     Vertex<T,C> *p, *pivot;
@@ -187,7 +188,7 @@ vector<T> Graph<T,C>::predecessors(T e) const
     return out;
 }
 
-template<class T, class C>
+template<class T, typename C>
 vector<T> Graph<T,C>::sourceVertices() const
 {
     Vertex<T,C> *pivot = graph;
@@ -201,7 +202,7 @@ vector<T> Graph<T,C>::sourceVertices() const
     return out;
 }
 
-template<class T, class C>
+template<class T, typename C>
 vector<T> Graph<T,C>::sinkVertices() const
 {
     Vertex<T,C> *pivot = graph;
@@ -215,7 +216,7 @@ vector<T> Graph<T,C>::sinkVertices() const
     return out;
 }
 
-template<class T, class C>
+template<class T, typename C>
 vector<T> Graph<T,C>::breadthFirstSearch() const
 {
     Vertex<T,C> *pivot = graph;
@@ -259,7 +260,7 @@ vector<T> Graph<T,C>::breadthFirstSearch() const
     return out;
 }
 
-template<class T, class C>
+template<class T, typename C>
 vector<T> Graph<T,C>::breadthFirstSearch(T v) const
 {
     Vertex<T,C> *w = getVertex(v);
@@ -299,7 +300,7 @@ vector<T> Graph<T,C>::breadthFirstSearch(T v) const
     return out;
 }
 
-template<class T, class C>
+template<class T, typename C>
 vector<T> Graph<T,C>::depthFirstSearch() const
 {
     Vertex<T,C> *pivot = graph;
@@ -318,7 +319,7 @@ vector<T> Graph<T,C>::depthFirstSearch() const
     return out;
 }
 
-template<class T, class C>
+template<class T, typename C>
 vector<T> Graph<T,C>::depthFirstSearch(T v) const
 {
     Vertex<T,C> *p = getVertex(v);
@@ -328,7 +329,7 @@ vector<T> Graph<T,C>::depthFirstSearch(T v) const
     return out;
 }
 
-template<class T, class C>
+template<class T, typename C>
 void Graph<T,C>::depthFirstSearch(Vertex<T,C> *v, vector<T> &out) const
 {
     if (!v->visited)
@@ -344,7 +345,7 @@ void Graph<T,C>::depthFirstSearch(Vertex<T,C> *v, vector<T> &out) const
     }
 }
 
-template<class T, class C>
+template<class T, typename C>
 int Graph<T,C>::order() const
 {
     Vertex<T,C> *pivot = graph;
@@ -358,7 +359,7 @@ int Graph<T,C>::order() const
     return cont;
 }
 
-template<class T, class C>
+template<class T, typename C>
 Vertex<T,C>* Graph<T,C>::getVertex(T e) const
 {
     Vertex<T,C>* pivot = graph;
@@ -374,7 +375,7 @@ Vertex<T,C>* Graph<T,C>::getVertex(T e) const
     return NULL;
 }
 
-template<class T, class C>
+template<class T, typename C>
 void Graph<T,C>::insertVertex(T v)
 {
     if (graph == NULL)
@@ -410,7 +411,7 @@ void Graph<T,C>::insertVertex(T v)
     }
 }
 
-template<class T, class C>
+template<class T, typename C>
 void Graph<T,C>::insertArc(T v, T w, C c)
 {
     if (v != w)
@@ -423,7 +424,7 @@ void Graph<T,C>::insertArc(T v, T w, C c)
     }
 }
 
-template<class T, class C>
+template<class T, typename C>
 void Graph<T,C>::deleteVertex(T v)
 {
     Vertex<T,C> *V = getVertex(v);
@@ -448,7 +449,7 @@ void Graph<T,C>::deleteVertex(T v)
     }
 }
 
-template<class E, class F>
+template<class E, typename F>
 std::ostream& operator<<(std::ostream& out, const Graph<E,F> &g)
 {
     Vertex<E,F> *pivot = g.graph;

@@ -2,10 +2,10 @@
 #define _ARC_HPP_
 #include <iostream>
 
-template<class T, class C>
+template<class T, typename C>
 class Vertex;
 
-template<class T, class C>
+template<class T, typename C>
 class Arc
 {
     private:
