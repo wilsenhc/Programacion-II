@@ -26,6 +26,7 @@ class Graph
 
         int order() const;
         bool null() const { return graph == NULL; };
+        bool hasCycle() const;
         bool adjacent(T, T) const;
         bool findArc(T, T) const;
         C arcCost(T, T) const;
@@ -91,6 +92,26 @@ Graph<T,C>::~Graph()
         graph = graph->getNext();
         delete p;
     }
+}
+
+template<class T, typename C>
+bool Graph<T,C>::hasCycle() const
+{
+    Graph<T,C> in(*this);
+    vector<T> suc;
+    suc = in.sourceVertices();
+
+    while (!suc.empty())
+    {
+        while (!suc.empty())
+        {
+            T u = suc.back();
+            suc.pop_back();
+            in.deleteVertex(u);
+        }
+        suc = in.sourceVertices();
+    }
+    return !in.null();
 }
 
 template<class T, typename C>
