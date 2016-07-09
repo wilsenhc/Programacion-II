@@ -25,7 +25,7 @@ class Graph
         ~Graph();
 
         int order() const;
-        bool hasCycle() const;
+        bool null() const { return graph == NULL; };
         bool adjacent(T, T) const;
         bool findArc(T, T) const;
         C arcCost(T, T) const;
