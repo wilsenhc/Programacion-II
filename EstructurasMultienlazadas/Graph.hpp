@@ -38,7 +38,8 @@ class Graph
         vector<T> breadthFirstSearch(T) const;
         vector<T> depthFirstSearch() const;
         vector<T> depthFirstSearch(T) const;
-        
+        vector<T> topologicalSorting() const;
+
         void insertVertex(T);
         void insertArc(T, T, C);
         void deleteVertex(T);
@@ -364,6 +365,29 @@ void Graph<T,C>::depthFirstSearch(Vertex<T,C> *v, vector<T> &out) const
         }
         out.push_back(v->getKey());
     }
+}
+
+template<class T, typename C>
+vector<T> Graph<T,C>::topologicalSorting() const
+{
+    vector<T> out;
+    if (!this->hasCycle())
+    {
+        Graph<T,C> in(*this);
+        vector<T> source;
+
+        while (!in.null())
+        {
+            source = in.sourceVertices();
+            while (!source.empty())
+            {
+                in.deleteVertex(source.back());
+                out.push_back(source.back());
+                source.pop_back();
+            }
+        }
+    }
+    return out;
 }
 
 template<class T, typename C>
