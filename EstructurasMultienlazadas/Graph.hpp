@@ -26,6 +26,7 @@ class Graph
 
         int order() const;
         bool null() const { return graph == NULL; };
+        bool isConnected() const;
         bool hasCycle() const;
         bool adjacent(T, T) const;
         bool findArc(T, T) const;
@@ -48,6 +49,7 @@ class Graph
         friend std::ostream& operator<<(std::ostream&, const Graph<E,F>&);
         
     private:
+        void isConnected(Vertex<T,C> *p, int &count) const;
         Arc<T,C>* getArc(T, T) const;
         Vertex<T,C>* getVertex(T) const;
         void depthFirstSearch(Vertex<T,C>*, vector<T>&) const;
@@ -92,6 +94,38 @@ Graph<T,C>::~Graph()
         p = graph;
         graph = graph->getNext();
         delete p;
+    }
+}
+
+template<class T, typename C>
+bool Graph<T,C>::isConnected() const
+{
+    Vertex<T,C> *pivot;
+    int count = 0;
+    isConnected(graph, count);
+
+    pivot = graph;
+    while (pivot)
+    {
+        pivot->visited = false;
+        pivot = pivot->getNext();
+    }
+    
+}
+
+template<class T, typename C>
+void Graph<T,C>::isConnected(Vertex<T,C> *p, int &count)
+{
+    if (!p->visited)
+    {
+        Arc<T,C> *pivot = p->ady;
+        p->visited = true;
+        count++;
+        while (pivot)
+        {
+            isConnected(pivot, count);
+            pivot = pivot->getNext();
+        }
     }
 }
 
@@ -344,10 +378,16 @@ vector<T> Graph<T,C>::depthFirstSearch() const
 template<class T, typename C>
 vector<T> Graph<T,C>::depthFirstSearch(T v) const
 {
-    Vertex<T,C> *p = getVertex(v);
+    Vertex<T,C> *pivot = getVertex(v);
     vector<T> out;
-    if (p)
-        depthFirstSearch(p, out);
+    if (pivot)
+        depthFirstSearch(pivot, out);
+    pivot = graph;
+    while (pivot)
+    {
+        pivot->visited = false;
+        pivot = pivot->getNext();
+    }
     return out;
 }
 
