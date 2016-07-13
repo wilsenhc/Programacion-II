@@ -26,7 +26,7 @@ class Graph
 
         int order() const;
         bool null() const { return graph == NULL; };
-        bool path(T, T) const;
+        bool path(T, T) const; // Existe un camino
         bool isConnected() const;
         bool hasCycle() const;
         bool adjacent(T, T) const;
@@ -41,6 +41,7 @@ class Graph
         vector<T> depthFirstSearch() const;
         vector<T> depthFirstSearch(T) const;
         vector<T> topologicalSorting() const;
+        vector<T> shortestPath(T, T) const;
 
         void insertVertex(T);
         void insertArc(T, T, C);
@@ -50,6 +51,7 @@ class Graph
         friend std::ostream& operator<<(std::ostream&, const Graph<E,F>&);
         
     private:
+        void shortestPath(Vertex<T,C>*, Vertex<T,C>*, vector<T>&, vector<T>&) const;
         void clear() const;
         void isConnected(Vertex<T,C> *p, int &count) const;
         Arc<T,C>* getArc(T, T) const;
@@ -462,6 +464,42 @@ vector<T> Graph<T,C>::topologicalSorting() const
         }
     }
     return out;
+}
+
+template<class T, typename C>
+vector<T> Graph<T,C>::shortestPath(T u, T v) const
+{
+    Vertex<T,C> *U = getVertex(u);
+    Vertex<T,C> *V = getVertex(v);
+    vector<T> act, best;
+
+    if (U && V)
+        this->shortestPath(U, V, best, act);
+        
+    this->clear();
+
+    return best;
+}
+
+template<class T, typename C>
+void Graph<T,C>::shortestPath(Vertex<T,C> *u, Vertex<T,C> *v, vector<T> &best, vector<T> &act) const
+{
+    act.push_back(u->getKey());
+    if (u == v && (best.empty() || best.size() > act.size()))
+        best = act;
+    else
+    {
+        Arc<T,C> *pivot = u->ady;
+        u->visited = true;
+        while (pivot)
+        {
+            if (!pivot->getVertex()->visited)
+                shortestPath(pivot->getVertex(), v, best, act);
+            pivot = pivot->getNext();
+        }
+        u->visited = false;
+    }
+    act.pop_back();
 }
 
 template<class T, typename C>
