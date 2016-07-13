@@ -26,6 +26,7 @@ class Graph
 
         int order() const;
         bool null() const { return graph == NULL; };
+        bool path(T, T) const;
         bool isConnected() const;
         bool hasCycle() const;
         bool adjacent(T, T) const;
@@ -49,10 +50,12 @@ class Graph
         friend std::ostream& operator<<(std::ostream&, const Graph<E,F>&);
         
     private:
+        void clear() const;
         void isConnected(Vertex<T,C> *p, int &count) const;
         Arc<T,C>* getArc(T, T) const;
         Vertex<T,C>* getVertex(T) const;
         void depthFirstSearch(Vertex<T,C>*, vector<T>&) const;
+        bool path(Vertex<T,C>*, Vertex<T,C>*) const;
 };
 
 template<class T, typename C>
@@ -98,23 +101,54 @@ Graph<T,C>::~Graph()
 }
 
 template<class T, typename C>
+bool Graph<T,C>::path(T u, T v) const
+{
+    Vertex<T,C> *A = getVertex(u);
+    Vertex<T,C> *B = getVertex(v);
+    bool out = false;
+
+    if (A && B)
+        out = path(A, B);
+    
+    this->clear();
+    
+    return out;
+}
+
+template<class T, typename C>
+bool Graph<T,C>::path(Vertex<T,C> *u, Vertex<T,C> *v) const
+{
+    if (u == v)
+        return true;
+    else
+    {
+        Arc<T,C> *pivot = u->ady;
+        u->visited = true;
+        bool out = false;
+        while (pivot)
+        {
+            if (!pivot->getVertex()->visited)
+                out = out || path(pivot->getVertex(), v);
+            pivot = pivot->getNext();
+        }
+        u->visited = false;
+        return out;
+    }
+    return false;
+}
+
+template<class T, typename C>
 bool Graph<T,C>::isConnected() const
 {
     Vertex<T,C> *pivot;
     int count = 0;
     isConnected(graph, count);
-
-    pivot = graph;
-    while (pivot)
-    {
-        pivot->visited = false;
-        pivot = pivot->getNext();
-    }
-    
+    this->clear();
+    return count == this->order();    
 }
 
 template<class T, typename C>
-void Graph<T,C>::isConnected(Vertex<T,C> *p, int &count)
+void Graph<T,C>::isConnected(Vertex<T,C> *p, int &count) const
 {
     if (!p->visited)
     {
@@ -123,7 +157,7 @@ void Graph<T,C>::isConnected(Vertex<T,C> *p, int &count)
         count++;
         while (pivot)
         {
-            isConnected(pivot, count);
+            isConnected(pivot->getVertex(), count);
             pivot = pivot->getNext();
         }
     }
@@ -551,6 +585,17 @@ std::ostream& operator<<(std::ostream& out, const Graph<E,F> &g)
         pivot = pivot->getNext();
     }
     return out;
+}
+
+template<class T, typename C>
+void Graph<T,C>::clear() const
+{
+    Vertex<T,C> *pivot = graph;
+    while (pivot)
+    {
+        pivot->visited = false;
+        pivot = pivot->getNext();
+    }
 }
 
 #endif
