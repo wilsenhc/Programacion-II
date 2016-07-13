@@ -4,9 +4,11 @@
 #include <vector>
 #include <queue>
 #include <stack>
+#include <limits>
 #include "Arc.hpp"
 #include "Vertex.hpp"
 
+using std::numeric_limits;
 using std::vector;
 using std::queue;
 using std::stack;
@@ -42,15 +44,25 @@ class Graph
         vector<T> depthFirstSearch(T) const;
         vector<T> topologicalSorting() const;
         vector<T> shortestPath(T, T) const;
+        float shortestPathLength(T ,T) const;
+        vector<T> dijkstra(T, T) const;
+        vector<float> eccentricityCentrality() const;
+        
 
         void insertVertex(T);
         void insertArc(T, T, C);
+        void insertEdge(T, T, C);
         void deleteVertex(T);
+        
+        vector<T> getVertices() const;
 
         template<class E, typename F>
         friend std::ostream& operator<<(std::ostream&, const Graph<E,F>&);
         
     private:
+        float shortestPathLength(Vertex<T,C>*, Vertex<T,C>*) const;
+        void shortestPathLength(Vertex<T,C>*, Vertex<T,C>*, float &, float&) const;
+        void dijkstra(Vertex<T,C>*, Vertex<T,C>*, vector<T>&, vector<T>&, C&, C&) const;
         void shortestPath(Vertex<T,C>*, Vertex<T,C>*, vector<T>&, vector<T>&) const;
         void clear() const;
         void isConnected(Vertex<T,C> *p, int &count) const;
@@ -503,6 +515,137 @@ void Graph<T,C>::shortestPath(Vertex<T,C> *u, Vertex<T,C> *v, vector<T> &best, v
 }
 
 template<class T, typename C>
+float Graph<T,C>::shortestPathLength(T u, T v) const
+{
+    Vertex<T,C> *U = getVertex(u);
+    Vertex<T,C> *V = getVertex(v);
+    float aux = 0;
+    float best = numeric_limits<float>::max();
+    
+    if (U && V)
+        shortestPathLength(U, V, aux, best);
+    else
+        return 0;
+        
+    return best;
+}
+
+template<class T, typename C>
+float Graph<T,C>::shortestPathLength(Vertex<T,C> *U, Vertex<T,C> *V) const
+{
+    float aux = 0;
+    float best = numeric_limits<float>::max();
+    
+    if (U && V)
+        shortestPathLength(U, V, aux, best);
+    else
+        return 0;
+    
+    return best;
+    
+}
+
+template<class T, typename C>
+void Graph<T,C>::shortestPathLength(Vertex<T,C> *u, Vertex<T,C> *v, float &act, float &best) const
+{
+    act++;
+    if (u == v && act < best)
+        best = act;
+    else
+    {
+        Arc<T,C> *pivot = u->ady;
+        u->visited = true;
+        while (pivot)
+        {
+            if (!pivot->getVertex()->visited)
+                shortestPathLength(pivot->getVertex(), v, act, best);
+            pivot = pivot->getNext();
+        }
+        u->visited = false;
+    }
+    act--;
+}
+
+
+template<class T, typename C>
+vector<T> Graph<T,C>::dijkstra(T u, T v) const
+{
+    Vertex<T,C> *U = getVertex(u);
+    Vertex<T,C> *V = getVertex(v);
+    vector<T> best, path;
+    C cost = 0;
+    C bestC = numeric_limits<C>::max();
+
+    if (U && V)
+        dijkstra(U, V, path, best, cost, bestC);
+
+    return best;
+}
+
+template<class T, typename C>
+void Graph<T,C>::dijkstra(Vertex<T,C> *u, Vertex<T,C> *v, vector<T> &path, vector<T> &bestP, C &pathC, C &bestC) const
+{
+    path.push_back(u->getKey());
+    if (u == v)
+    {
+        if (pathC < bestC)
+        {
+            bestP = path;
+            pathC = bestC;
+        }
+        else if (pathC == bestC && path.size() < bestP.size())
+        {
+            bestP = path;
+            pathC = bestC;
+        }
+    }
+    else
+    {
+        Arc<T,C> *pivot = u->ady;
+        u->visited = true;
+        while (pivot)
+        {
+            if (!pivot->getVertex()->visited)
+            {   pathC = pathC + pivot->getCost();
+                dijkstra(pivot->getVertex(), v, path, bestP, pathC, bestC);
+                pathC = pathC - pivot->getCost();
+            }
+            pivot = pivot->getNext();
+        }
+        u->visited = false;
+    }
+    path.pop_back();
+}
+
+template<class T, typename C>
+vector<float> Graph<T,C>::eccentricityCentrality() const
+{
+    Vertex<T,C> *pivot = graph;
+    Vertex<T,C> *iter;
+    vector<float> out;
+    float max;
+    float EC;
+    
+    while (pivot)
+    {
+        max = numeric_limits<float>::min();
+        iter = graph;
+        while (iter)
+        {
+            if (iter != pivot)
+            {
+                EC = shortestPathLength(pivot, iter) - 1;
+                max = (EC > max) ? EC : max;
+            }
+            iter = iter->getNext();
+        }
+        out.push_back(1/max);
+        pivot = pivot->getNext();
+    }
+    return out;
+}
+
+template<class T, typename C>
 int Graph<T,C>::order() const
 {
     Vertex<T,C> *pivot = graph;
@@ -569,7 +712,13 @@ void Graph<T,C>::insertVertex(T v)
 }
 
 template<class T, typename C>
-void Graph<T,C>::insertArc(T v, T w, C c)
+void Graph<T,C>::insertEdge(T u, T v, C c)
+{
+    
+}
+
+template<class T, typename C>
+void Graph<T,C>::insertArc(T v, T w, C c = 0)
 {
     if (v != w)
     {
@@ -606,13 +755,26 @@ void Graph<T,C>::deleteVertex(T v)
     }
 }
 
+template<class T, typename C>
+vector<T> Graph<T,C>::getVertices() const
+{
+    vector<T> out;
+    Vertex<T,C> *pivot = graph;
+    while (pivot)
+    {
+        out.push_back(pivot->getKey());
+        pivot = pivot->getNext();
+    }
+    return out;
+}
+
 template<class E, typename F>
 std::ostream& operator<<(std::ostream& out, const Graph<E,F> &g)
 {
     Vertex<E,F> *pivot = g.graph;
     while (pivot)
     {
-        out << pivot->getKey();
+        out << pivot->getKey() << " > ";
         Arc<E,F> *a = pivot->getAdy();
         while (a)
         {
