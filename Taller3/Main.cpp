@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <list>
-#include "Graph.hpp"
+#include "../EstructurasMultienlazadas/Graph.hpp"
 
 using namespace std;
 
@@ -65,7 +65,7 @@ int main(int argc, char **argv)
         {
             PersonaEC in(*veriter, *maxiter);
             lista.push_back(in);
-                        
+            
             maxiter++;
             veriter++;
         }

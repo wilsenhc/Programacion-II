@@ -718,7 +718,7 @@ void Graph<T,C>::insertEdge(T u, T v, C c)
 }
 
 template<class T, typename C>
-void Graph<T,C>::insertArc(T v, T w, C c = 0)
+void Graph<T,C>::insertArc(T v, T w, C c)
 {
     if (v != w)
     {
