@@ -6,22 +6,22 @@ Todas las librerías fueron programadas por mi persona mientras vi el curso en c
 ## Estructura
 
 El repositorio consta de un conjunto de librerías
-y soluciones a talleres distribuidos en distintas categorías que constituyen los tres tipos de estructuras de datos trabajadas en el curso. Entre ellas están:
+y soluciones a talleres distribuidos en distintas categorías que constituyen los tres tipos de estructuras de datos trabajadas en el curso.
 
-* Estructuras Lineales
- * Lista<T> / List<T>
- * Pila<T> / Stack<T>
- * Cola<T> / Queue<T>
+#### Estructuras Lineales
+* Lista<T> / List<T>
+* Pila<T> / Stack<T>
+* Cola<T> / Queue<T>
 
-* Estructuras Jerárquicas
- * Arbol<T> / Tree<T>
- * ArbolBinario<T> / BinaryTree<T>
- * BinarioDeBusqueda<T> / BST<T>
- * ArbolDeSintaxis<T> / SintaxTree<T>
- * ArbolAVL<T> / AVL<T>
+#### Estructuras Jerárquicas
+* Arbol<T> / Tree<T>
+* ArbolBinario<T> / BinaryTree<T>
+* BinarioDeBusqueda<T> / BST<T>
+* ArbolDeSintaxis<T> / SintaxTree<T>
+* ArbolAVL<T> / AVL<T>
 
-* Estructuras Multienlazadas
- * Grafo<T, C> / Graph<T, C>
+#### Estructuras Multienlazadas
+* Grafo<T, C> / Graph<T, C>
 
 ## Contribuir
 Para contribuir a este repositorio de código libre puedes
