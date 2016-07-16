@@ -32,8 +32,8 @@ El repositorio consta de un conjunto de **librerías**, **soluciones a talleres*
 
 Si quieres reportar un bug, algún problema o mejora de
 
-* Enviar un [pull request](link aca)
-* Enviar un [problema](issue link) y explícame como sucede y como reproducirlo.
+* Enviar un [pull request](https://github.com/WilsenHernandez/Programacion-II/pulls)
+* Enviar un [problema](https://github.com/WilsenHernandez/Programacion-II/issues) y explícame como sucede y como reproducirlo.
 * Enviarme un [correo electronico](mailto:wilsenh95@gmail.com)
 
 
