@@ -1,0 +1,9 @@
+Hay 40 pixels en negro.
+Hay 32 pixels en negro.
+Hay 24 pixels en negro.
+Hay 64 pixels en negro.
+Hay 0 pixels en negro.
+Hay 64 pixels en negro.
+Hay 35 pixels en negro.
+Hay 0 pixels en negro.
+Hay 1 pixels en negro.
