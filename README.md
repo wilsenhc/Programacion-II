@@ -38,5 +38,4 @@ Si quieres reportar un bug, algún problema o mejora de
 
 
 ## Licencia
-
-// TODO: Decidir que licencia utilizar
+[MIT](LICENSE.txt)
