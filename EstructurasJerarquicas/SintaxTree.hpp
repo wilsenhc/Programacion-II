@@ -6,7 +6,7 @@
 #define _SINTAX_TREE_HPP_
 #include <string>
 #include <sstream>
-#include "../EstructurasLineales/Lista.hpp"
+#include "../EstructurasLineales/List.hpp"
 #include "BinaryTree.hpp"
 
 using namespace std;

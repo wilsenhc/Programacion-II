@@ -2,57 +2,57 @@
  *  Copyright (c) Wilsen Hernandez. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-#ifndef _NODO_HPP_
-#define _NODO_HPP_
+#ifndef _NODE_HPP_
+#define _NODE_HPP_
 #include <iostream>
 
-template<class Item>
-class Nodo
+template<class T>
+class Node
 {
     private:
-        Item info;
-        Nodo<Item> *sig;
+        T info;
+        Node<T> *sig;
 
     public:
-        Nodo() : sig(NULL) { };
-        Nodo(const Nodo<Item>& in) : info(in.info), sig(NULL) { };
-        Nodo(Item e) : info(e), sig(NULL) { };
-        //~Nodo();
+        Node() : sig(NULL) { };
+        Node(const Node<T>& in) : info(in.info), sig(NULL) { };
+        Node(T e) : info(e), sig(NULL) { };
+        //~Node();
 
-        void setInfo(Item);
-        void setSig(Nodo<Item>*);
-        Item getInfo();
-        Nodo<Item>* getSig();
+        void setInfo(T);
+        void setSig(Node<T>*);
+        T getInfo();
+        Node<T>* getSig();
 
 
-        void operator=(const Item &);
-        bool operator>(const Nodo<Item>&);
-        bool operator<(const Nodo<Item>&);
-        bool operator==(const Nodo<Item>&);
-        bool operator>=(const Nodo<Item>&);
-        bool operator<=(const Nodo<Item>&);
+        void operator=(const T &);
+        bool operator>(const Node<T>&);
+        bool operator<(const Node<T>&);
+        bool operator==(const Node<T>&);
+        bool operator>=(const Node<T>&);
+        bool operator<=(const Node<T>&);
 
-        static void intercambiar(Nodo<Item> *, Nodo<Item> *);
+        static void intercambiar(Node<T> *, Node<T> *);
 };
 
 /**
  * Setter de Info.
  * @function
- * @param {Item} Info
+ * @param {T} Info
  * */
-template<class Item>
-void Nodo<Item>::setInfo(Item item)
+template<class T>
+void Node<T>::setInfo(T item)
 {
     info = item;
 }
 
 /**
- * Setter de siguiente Nodo.
+ * Setter de siguiente Node.
  * @function
- * @param {Nodo<Item>*} Apuntador a siguiente nodo
+ * @param {Node<T>*} Apuntador a siguiente nodo
  * */
-template<class Item>
-void Nodo<Item>::setSig(Nodo<Item> * siguiente)
+template<class T>
+void Node<T>::setSig(Node<T> * siguiente)
 {
     sig = siguiente;
 }
@@ -60,31 +60,31 @@ void Nodo<Item>::setSig(Nodo<Item> * siguiente)
 /**
  * Getter de Info.
  * @function
- * @returns {Item} Info Item
+ * @returns {T} Info Item
  * */
-template<class Item>
-Item Nodo<Item>::getInfo()
+template<class T>
+T Node<T>::getInfo()
 {
     return info;
 }
 
 /**
- * Getter de siguiente Nodo.
+ * Getter de siguiente Node.
  * @function
- * @returns {Nodo<Item>*} Siguiente Nodo
+ * @returns {Node<T>*} Siguiente Node
  * */
-template<class Item>
-Nodo<Item>* Nodo<Item>::getSig()
+template<class T>
+Node<T>* Node<T>::getSig()
 {
     return sig;
 }
 
 
 /**
- * Sobrecarga de operador de Mayor Que de Nodo.
+ * Sobrecarga de operador de Mayor Que de Node.
  * */
-template<class Item>
-bool Nodo<Item>::operator>(const Nodo<Item> &a)
+template<class T>
+bool Node<T>::operator>(const Node<T> &a)
 {
     if (this != &a)
         return (this->getInfo() > a.getInfo());
@@ -93,10 +93,10 @@ bool Nodo<Item>::operator>(const Nodo<Item> &a)
 }
 
 /**
- * Sobrecarga de operador Menor Que de Nodo.
+ * Sobrecarga de operador Menor Que de Node.
  * */
-template<class Item>
-bool Nodo<Item>::operator<(const Nodo<Item> &a )
+template<class T>
+bool Node<T>::operator<(const Node<T> &a )
 {
     if (this != &a)
         return (this->getInfo() < a.getInfo());
@@ -105,28 +105,28 @@ bool Nodo<Item>::operator<(const Nodo<Item> &a )
 }
 
 /**
- * Sobrecarga de operador de Igual Que de Nodo.
+ * Sobrecarga de operador de Igual Que de Node.
  * */
-template<class Item>
-bool Nodo<Item>::operator==(const Nodo<Item> &a)
+template<class T>
+bool Node<T>::operator==(const Node<T> &a)
 {
     return (this->getInfo() == a.getInfo());
 }
 
 /**
- * Sobrecarga de operador Mayor o Igual Que de Nodo.
+ * Sobrecarga de operador Mayor o Igual Que de Node.
  * */
-template<class Item>
-bool Nodo<Item>::operator>=(const Nodo<Item> &a)
+template<class T>
+bool Node<T>::operator>=(const Node<T> &a)
 {
     return (*this > a || *this == a);
 }
 
 /**
- * Sobrecarga de operador Menor o Igual Que de Nodo.
+ * Sobrecarga de operador Menor o Igual Que de Node.
  * */
-template<class Item>
-bool Nodo<Item>::operator<=(const Nodo<Item> &a)
+template<class T>
+bool Node<T>::operator<=(const Node<T> &a)
 {
     return (*this < a || *this == a);
 }
@@ -135,10 +135,10 @@ bool Nodo<Item>::operator<=(const Nodo<Item> &a)
  * Intercambia la info de dos nodos dados.
  * @static
  * */
-template<class Item>
-void Nodo<Item>::intercambiar(Nodo<Item> *a, Nodo<Item> *b)
+template<class T>
+void Node<T>::intercambiar(Node<T> *a, Node<T> *b)
 {
-    Item aux = a->getInfo();
+    T aux = a->getInfo();
     a->setInfo(b->getInfo());
     b->setInfo(aux);
 }

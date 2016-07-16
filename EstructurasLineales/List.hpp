@@ -2,93 +2,84 @@
  *  Copyright (c) Wilsen Hernandez. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-#ifndef _LISTA_HPP_
-#define _LISTA_HPP_
+#ifndef _LIST_HPP_
+#define _LIST_HPP_
 #include "Nodo.hpp"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
 
-template<class Item>
-class Lista
+template<class T>
+class List
 {
     private:
         int length;
-        Nodo<Item> *primero;
-        Nodo<Item> *ultimo;
+        Nodo<T> *primero;
+        Nodo<T> *ultimo;
 
     public:
-        Lista();
-        Lista(const Lista<Item>&);
-        ~Lista();
+        List() : length(0), primero(NULL), ultimo(NULL) { };
+        List(const List<T>&);
+        ~List() { this->clear(); };
 
-        int longitud() const;
-        bool esVacia() const;
-        void insertar(Item, int);
-        Item consultar(int) const;
-        int buscar(Item) const;
+        int size() const { return length; };
+        bool empty() const { return this->length == 0; };
+        void insert(T, int);
+        T get(int) const;
+        int find(T) const;
         
-        Item getPrimero() const;
-        Item getUltimo() const;
-        void setPrimero(Item);
-        void setUltimo(Item);
-        void pushPrimero(Item);
-        void pushUltimo(Item);
-        Item popPrimero();
-        Item popUltimo();
-        void eliminar(int);
-        void modificar(Item, int);
-        void vaciar();
-        Lista<Item> sublista(int, int);
-        void invertir();
-        void ordenar();
-        void bubbleSort();
-        bool estaOrdenada() const;
+        T front() const;
+        T back() const;
+        void set_front(T);
+        void set_back(T);
+        void push_back(T);
+        void push_back(T);
+        T pop_front();
+        T pop_back();
+        void erase(int);
+        void change(T, int);
+        void clear();
+        List<T> sublist(int, int);
+        void reverse();
+        void sort();
+        void bubblesort();
+        bool sorted() const;
         
         // Taller 1
         int mediana() const;
         // Fin Taller 1
 
-        void operator=(const Lista<Item> &);
-        bool operator>(const Lista<Item> &) const;
-        bool operator<(const Lista<Item> &) const;
-        bool operator==(const Lista<Item> &) const;
-        bool operator>=(const Lista<Item> &) const;
-        bool operator<=(const Lista<Item> &) const;
+        void operator=(const List<T> &);
+        bool operator>(const List<T> &) const;
+        bool operator<(const List<T> &) const;
+        bool operator==(const List<T> &) const;
+        bool operator>=(const List<T> &) const;
+        bool operator<=(const List<T> &) const;
 
-        template<class Items>
-        friend std::ostream& operator<<(std::ostream&, const Lista<Items> &);
+        template<class Ts>
+        friend std::ostream& operator<<(std::ostream&, const List<Ts> &);
 
     private:
-        Nodo<Item>* _invertir(Nodo<Item>*);
-        void _desordenar();
-};
-
-/**
- * Constructor de Lista.
- * Construye una Lista vacia.
- * @constructs Lista
- * */
-template<class Item>
-Lista<Item>::Lista()
-    : length(0), primero(NULL), ultimo(NULL) { }
+        Nodo<T>* _reverse(Nodo<T>*);
+        void _dessort();
+};    
 
 /**
  * Constructor copia de Lista.
  * @constructs Lista
  * */
-template<class Item>
-Lista<Item>::Lista(const Lista<Item>& in)
+template<class T>
+List<T>::List(const List<T>& in)
 {
     if (in.primero != NULL)
     {
-        primero = new Nodo<Item>(in.primero->getInfo());
-        Nodo<Item> *inaux = in.primero->getSig();
-        Nodo<Item> *thisaux = this->primero;
-        Nodo<Item> *nuevo;
+        primero = new Nodo<T>(in.primero->getInfo());
+        Nodo<T> *inaux = in.primero->getSig();
+        Nodo<T> *thisaux = this->primero;
+        Nodo<T> *nuevo;
         while (inaux != NULL)
         {
-            nuevo = new Nodo<Item>(inaux->getInfo());
+            nuevo = new Nodo<T>(inaux->getInfo());
             thisaux->setSig(nuevo);
             thisaux = thisaux->getSig();
             inaux = inaux->getSig();
@@ -99,49 +90,19 @@ Lista<Item>::Lista(const Lista<Item>& in)
 }
 
 /**
- * Destructor de Lista.
- * Primero vacia la Lista y luego destruye.
- * */
-template<class Item>
-Lista<Item>::~Lista()
-{
-    this->vaciar();
-}
-
-/**
- * Muestra longitud de la lista.
- * @returns int Longitud de la lista
- * */
-template<class Item>
-int Lista<Item>::longitud() const
-{
-    return this->length;
-}
-
-/**
- * Indica si la lista esta vacia.
- * @returns {bool} TRUE sí esta vacia.
- * */
-template<class Item>
-bool Lista<Item>::esVacia() const
-{
-    return this->length == 0;
-}
-
-/**
  * Insertar en la lista.
  * @param e El Item a insertar en lista.
  * @param pos Posicion en la lista a insertar.
  * */
-template<class Item>
-void Lista<Item>::insertar(Item e, int pos)
+template<class T>
+void List<T>::insert(T e, int pos)
 {
     if (pos < 1 || pos > length + 2)
         std::cout << "Posicion invalida" << std::endl;
     else
     {
-        Nodo<Item> *nuevo, *actual, *siguiente;
-        nuevo = new Nodo<Item>(e);
+        Nodo<T> *nuevo, *actual, *siguiente;
+        nuevo = new Nodo<T>(e);
 
         if (length == 0)
         {
@@ -179,8 +140,8 @@ void Lista<Item>::insertar(Item e, int pos)
  * @function
  * @param {int} pos - Posicion a consultar
  * */
-template<class Item>
-Item Lista<Item>::consultar(int pos) const
+template<class T>
+T List<T>::get(int pos) const
 {
     if (pos < 1 || pos > length + 1)
         std::cout << "Posicion invalida" << std::endl;
@@ -192,7 +153,7 @@ Item Lista<Item>::consultar(int pos) const
             return ultimo->getInfo();
         else
         {
-            Nodo<Item> *act = primero;
+            Nodo<T> *act = primero;
             for (int i = 1; i < pos; i++)
                 act = act->getSig();
 
@@ -204,12 +165,12 @@ Item Lista<Item>::consultar(int pos) const
 /**
  * Buscar
  * */
-template<class Item>
-int Lista<Item>::buscar(Item e) const
+template<class T>
+int List<T>::find(T e) const
 {
     if (!esVacia())
     {
-        Nodo<Item> *pivot;
+        Nodo<T> *pivot;
         int i = 0;
         
         pivot = primero;
@@ -233,8 +194,8 @@ int Lista<Item>::buscar(Item e) const
  * Retorna el primer Item de la Lista.
  * @returns {Item} Primer Item de la Lista.
  * */
-template<class Item>
-Item Lista<Item>::getPrimero() const
+template<class T>
+T List<T>::front() const
 {
     return this->primero->getInfo();
 }
@@ -245,28 +206,28 @@ Item Lista<Item>::getPrimero() const
  * Retorna el ultimo Item de la Lista.
  * @returns {Item} Ultimo Item de la Lista.
  * */
-template<class Item>
-Item Lista<Item>::getUltimo() const
+template<class T>
+T List<T>::back() const
 {
     return this->ultimo->getInfo();
 }
 
-template<class Item>
-void Lista<Item>::setPrimero(Item e)
+template<class T>
+void List<T>::set_front(T e)
 {
     primero->setInfo(e);
 }
 
-template<class Item>
-void Lista<Item>::setUltimo(Item e)
+template<class T>
+void List<T>::set_back(T e)
 {
     ultimo->setInfo(e);
 }
 
-template<class Item>
-void Lista<Item>::pushPrimero(Item e)
+template<class T>
+void List<T>::push_back(T e)
 {
-    Nodo<Item> *nuevo = new Nodo<Item>(e);
+    Nodo<T> *nuevo = new Nodo<T>(e);
     if (!esVacia())
     {
         nuevo->setSig(primero);
@@ -280,10 +241,10 @@ void Lista<Item>::pushPrimero(Item e)
     length++;
 }
 
-template<class Item>
-void Lista<Item>::pushUltimo(Item e)
+template<class T>
+void List<T>::push_back(T e)
 {
-    Nodo<Item> *nuevo = new Nodo<Item>(e);
+    Nodo<T> *nuevo = new Nodo<T>(e);
     if(!esVacia())
     {
         ultimo->setSig(nuevo);
@@ -297,13 +258,13 @@ void Lista<Item>::pushUltimo(Item e)
     length++;
 }
 
-template<class Item>
-Item Lista<Item>::popPrimero()
+template<class T>
+T List<T>::pop_front()
 {
     if (!esVacia())
     {
-        Nodo<Item> *aux;
-        Item e;
+        Nodo<T> *aux;
+        T e;
         e = primero->getInfo();
         aux = primero;
         primero = aux->getSig();
@@ -314,12 +275,12 @@ Item Lista<Item>::popPrimero()
     return 0;
 }
 
-template<class Item>
-Item Lista<Item>::popUltimo()
+template<class T>
+T List<T>::pop_back()
 {
     if (!esVacia())
     {
-        Nodo<Item> *ant, *act;
+        Nodo<T> *ant, *act;
         act = primero;
         for(int i = 0; i < length; i++)
         {
@@ -328,7 +289,7 @@ Item Lista<Item>::popUltimo()
         }
         ant->setSig(NULL);
         ultimo = ant;
-        Item e = act->getInfo();
+        T e = act->getInfo();
         delete act;
         return e;
     }
@@ -336,10 +297,10 @@ Item Lista<Item>::popUltimo()
 }
 
 /**
- * Modificar
+ * change
  * */
-template<class Item>
-void Lista<Item>::modificar(Item e, int pos)
+template<class T>
+void List<T>::change(T e, int pos)
 {
     if (pos < 1 || pos > length)
         std::cout << "Posicion invalida" << std::endl;
@@ -353,7 +314,7 @@ void Lista<Item>::modificar(Item e, int pos)
             ultimo->setInfo(e);
         else
         {
-            Nodo<Item> *act = primero;
+            Nodo<T> *act = primero;
             for (int i = 0; i < pos; i++)
                 act = act->getSig();
             
@@ -363,12 +324,12 @@ void Lista<Item>::modificar(Item e, int pos)
 }
 
 /**
- * Eliminar de lista
+ * erase de lista
  * @function
- * @param {int} pos - Posicion a eliminar
+ * @param {int} pos - Posicion a erase
  * */
-template<class Item>
-void Lista<Item>::eliminar(int pos)
+template<class T>
+void List<T>::erase(int pos)
 {
     if (pos < 1 || pos > length)
         std::cout << "Posicion invalida" << std::endl;
@@ -376,7 +337,7 @@ void Lista<Item>::eliminar(int pos)
         std::cout << "Lista vacia" << std::endl;
     else
     {
-        Nodo<Item> *ant, *act, *sig;
+        Nodo<T> *ant, *act, *sig;
         if (pos == 1)
         {
             act = primero;
@@ -401,14 +362,14 @@ void Lista<Item>::eliminar(int pos)
 }
 
 /**
- * Vaciar lista.
+ * clear lista.
  * */
-template<class Item>
-void Lista<Item>::vaciar()
+template<class T>
+void List<T>::clear()
 {
     if (!esVacia())
     {
-        Nodo<Item> *actual, *next;
+        Nodo<T> *actual, *next;
         actual = primero;
         next = actual->getSig();
 
@@ -428,26 +389,26 @@ void Lista<Item>::vaciar()
 
 
 /**
- * Invertir Lista.
+ * Invertir List.
  * Invierte los elementos de la Lista.
  * */
-template<class Item>
-void Lista<Item>::invertir()
+template<class T>
+void List<T>::reverse()
 {
-    this->ultimo = _invertir(this->primero);
+    this->ultimo = _reverse(this->primero);
     this->ultimo->setSig(NULL);
 }
 
 /**
- * @desc Sublista.
- * Genera una Sublista a partir de una Lista inicial.
+ * @desc sublist.
+ * Genera una sublist a partir de una List inicial.
  * @function
- * @param {int} low - Posicion incial de la Sublista.
- * @param {int} high - Posicion final de la Sublista.
- * @returns {Lista<Item>} Sublista generada.
+ * @param {int} low - Posicion incial de la sublist.
+ * @param {int} high - Posicion final de la sublist.
+ * @returns {Lista<Item>} sublist generada.
  * */
-template<class Item>
-Lista<Item> Lista<Item>::sublista(int low, int high)
+template<class T>
+List<T> List<T>::sublist(int low, int high)
 {
     // Swap preventivo
     if (low > high)
@@ -457,20 +418,20 @@ Lista<Item> Lista<Item>::sublista(int low, int high)
         high = aux;
     }
 
-    Lista<Item> *lista = new Lista<Item>();
+    List<T> *lista = new List<T>();
 
     if ((low >= 1 && low <= length) && (high >= 1 && high <= length))
     {
 
-        Nodo<Item> *aux = primero;
-        Nodo<Item> *aux2 = NULL;
-        Nodo<Item> *nuevo;
+        Nodo<T> *aux = primero;
+        Nodo<T> *aux2 = NULL;
+        Nodo<T> *nuevo;
 
         for (int i = 1; i <= high; i++)
         {
             if (i >= low)
             {
-                nuevo = new Nodo<Item>(*aux);
+                nuevo = new Nodo<T>(*aux);
 
                 if (i == low)
                     lista->primero = nuevo;
@@ -490,10 +451,10 @@ Lista<Item> Lista<Item>::sublista(int low, int high)
 /**
  * Ordernar
  * */
-template<class Item>
-void Lista<Item>::ordenar()
+template<class T>
+void List<T>::sort()
 {
-    this->bubbleSort();
+    this->bubblesort();
 }
 
 /**
@@ -501,20 +462,20 @@ void Lista<Item>::ordenar()
  * Ordena de menor a mayor los elementos de la lista, utilizando
  * el algoritmo de ordenamiento Bubble Sort.
  * */
-template<class Item>
-void Lista<Item>::bubbleSort()
+template<class T>
+void List<T>::bubblesort()
 {
-    if (!estaOrdenada())
+    if (!sorted())
     {
         int n = this->length;
         for (int pasada = 0; pasada < n - 1; pasada++)
         {
-            Nodo<Item> *pivot = this->primero;
-            Nodo<Item> *pivotNext = pivot->getSig();
+            Nodo<T> *pivot = this->primero;
+            Nodo<T> *pivotNext = pivot->getSig();
             for (int j = 0; j < n - pasada - 1; j++)
             {
                 if (pivot->getInfo() > pivotNext->getInfo())
-                    Nodo<Item>::intercambiar(pivot, pivotNext);
+                    Nodo<T>::intercambiar(pivot, pivotNext);
 
                 pivot = pivotNext;
                 pivotNext = pivotNext->getSig();
@@ -528,14 +489,14 @@ void Lista<Item>::bubbleSort()
  * @function
  * @returns {bool} TRUE sí esta ordenada
  * */
-template<class Item>
-bool Lista<Item>::estaOrdenada() const
+template<class T>
+bool List<T>::sorted() const
 {
     bool ordenada = true;
     if (!esVacia())
     {
-        Nodo<Item> *pivot = this->primero;
-        Nodo<Item> *pivotNext = pivot->getSig();
+        Nodo<T> *pivot = this->primero;
+        Nodo<T> *pivotNext = pivot->getSig();
         int i = 0;
 
         do
@@ -558,10 +519,10 @@ bool Lista<Item>::estaOrdenada() const
  * Necesita que el 'Item' a sobrecargar igualmente pueda ser mostrado por pantalla
  * utilizando este mismo operador.
  * */
-template<class Item>
-std::ostream& operator<<(std::ostream& out, const Lista<Item> &list)
+template<class T>
+std::ostream& operator<<(std::ostream& out, const List<T> &list)
 {
-    Nodo<Item> *nodo;
+    Nodo<T> *nodo;
     nodo = list.primero;
     for (int i = 0; i < list.length; i++, nodo = nodo->getSig())
         if (nodo != list.ultimo)
@@ -575,19 +536,19 @@ std::ostream& operator<<(std::ostream& out, const Lista<Item> &list)
 /**
  * Sobrecarga de operador de Asignacion para Lista.
  * Permite hacer una copia de una lista mediante el uso del operador '='.
- * Ejemplo: Lista2 = Lista1.sublista(a, b).
+ * Ejemplo: Lista2 = Lista1.sublist(a, b).
  * */
-template<class Item>
-void Lista<Item>::operator=(const Lista<Item> & list)
+template<class T>
+void List<T>::operator=(const List<T> & list)
 {
     if (this != &list)
     {
-        Nodo<Item> *listPivot = list.primero;
-        Nodo<Item> *thisPivot = this->primero;
-        Nodo<Item> *nuevo;
+        Nodo<T> *listPivot = list.primero;
+        Nodo<T> *thisPivot = this->primero;
+        Nodo<T> *nuevo;
         for (int i = 1; i <= list.length; i++, listPivot = listPivot->getSig())
         {
-            nuevo = new Nodo<Item>();
+            nuevo = new Nodo<T>();
             nuevo->setInfo(listPivot->getInfo());
 
             if (i == 1)
@@ -611,8 +572,8 @@ void Lista<Item>::operator=(const Lista<Item> & list)
  * Indica si una Lista tiene o no mas elementos que otra, utilizando
  * el operador '>'.
  * */
-template<class Item>
-bool Lista<Item>::operator>(const Lista<Item> &v) const
+template<class T>
+bool List<T>::operator>(const List<T> &v) const
 {
     if (this != &v)
         return (this->length > v.length);
@@ -625,8 +586,8 @@ bool Lista<Item>::operator>(const Lista<Item> &v) const
  * Indica si una Lista tiene o no menos elementos que otra, utilizando
  * el operador '<'.
  * */
-template<class Item>
-bool Lista<Item>::operator<(const Lista<Item> &v) const
+template<class T>
+bool List<T>::operator<(const List<T> &v) const
 {
     return !(*this > v);
 }
@@ -636,15 +597,15 @@ bool Lista<Item>::operator<(const Lista<Item> &v) const
  * Indica si una Lista tiene o no los mismos elementos que otra,
  * utilizando el operador '=='.
  * */
-template<class Item>
-bool Lista<Item>::operator==(const Lista<Item> &v) const
+template<class T>
+bool List<T>::operator==(const List<T> &v) const
 {
     if (this != &v)
     {
         if (this->length == v.length)
         {
-            Nodo<Item> *thisPivot = this->primero;
-            Nodo<Item> *vPivot = v.primero;
+            Nodo<T> *thisPivot = this->primero;
+            Nodo<T> *vPivot = v.primero;
             bool esIgual;
             int i = 0;
 
@@ -669,8 +630,8 @@ bool Lista<Item>::operator==(const Lista<Item> &v) const
  * Indica si una Lista tiene mas elementos o es igual que otra,
  * utilizando el operador '>='.
  * */
-template<class Item>
-bool Lista<Item>::operator>=(const Lista<Item> &v) const
+template<class T>
+bool List<T>::operator>=(const List<T> &v) const
 {
     if (this != &v)
         return (*this > v || *this == v);
@@ -684,8 +645,8 @@ bool Lista<Item>::operator>=(const Lista<Item> &v) const
  * Indica si una Lista tiene menos elementos o es igual que otra,
  * utilizando el operador '<='.
  * */
-template<class Item>
-bool Lista<Item>::operator<=(const Lista<Item> &v) const
+template<class T>
+bool List<T>::operator<=(const List<T> &v) const
 {
     if (this != &v)
         return (*this < v || *this == v);
@@ -695,34 +656,34 @@ bool Lista<Item>::operator<=(const Lista<Item> &v) const
 
 /**
  * Invertir lista.
- * Helper Method para Invertir la Lista.
- * Invierte los elementos de la lista recursivamente.
+ * Helper Method para Invertir la List.
+ * Invierte los elementos de la List recursivamente.
  * Esta funcion debe mantenerse como privada.
  * @private
  * */
-template<class Item>
-Nodo<Item>* Lista<Item>::_invertir(Nodo<Item>*nodo)
+template<class T>
+Nodo<T>* List<T>::_reverse(Nodo<T>*nodo)
 {
     if (nodo->getSig() == NULL) // ¿Es el ultimo nodo?
         this->primero = nodo;
     else
-        _invertir(nodo->getSig())->setSig(nodo);
+        _reverse(nodo->getSig())->setSig(nodo);
 
     return nodo;
 }
 
 /**
- * Desordenar la lista dada.
+ * Dessort la lista dada.
  * Helper Method para el Algoritmo de QuickSort.
  * Privado porque no le veo uso fuera del algoritmo de QuickSort.
  * Su nivel de acceso puede ser modificado sí es necesario.
  * @private */
-template<class Item>
-void Lista<Item>::_desordenar()
+template<class T>
+void List<T>::_dessort()
 {
     std::srand(time(NULL));
-    Nodo<Item> *iPivot = this->primero;
-    Nodo<Item> *jPivot;
+    Nodo<T> *iPivot = this->primero;
+    Nodo<T> *jPivot;
     for (int i = 0; i < this->length; i++)
     {
         int r = std::rand() % (i + 1);
@@ -731,7 +692,7 @@ void Lista<Item>::_desordenar()
         for (int j = 0; j < r; j++)
             jPivot = jPivot->getSig();
 
-        Nodo<Item>::intercambiar(iPivot, jPivot);
+        Nodo<T>::intercambiar(iPivot, jPivot);
 
         iPivot = iPivot->getSig();
     }
@@ -743,10 +704,10 @@ void Lista<Item>::_desordenar()
  * Semestre 1-2016
  * @returns int La mediana de la Lista de Enteros.
  * */
-template<class Item>
-int Lista<Item>::mediana() const
+template<class T>
+int List<T>::mediana() const
 {
-    Nodo<Item> *aux = this->primero;
+    Nodo<T> *aux = this->primero;
     int median = 0;
     
     for (int i = 0; i < length; i++, aux = aux->getSig())

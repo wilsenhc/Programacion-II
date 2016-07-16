@@ -25,7 +25,7 @@ class Cola
         void encolar(Item);
         void desencolar();
         Item frente();
-        void vaciar();
+        void clear();
         void imprimir();
 };
 
@@ -74,7 +74,7 @@ template<class Item>
 Cola<Item>::~Cola()
 {
     std::cout << "Destructor Cola" << std::endl;
-    this->vaciar();
+    this->clear();
 }
 
 /**
@@ -88,7 +88,7 @@ int Cola<Item>::longitud()
 }
 
 /**
- * Indica si la lista esta vacia.
+ * Indica si la List esta vacia.
  * @returns {bool} TRUE sí esta vacia.
  * */
 template<class Item>
@@ -127,7 +127,7 @@ void Cola<Item>::desencolar()
     Nodo<Item> *del;
 
     if (esVacia())
-        std::cout << "Lista vacia" << std::endl;
+        std::cout << "List vacia" << std::endl;
     else
     {
         del = primero;
@@ -149,10 +149,10 @@ Item Cola<Item>::frente()
 }
 
 /**
- * Vaciar Cola.
+ * clear Cola.
  * */
 template<class Item>
-void Cola<Item>::vaciar()
+void Cola<Item>::clear()
 {
     if (!esVacia())
     {

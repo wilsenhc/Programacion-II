@@ -5,10 +5,10 @@
 #ifndef _POLINOMIO_HPP_
 #define _POLINOMIO_HPP_
 #include <iostream>
-#include "Lista.hpp"
+#include "List.hpp"
 #include "Monomio.hpp"
 
-class Polinomio : private Lista<Monomio>
+class Polinomio : private List<Monomio>
 {
     public:
         void insertar(Monomio);
@@ -18,7 +18,7 @@ class Polinomio : private Lista<Monomio>
 
 void Polinomio::insertar(Monomio m)
 {
-    this->Lista<Monomio>::insertar(m, this->longitud() + 1);
+    this->List<Monomio>::insertar(m, this->longitud() + 1);
 }
 
 void Polinomio::suma(Polinomio p, Polinomio q)

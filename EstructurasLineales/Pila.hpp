@@ -24,7 +24,7 @@ class Pila
         void apilar(Item);
         void desapilar();
         Item tope();
-        void vaciar();
+        void clear();
 };
 
 /**
@@ -69,7 +69,7 @@ Pila<Item>::Pila(const Pila<Item>& in)
 template<class Item>
 Pila<Item>::~Pila()
 {
-    this->vaciar();
+    this->clear();
 }
 
 /**
@@ -132,10 +132,10 @@ Item Pila<Item>::tope()
 }
 
 /**
- * Vaciar Pila
+ * clear Pila
  * */
 template<class Item>
-void Pila<Item>::vaciar()
+void Pila<Item>::clear()
 {
     if (!esVacia())
     {

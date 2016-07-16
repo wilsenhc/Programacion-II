@@ -12,7 +12,7 @@
  
 #include <iostream>
 #include <string>
-#include "../EstructurasLineales/Lista.hpp"
+#include "../EstructurasLineales/List.hpp"
 #include "../EstructurasJerarquicas/BST.hpp"
 
 using namespace std;
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
         for (int i = 0; i < N; i++)
         {
             cin >> numeroIn;
-            porden.pushUltimo(numeroIn);
+            porden.push_back(numeroIn);
         }
         cin >> s;
         
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
         for (int i = 0; i < N; i++)
         {
             cin >> numeroIn;
-            inorden.pushUltimo(numeroIn);
+            inorden.push_back(numeroIn);
         }
         
         tree = new BST<int>(porden, inorden, orden);
@@ -60,8 +60,8 @@ int main(int argc, char **argv)
         else
             cout << "NO es binario de busqueda.";
         
-        porden.vaciar();
-        inorden.vaciar();
+        porden.clear();
+        inorden.clear();
         delete tree;
     }
     

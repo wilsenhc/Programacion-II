@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 #include <iostream>
-#include "../EstructurasLineales/Lista.hpp"
+#include "../EstructurasLineales/List.hpp"
 #include "../EstructurasLineales/Cola.hpp"
 
 using namespace std;
@@ -24,8 +24,8 @@ int main(int argc, char **argv)
             cin >> numero;
             L.insertar(numero, j);
         }
-        // Ordenar ascendientemente
-        L.ordenar();
+        // sort ascendientemente
+        L.sort();
 
         // Calculo de la mediana
         mediana = L.mediana();
@@ -33,8 +33,8 @@ int main(int argc, char **argv)
         longi = L.longitud();
         for (int j = 1; j <= longi; j++)
         {
-            numero = L.consultar(1);
-            L.eliminar(1);
+            numero = L.get(1);
+            L.erase(1);
             if (numero >= mediana)
                 mayor.encolar(numero);
             else
@@ -58,9 +58,9 @@ int main(int argc, char **argv)
         cout << endl;
         
         // Vaciado de las Listas y Colas
-        L.vaciar();
-        menor.vaciar();
-        mayor.vaciar();
+        L.clear();
+        menor.clear();
+        mayor.clear();
     }
     
     

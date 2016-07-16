@@ -1,6 +1,6 @@
 #ifndef _BINARY_SEARCH_TREE_HPP_
 #define _BINARY_SEARCH_TREE_HPP_
-#include "../EstructurasLineales/Lista.hpp"
+#include "../EstructurasLineales/List.hpp"
 #include "BinaryTree.hpp"
 
 template<class T>

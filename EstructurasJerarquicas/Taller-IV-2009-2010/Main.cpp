@@ -32,7 +32,7 @@ int main(int argc, char **argv)
         while (cin.get() != '\n')
         {
             cin >> s;
-            porden.pushUltimo(s);
+            porden.push_back(s);
         }
         
         cin >> s;
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
         while (cin.get() != '\n')
         {
             cin >> s;
-            inorden.pushUltimo(s);
+            inorden.push_back(s);
         }
         
         tree = new SintaxTree(porden, inorden, orden);
@@ -48,8 +48,8 @@ int main(int argc, char **argv)
 		cout << "Caso #" << i++ << ":" << endl 
 		<< tree->solve() << endl;
 		
-		porden.vaciar();
-		inorden.vaciar();
+		porden.clear();
+		inorden.clear();
 		delete tree;
     }
     

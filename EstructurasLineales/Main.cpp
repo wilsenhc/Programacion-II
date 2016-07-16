@@ -3,16 +3,16 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 #include <iostream>
-#include "Lista.hpp"
+#include "List.hpp"
 
 using namespace std;
 
-void a(Lista<int> b)
+void a(List<int> b)
 {
 	cout << "ENTRADA A VOID" << endl << endl;
 	cout << b << endl;
 	
-	b.vaciar();
+	b.clear();
 	
 	cout << b << endl;
 	cout << "SALE VOID" << endl << endl;
@@ -20,13 +20,13 @@ void a(Lista<int> b)
 
 int main(int argc, char **argv)
 {
-    Lista<int> l;
+    List<int> l;
 
     for (int i = 1; i <= 10; i++)
         l.insertar(i, i);
 
     l.invertir();
-    l.ordenar();
+    l.sort();
 
     cout << l << endl;
 

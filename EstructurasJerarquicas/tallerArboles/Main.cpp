@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 #include <iostream>
 #include <string>
-#include "../../EstructurasLineales/Lista.hpp"
+#include "../../EstructurasLineales/List.hpp"
 #include "../BinaryTree.hpp"
 
 using namespace std;
@@ -31,7 +31,7 @@ int main(int argc, char **argv)
         for (int l = 0; l < m; l++)
         {
             cin >> c;
-            P.pushUltimo(c);
+            P.push_back(c);
         }
         
         cin >> porden;
@@ -39,7 +39,7 @@ int main(int argc, char **argv)
         for (int l = 0; l < m; l++)
         {
             cin >> c;
-            IN.pushUltimo(c);
+            IN.push_back(c);
         }
         
         BinaryTree<char> tree(P, IN, orden);

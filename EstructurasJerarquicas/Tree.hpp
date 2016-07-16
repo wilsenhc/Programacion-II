@@ -6,7 +6,7 @@
 #define _TREE_HPP_
 #include <iostream>
 #include "NodeN.hpp"
-#include "../EstructurasLineales/Lista.hpp"
+#include "../EstructurasLineales/List.hpp"
 
 template<class T>
 class Tree
@@ -42,10 +42,10 @@ Tree<T>::Tree(T e, Lista<Tree<T>> L)
 	
 	if (!L.esVacia())
 	{
-        _root->setLeft(copyTree(L.popPrimero()._root));
+        _root->setLeft(copyTree(L.pop_front()._root));
                 
         for (NodeN<T>* silbings = _root->getLeft(); !L.esVacia(); silbings = silbings->getRight())
-            silbings->setRight(copyTree(L.popPrimero()._root));
+            silbings->setRight(copyTree(L.pop_front()._root));
 	}
 }
 
@@ -69,7 +69,7 @@ Lista<Tree<T>> Tree<T>::getChilds() const
     for (NodeN<T> *s = _root->getLeft(); s != NULL; s = s->getRight())
     {
         Tree<T> t(new NodeN<T>(s->getKey(), copyTree(s->getLeft())));
-        L.pushUltimo(t);
+        L.push_back(t);
     }
     return L;
 }

@@ -5,7 +5,7 @@
 #ifndef _BINARY_TREE_HPP_
 #define _BINARY_TREE_HPP_
 #include "NodeBT.hpp"
-#include "../EstructurasLineales/Lista.hpp"
+#include "../EstructurasLineales/List.hpp"
 
 enum Traverse { preorden, postorden, inorden, levels };
 
@@ -73,7 +73,7 @@ BinaryTree<T>::BinaryTree(Lista<T> ordenA, Lista<T> ordenB, Traverse e)
         _root = pre_in(ordenA, ordenB);
     else if (e == postorden)
     {
-        ordenA.invertir();
+        ordenA.reverse();
         _root = post_in(ordenA, ordenB);
     }
     else
@@ -161,10 +161,10 @@ NodeBT<T>* BinaryTree<T>::pre_in(Lista<T> &pre, Lista<T> &in)
         Lista<T> sub;
         T e;
         while (pre.getPrimero() != in.getPrimero())
-            sub.pushUltimo(in.popPrimero());
+            sub.push_back(in.pop_front());
         
-        in.popPrimero();
-        e = pre.popPrimero();
+        in.pop_front();
+        e = pre.pop_front();
         
         return new NodeBT<T>(e, pre_in(pre, sub), pre_in(pre,in));
     }
@@ -180,10 +180,10 @@ NodeBT<T>* BinaryTree<T>::post_in(Lista<T> &post, Lista<T> &in)
         NodeBT<T> *der;
         T e;
         while (post.getPrimero() != in.getPrimero())
-            sub.pushUltimo(in.popPrimero());
+            sub.push_back(in.pop_front());
         
-        in.popPrimero();
-        e = post.popPrimero();
+        in.pop_front();
+        e = post.pop_front();
         der = post_in(post, in);
         
         return new NodeBT<T>(e, post_in(post, sub), der);
@@ -232,7 +232,7 @@ void BinaryTree<T>::list_pre(Lista<T> &L, NodeBT<T> *n) const
 {
     if (n)
     {
-        L.pushUltimo(n->getKey());
+        L.push_back(n->getKey());
         list_pre(L, n->getLeft());
         list_pre(L, n->getRight());
     }
@@ -245,7 +245,7 @@ void BinaryTree<T>::list_post(Lista<T> &L, NodeBT<T> *n) const
     {
         list_post(L, n->getLeft());
         list_post(L, n->getRight());
-        L.pushUltimo(n->getKey());
+        L.push_back(n->getKey());
     }
 }
 
@@ -255,7 +255,7 @@ void BinaryTree<T>::list_in(Lista<T> &L, NodeBT<T> *n) const
     if (n)
     {
         list_in(L, n->getLeft());
-        L.pushUltimo(n->getKey());
+        L.push_back(n->getKey());
         list_in(L, n->getRight());
     }
 }
@@ -267,19 +267,19 @@ void BinaryTree<T>::list_lvl(Lista<T> &L) const
     {
         Lista<NodeBT<T>*> lvl;
         
-        lvl.pushUltimo(_root);
+        lvl.push_back(_root);
         
         while(!lvl.esVacia())
         {
-            NodeBT<T>* n = lvl.popPrimero();
+            NodeBT<T>* n = lvl.pop_front();
             
             if (n->getLeft())
-                lvl.pushUltimo(n->getLeft());
+                lvl.push_back(n->getLeft());
             
             if (n->getRight())
-                lvl.pushUltimo(n->getRight());
+                lvl.push_back(n->getRight());
                 
-            L.pushUltimo(n->getKey());
+            L.push_back(n->getKey());
         }
     }
 }

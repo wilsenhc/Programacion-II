@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 #include <iostream>
 #include <string>
-#include "../../EstructurasLineales/Lista.hpp"
+#include "../../EstructurasLineales/List.hpp"
 #include "../SintaxTree.hpp"
 #include "../BinaryTree.hpp"
 #include "../BST.hpp"
@@ -30,19 +30,19 @@ int main(int argc, char **argv)
         for (int i = 0; i < N; i++)
         {
             cin >> n;
-            porden.pushUltimo(n);
+            porden.push_back(n);
         }
         
         cin >> s >> N;
         for (int i = 0; i < N; i++)
         {
             cin >> n;
-            inorden.pushUltimo(n);
+            inorden.push_back(n);
         }
         
         b1 = new BinaryTree<int>(porden, inorden, orden);
-        porden.vaciar();
-        inorden.vaciar();
+        porden.clear();
+        inorden.clear();
         
         cin >> s >> N;
         if (s == "PREORDEN")
@@ -53,19 +53,19 @@ int main(int argc, char **argv)
         for (int i = 0; i < N; i++)
         {
             cin >> n;
-            porden.pushUltimo(n);
+            porden.push_back(n);
         }
         
         cin >> s >> N;
         for (int i = 0; i < N; i++)
         {
             cin >> n;
-            inorden.pushUltimo(n);
+            inorden.push_back(n);
         }
         
         b2 = new BinaryTree<int>(porden, inorden, orden);
-        porden.vaciar();
-        inorden.vaciar();
+        porden.clear();
+        inorden.clear();
         
         if (b1->min() < b2->max())
             cout << "Es menor" << endl;
