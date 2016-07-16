@@ -1,3 +1,7 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Wilsen Hernandez. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 /* Main.cpp
  * 
  * Universidad de Carabobo
@@ -7,8 +11,8 @@
  * Seccion 02
  * Proyecto Arboles I-2016
  * 
- * Freddy Duran     C.I: 24.547.626 <freddyjdr03@gmail.com>
- * Wilsen Hernandez C.I: 24.993.998 <wilsenh95@gmail.com>
+ * Freddy Duran     <freddyjdr03@gmail.com>
+ * Wilsen Hernandez <wilsenh95@gmail.com>
  * 
  * Julio, 2016
  * */

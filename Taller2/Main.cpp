@@ -1,5 +1,8 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Wilsen Hernandez. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 /* WILSEN HERNANDEZ
- * C.I: 24.993.998
  * 15/06/2016
  * CAO403 Programacion II
  * Seccion 02

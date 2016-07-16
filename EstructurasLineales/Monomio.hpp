@@ -1,3 +1,7 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Wilsen Hernandez. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 #ifndef _MONOMIO_HPP_
 #define _MONOMIO_HPP_
 #include <iostream>
