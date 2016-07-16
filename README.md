@@ -10,24 +10,21 @@ Cabe destacar que ese curso fue mi primera experiencia como programador utilizan
 
 El repositorio consta de un conjunto de **librerías**, **soluciones a talleres** anteriores e igualmente aquellos que formaron parte de la evaluación de mi curso y el **proyecto final** del curso distribuidos en distintas categorías que constituyen los tres tipos de estructuras de datos trabajadas en el curso.
 
-#### Estructuras Lineales
-```
-Lista<T> / List<T>
-Pila<T> / Stack<T>
-Cola<T> / Queue<T>
-```
-#### Estructuras Jerárquicas
-```
-Arbol<T> / Tree<T>
-ArbolBinario<T> / BinaryTree<T>
-ArbolBinarioDeBusqueda<T> / BST<T>
-ArbolDeSintaxis<T> / SintaxTree<T>
-ArbolAVL<T> / AVL<T>
-```
-#### Estructuras Multienlazadas
-```
-Grafo<T, C> / Graph<T, C>
-```
+#### [Estructuras Lineales](EstructurasLineales/)
+* Lista< T > / [List< T >](EstructurasLineales/List.hpp)
+* Pila< T > / [Stack< T >](EstructurasLineales/Stack.hpp)
+* Cola< T > / [Queue< T >](EstructurasLineales/Queue.hpp)
+
+#### [Estructuras Jerárquicas](EstructurasJerarquicas/)
+* Arbol< T > / [Tree< T >](EstructurasJerarquicas/Tree.hpp)
+* ArbolBinario< T > / [BinaryTree< T >](EstructurasJerarquicas/BinaryTree.hpp)
+* ArbolBinarioDeBusqueda< T > / [BST< T >](EstructurasJerarquicas/BST.hpp)
+* ArbolDeSintaxis< T > / [SintaxTree< T >](EstructurasJerarquicas/SintaxTree.hpp)
+* ArbolAVL< T > / [AVL< T >](EstructurasJerarquicas/AVL.hpp)
+
+#### [Estructuras Multienlazadas](EstructurasMultienlazadas/)
+* Grafo<T, C> / [Graph< T, C >](EstructurasMultienlazadas/Graph.hpp)
+
 #### Talleres I, II y III
 #### Proyecto final
 
