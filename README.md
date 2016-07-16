@@ -1,4 +1,5 @@
 # Programación II - CAO403
+
 [**Programación II**](https://github.com/WilsenHernandez/Programacion-II) es un repositorio de librerías en C++ para el curso del mismo nombre que se imparte a los estudiantes de **Ciencias de la Computación** en la **Facultad de Ciencias y Tecnología** de la **Universidad de Carabobo**.
 
 Todas las librerías fueron *programadas por mi persona* forme parte del curso en cuestión. Este repositorio no solamente incluye la colección de librerías necesarias para ser estudiadas y utilizadas en las distintas evaluaciones del curso, sino también enunciados de evaluaciones pasadas y las soluciones a tales problemas proporcionadas por mi persona.
@@ -28,6 +29,7 @@ El repositorio consta de un conjunto de **librerías**, **soluciones a talleres*
 #### Proyecto final
 
 ## Contribuir
+
 Si quieres reportar un bug, algún problema o mejora de
 
 * Enviar un [pull request](link aca)
