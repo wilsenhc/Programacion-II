@@ -40,11 +40,11 @@ Tree<T>::Tree(T e, Lista<Tree<T>> L)
 {
 	_root = new NodeN<T>(e);
 	
-	if (!L.esVacia())
+	if (!L.empty())
 	{
         _root->setLeft(copyTree(L.pop_front()._root));
                 
-        for (NodeN<T>* silbings = _root->getLeft(); !L.esVacia(); silbings = silbings->getRight())
+        for (NodeN<T>* silbings = _root->getLeft(); !L.empty(); silbings = silbings->getRight())
             silbings->setRight(copyTree(L.pop_front()._root));
 	}
 }

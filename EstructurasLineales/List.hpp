@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 #ifndef _LIST_HPP_
 #define _LIST_HPP_
-#include "Nodo.hpp"
+#include "Node.hpp"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -14,8 +14,8 @@ class List
 {
     private:
         int length;
-        Nodo<T> *primero;
-        Nodo<T> *ultimo;
+        Node<T> *primero;
+        Node<T> *ultimo;
 
     public:
         List() : length(0), primero(NULL), ultimo(NULL) { };
@@ -60,7 +60,7 @@ class List
         friend std::ostream& operator<<(std::ostream&, const List<Ts> &);
 
     private:
-        Nodo<T>* _reverse(Nodo<T>*);
+        Node<T>* _reverse(Node<T>*);
         void _dessort();
 };    
 
@@ -73,13 +73,13 @@ List<T>::List(const List<T>& in)
 {
     if (in.primero != NULL)
     {
-        primero = new Nodo<T>(in.primero->getInfo());
-        Nodo<T> *inaux = in.primero->getSig();
-        Nodo<T> *thisaux = this->primero;
-        Nodo<T> *nuevo;
+        primero = new Node<T>(in.primero->getInfo());
+        Node<T> *inaux = in.primero->getSig();
+        Node<T> *thisaux = this->primero;
+        Node<T> *nuevo;
         while (inaux != NULL)
         {
-            nuevo = new Nodo<T>(inaux->getInfo());
+            nuevo = new Node<T>(inaux->getInfo());
             thisaux->setSig(nuevo);
             thisaux = thisaux->getSig();
             inaux = inaux->getSig();
@@ -101,8 +101,8 @@ void List<T>::insert(T e, int pos)
         std::cout << "Posicion invalida" << std::endl;
     else
     {
-        Nodo<T> *nuevo, *actual, *siguiente;
-        nuevo = new Nodo<T>(e);
+        Node<T> *nuevo, *actual, *siguiente;
+        nuevo = new Node<T>(e);
 
         if (length == 0)
         {
@@ -153,7 +153,7 @@ T List<T>::get(int pos) const
             return ultimo->getInfo();
         else
         {
-            Nodo<T> *act = primero;
+            Node<T> *act = primero;
             for (int i = 1; i < pos; i++)
                 act = act->getSig();
 
@@ -168,9 +168,9 @@ T List<T>::get(int pos) const
 template<class T>
 int List<T>::find(T e) const
 {
-    if (!esVacia())
+    if (!empty())
     {
-        Nodo<T> *pivot;
+        Node<T> *pivot;
         int i = 0;
         
         pivot = primero;
@@ -227,8 +227,8 @@ void List<T>::set_back(T e)
 template<class T>
 void List<T>::push_back(T e)
 {
-    Nodo<T> *nuevo = new Nodo<T>(e);
-    if (!esVacia())
+    Node<T> *nuevo = new Node<T>(e);
+    if (!empty())
     {
         nuevo->setSig(primero);
         primero = nuevo;
@@ -244,8 +244,8 @@ void List<T>::push_back(T e)
 template<class T>
 void List<T>::push_back(T e)
 {
-    Nodo<T> *nuevo = new Nodo<T>(e);
-    if(!esVacia())
+    Node<T> *nuevo = new Node<T>(e);
+    if(!empty())
     {
         ultimo->setSig(nuevo);
         ultimo = nuevo;
@@ -261,9 +261,9 @@ void List<T>::push_back(T e)
 template<class T>
 T List<T>::pop_front()
 {
-    if (!esVacia())
+    if (!empty())
     {
-        Nodo<T> *aux;
+        Node<T> *aux;
         T e;
         e = primero->getInfo();
         aux = primero;
@@ -278,9 +278,9 @@ T List<T>::pop_front()
 template<class T>
 T List<T>::pop_back()
 {
-    if (!esVacia())
+    if (!empty())
     {
-        Nodo<T> *ant, *act;
+        Node<T> *ant, *act;
         act = primero;
         for(int i = 0; i < length; i++)
         {
@@ -304,7 +304,7 @@ void List<T>::change(T e, int pos)
 {
     if (pos < 1 || pos > length)
         std::cout << "Posicion invalida" << std::endl;
-    else if (this->esVacia())
+    else if (this->empty())
         std::cout << "Lista vacia" << std::endl;
     else
     {
@@ -314,7 +314,7 @@ void List<T>::change(T e, int pos)
             ultimo->setInfo(e);
         else
         {
-            Nodo<T> *act = primero;
+            Node<T> *act = primero;
             for (int i = 0; i < pos; i++)
                 act = act->getSig();
             
@@ -333,11 +333,11 @@ void List<T>::erase(int pos)
 {
     if (pos < 1 || pos > length)
         std::cout << "Posicion invalida" << std::endl;
-    else if (this->esVacia())
+    else if (this->empty())
         std::cout << "Lista vacia" << std::endl;
     else
     {
-        Nodo<T> *ant, *act, *sig;
+        Node<T> *ant, *act, *sig;
         if (pos == 1)
         {
             act = primero;
@@ -367,9 +367,9 @@ void List<T>::erase(int pos)
 template<class T>
 void List<T>::clear()
 {
-    if (!esVacia())
+    if (!empty())
     {
-        Nodo<T> *actual, *next;
+        Node<T> *actual, *next;
         actual = primero;
         next = actual->getSig();
 
@@ -423,15 +423,15 @@ List<T> List<T>::sublist(int low, int high)
     if ((low >= 1 && low <= length) && (high >= 1 && high <= length))
     {
 
-        Nodo<T> *aux = primero;
-        Nodo<T> *aux2 = NULL;
-        Nodo<T> *nuevo;
+        Node<T> *aux = primero;
+        Node<T> *aux2 = NULL;
+        Node<T> *nuevo;
 
         for (int i = 1; i <= high; i++)
         {
             if (i >= low)
             {
-                nuevo = new Nodo<T>(*aux);
+                nuevo = new Node<T>(*aux);
 
                 if (i == low)
                     lista->primero = nuevo;
@@ -470,12 +470,12 @@ void List<T>::bubblesort()
         int n = this->length;
         for (int pasada = 0; pasada < n - 1; pasada++)
         {
-            Nodo<T> *pivot = this->primero;
-            Nodo<T> *pivotNext = pivot->getSig();
+            Node<T> *pivot = this->primero;
+            Node<T> *pivotNext = pivot->getSig();
             for (int j = 0; j < n - pasada - 1; j++)
             {
                 if (pivot->getInfo() > pivotNext->getInfo())
-                    Nodo<T>::intercambiar(pivot, pivotNext);
+                    Node<T>::intercambiar(pivot, pivotNext);
 
                 pivot = pivotNext;
                 pivotNext = pivotNext->getSig();
@@ -493,10 +493,10 @@ template<class T>
 bool List<T>::sorted() const
 {
     bool ordenada = true;
-    if (!esVacia())
+    if (!empty())
     {
-        Nodo<T> *pivot = this->primero;
-        Nodo<T> *pivotNext = pivot->getSig();
+        Node<T> *pivot = this->primero;
+        Node<T> *pivotNext = pivot->getSig();
         int i = 0;
 
         do
@@ -522,13 +522,13 @@ bool List<T>::sorted() const
 template<class T>
 std::ostream& operator<<(std::ostream& out, const List<T> &list)
 {
-    Nodo<T> *nodo;
-    nodo = list.primero;
-    for (int i = 0; i < list.length; i++, nodo = nodo->getSig())
-        if (nodo != list.ultimo)
-            out << nodo->getInfo() << " ";
+    Node<T> *Node;
+    Node = list.primero;
+    for (int i = 0; i < list.length; i++, Node = Node->getSig())
+        if (Node != list.ultimo)
+            out << Node->getInfo() << " ";
         else
-            out << nodo->getInfo();
+            out << Node->getInfo();
 
     return out;
 }
@@ -543,12 +543,12 @@ void List<T>::operator=(const List<T> & list)
 {
     if (this != &list)
     {
-        Nodo<T> *listPivot = list.primero;
-        Nodo<T> *thisPivot = this->primero;
-        Nodo<T> *nuevo;
+        Node<T> *listPivot = list.primero;
+        Node<T> *thisPivot = this->primero;
+        Node<T> *nuevo;
         for (int i = 1; i <= list.length; i++, listPivot = listPivot->getSig())
         {
-            nuevo = new Nodo<T>();
+            nuevo = new Node<T>();
             nuevo->setInfo(listPivot->getInfo());
 
             if (i == 1)
@@ -604,8 +604,8 @@ bool List<T>::operator==(const List<T> &v) const
     {
         if (this->length == v.length)
         {
-            Nodo<T> *thisPivot = this->primero;
-            Nodo<T> *vPivot = v.primero;
+            Node<T> *thisPivot = this->primero;
+            Node<T> *vPivot = v.primero;
             bool esIgual;
             int i = 0;
 
@@ -662,14 +662,14 @@ bool List<T>::operator<=(const List<T> &v) const
  * @private
  * */
 template<class T>
-Nodo<T>* List<T>::_reverse(Nodo<T>*nodo)
+Node<T>* List<T>::_reverse(Node<T>*Node)
 {
-    if (nodo->getSig() == NULL) // ¿Es el ultimo nodo?
-        this->primero = nodo;
+    if (Node->getSig() == NULL) // ¿Es el ultimo Node?
+        this->primero = Node;
     else
-        _reverse(nodo->getSig())->setSig(nodo);
+        _reverse(Node->getSig())->setSig(Node);
 
-    return nodo;
+    return Node;
 }
 
 /**
@@ -682,8 +682,8 @@ template<class T>
 void List<T>::_dessort()
 {
     std::srand(time(NULL));
-    Nodo<T> *iPivot = this->primero;
-    Nodo<T> *jPivot;
+    Node<T> *iPivot = this->primero;
+    Node<T> *jPivot;
     for (int i = 0; i < this->length; i++)
     {
         int r = std::rand() % (i + 1);
@@ -692,7 +692,7 @@ void List<T>::_dessort()
         for (int j = 0; j < r; j++)
             jPivot = jPivot->getSig();
 
-        Nodo<T>::intercambiar(iPivot, jPivot);
+        Node<T>::intercambiar(iPivot, jPivot);
 
         iPivot = iPivot->getSig();
     }
@@ -707,7 +707,7 @@ void List<T>::_dessort()
 template<class T>
 int List<T>::mediana() const
 {
-    Nodo<T> *aux = this->primero;
+    Node<T> *aux = this->primero;
     int median = 0;
     
     for (int i = 0; i < length; i++, aux = aux->getSig())

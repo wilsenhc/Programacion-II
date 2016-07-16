@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 #include <iostream>
 #include "../EstructurasLineales/List.hpp"
-#include "../EstructurasLineales/Cola.hpp"
+#include "../EstructurasLineales/Queue.hpp"
 
 using namespace std;
 
@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 {
     int n, m, numero, mediana, longi;
     Lista<int> L;
-    Cola<int> menor, mayor;
+    Queue<int> menor, mayor;
     
     cin >> n; // Lectura de N (Cantidad de casos de prueba)
     for (int i = 0; i < n; i++)
@@ -36,24 +36,24 @@ int main(int argc, char **argv)
             numero = L.get(1);
             L.erase(1);
             if (numero >= mediana)
-                mayor.encolar(numero);
+                mayor.push(numero);
             else
-                menor.encolar(numero);
+                menor.push(numero);
         }
         
         longi = menor.longitud();
-        for (int j = 0; j < longi && !(menor.esVacia()); j++)
+        for (int j = 0; j < longi && !(menor.empty()); j++)
         {
             cout << menor.frente() << " ";
-            menor.desencolar();
+            menor.pop();
         }
         cout << endl;
         
         longi = mayor.longitud();
-        for (int p = 0; p < longi && !(mayor.esVacia()); p++)
+        for (int p = 0; p < longi && !(mayor.empty()); p++)
         {
             cout << mayor.frente() << " ";
-            mayor.desencolar();
+            mayor.pop();
         }
         cout << endl;
         
