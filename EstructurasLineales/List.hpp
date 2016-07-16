@@ -42,7 +42,6 @@ class List
         List<T> sublist(int, int);
         void reverse();
         void sort();
-        void bubblesort();
         bool sorted() const;
 
         void operator=(const List<T> &);
@@ -445,21 +444,12 @@ List<T> List<T>::sublist(int low, int high)
 }
 
 /**
- * Ordernar
- * */
-template<class T>
-void List<T>::sort()
-{
-    this->bubblesort();
-}
-
-/**
  * Ordena los elementos de la lista.
  * Ordena de menor a mayor los elementos de la lista, utilizando
  * el algoritmo de ordenamiento Bubble Sort.
  * */
 template<class T>
-void List<T>::bubblesort()
+void List<T>::sort()
 {
     if (!sorted())
     {
