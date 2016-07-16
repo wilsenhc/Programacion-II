@@ -38,4 +38,4 @@ Si quieres reportar un bug, algún problema o mejora de
 
 
 ## Licencia
-[MIT](LICENSE.txt)
+[MIT License](LICENSE.txt)
