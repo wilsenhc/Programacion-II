@@ -11,7 +11,7 @@ using namespace std;
 int main(int argc, char **argv)
 {
     int n, m, numero, mediana, longi;
-    Lista<int> L;
+    List<int> L;
     Queue<int> menor, mayor;
     
     cin >> n; // Lectura de N (Cantidad de casos de prueba)
@@ -22,37 +22,40 @@ int main(int argc, char **argv)
         {
             // Llenado de la Lista L
             cin >> numero;
-            L.insertar(numero, j);
+            L.insert(numero, j);
         }
         // sort ascendientemente
         L.sort();
 
         // Calculo de la mediana
-        mediana = L.mediana();
+        if (L.size() % 2)
+            mediana = (L.size() + 1)/2;
+        else
+            mediana = ((L.size()/2) + ((L.size()/2)+1))/2 ;
         
-        longi = L.longitud();
-        for (int j = 1; j <= longi; j++)
+        longi = L.size();
+        for (int j = 0; j < longi; j++)
         {
-            numero = L.get(1);
-            L.erase(1);
-            if (numero >= mediana)
+            numero = L.front();
+            L.pop_front();
+            if (j >= mediana)
                 mayor.push(numero);
             else
                 menor.push(numero);
         }
         
-        longi = menor.longitud();
+        longi = menor.size();
         for (int j = 0; j < longi && !(menor.empty()); j++)
         {
-            cout << menor.frente() << " ";
+            cout << menor.front() << " ";
             menor.pop();
         }
         cout << endl;
         
-        longi = mayor.longitud();
+        longi = mayor.size();
         for (int p = 0; p < longi && !(mayor.empty()); p++)
         {
-            cout << mayor.frente() << " ";
+            cout << mayor.front() << " ";
             mayor.pop();
         }
         cout << endl;

@@ -26,13 +26,13 @@ class NodeBT
         bool isFullNode() const { return _left != NULL && _right != NULL; }
         int height() const;
         
-        void setKey(const T);
-        void setLeft(NodeBT<T>*);
-        void setRight(NodeBT<T>*);
+        void setKey(const T item) { _key = item; };
+        void setLeft(NodeBT<T> *l) { _left = l; };
+        void setRight(NodeBT<T> *r) { _right = r; };
         
     private:
         int height(NodeBT<T>*) const;
-        int max(int, int) const;
+        int max(int a, int b) const { return a > b ? a : b; };
 };
 
 template<class T>
@@ -42,33 +42,6 @@ int NodeBT<T>::height() const
         return max(height(_left), height(_right));
     
     return 0;
-}
-
-/**
- * Key setter
- * */
-template<class T>
-void NodeBT<T>::setKey(const T item)
-{
-    _key = item;
-}
-
-/**
- * Left setter
- * */
-template<class T>
-void NodeBT<T>::setLeft(NodeBT<T>* l)
-{
-    _left = l;
-}
-
-/**
- * Right setter
- * */
-template<class T>
-void NodeBT<T>::setRight(NodeBT<T>* r)
-{
-    _right = r;
 }
 
 // =====================================================================
@@ -83,12 +56,6 @@ int NodeBT<T>::height(NodeBT<T>* p) const
         return 1 + max(height(p->getLeft()), height(p->getRight()));
     }
     return 0; 
-}
-
-template<class T>
-int NodeBT<T>::max(int a, int b) const
-{
-    return a > b ? a : b;
 }
 
 #endif

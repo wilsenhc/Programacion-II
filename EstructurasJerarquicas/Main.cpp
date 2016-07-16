@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
-#include "../EstructurasLineales/List.hpp"
+#include <list>
 #include "SintaxTree.hpp"
 #include "BinaryTree.hpp"
 #include "Tree.hpp"

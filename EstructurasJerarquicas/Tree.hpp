@@ -5,8 +5,8 @@
 #ifndef _TREE_HPP_
 #define _TREE_HPP_
 #include <iostream>
+#include <list>
 #include "NodeN.hpp"
-#include "../EstructurasLineales/List.hpp"
 
 template<class T>
 class Tree
@@ -19,24 +19,24 @@ class Tree
         Tree(NodeN<T> *p) : _root(p) { };
         Tree(const Tree<T>& t) : _root(copyTree(t._root)) { };
         Tree(T e) : _root(new NodeN<T>(e)) { };
-        Tree(T, Lista<Tree<T>>);
-        ~Tree() { _root = destroy(_root); };
+        Tree(T, list<Tree<T>>);
+        ~Tree() { _root = clear(_root); };
         
-        bool isNull() const { return _root == NULL; }
-        void insert(Tree<T>);
-        Lista<Tree<T>> getChilds() const;
+        bool null() const { return _root == NULL; }
+        void push(Tree<T>);
+        list<Tree<T>> children() const;
         
-        void destroy() { _root = destroy(_root); }
+        void clear() { _root = clear(_root); }
         
         void operator=(const Tree<T> &);
         
     private:
 		NodeN<T>* copyTree(NodeN<T>*) const;
-        NodeN<T>* destroy(NodeN<T>* p);
+        NodeN<T>* clear(NodeN<T>* p);
 };
 
 template<class T>
-Tree<T>::Tree(T e, Lista<Tree<T>> L)
+Tree<T>::Tree(T e, list<Tree<T>> L)
 {
 	_root = new NodeN<T>(e);
 	
@@ -50,9 +50,9 @@ Tree<T>::Tree(T e, Lista<Tree<T>> L)
 }
 
 template<class T>
-void Tree<T>::insert(Tree<T> t)
+void Tree<T>::push(Tree<T> t)
 {
-    if (!t.isNull())
+    if (!t.null())
     {
         NodeN<T> *sil = _root->getLeft();
         while(sil->getRight() != NULL)
@@ -63,9 +63,9 @@ void Tree<T>::insert(Tree<T> t)
 }
 
 template<class T>
-Lista<Tree<T>> Tree<T>::getChilds() const
+list<Tree<T>> Tree<T>::children() const
 {
-    Lista<Tree<T>> L;
+    list<Tree<T>> L;
     for (NodeN<T> *s = _root->getLeft(); s != NULL; s = s->getRight())
     {
         Tree<T> t(new NodeN<T>(s->getKey(), copyTree(s->getLeft())));
@@ -79,7 +79,7 @@ void Tree<T>::operator=(const Tree<T> &tree)
 {
     if (this != &tree)
     {
-        this->_root = destroy(this->_root);
+        this->_root = clear(this->_root);
         this->_root = copyTree(tree._root);
     }
 }
@@ -96,12 +96,12 @@ NodeN<T>* Tree<T>::copyTree(NodeN<T>* p) const
 }
 
 template<class T>
-NodeN<T>* Tree<T>::destroy(NodeN<T>* p)
+NodeN<T>* Tree<T>::clear(NodeN<T>* p)
 {
     if (p != NULL)
     {
-        p->setLeft(destroy(p->getLeft()));
-        p->setRight(destroy(p->getRight()));
+        p->setLeft(clear(p->getLeft()));
+        p->setRight(clear(p->getRight()));
         delete p;
     }
     return NULL;

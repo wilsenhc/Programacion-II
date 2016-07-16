@@ -32,7 +32,7 @@ class List
         T back() const;
         void set_front(T);
         void set_back(T);
-        void push_back(T);
+        void push_front(T);
         void push_back(T);
         T pop_front();
         T pop_back();
@@ -44,10 +44,6 @@ class List
         void sort();
         void bubblesort();
         bool sorted() const;
-        
-        // Taller 1
-        int mediana() const;
-        // Fin Taller 1
 
         void operator=(const List<T> &);
         bool operator>(const List<T> &) const;
@@ -225,7 +221,7 @@ void List<T>::set_back(T e)
 }
 
 template<class T>
-void List<T>::push_back(T e)
+void List<T>::push_front(T e)
 {
     Node<T> *nuevo = new Node<T>(e);
     if (!empty())
@@ -696,24 +692,6 @@ void List<T>::_dessort()
 
         iPivot = iPivot->getSig();
     }
-}
-
-/**
- * Metodo para Calcular la mediana de una lista de Enteros.
- * Desarrolada para utilizar en el Taller 1 de Programacion II.
- * Semestre 1-2016
- * @returns int La mediana de la Lista de Enteros.
- * */
-template<class T>
-int List<T>::mediana() const
-{
-    Node<T> *aux = this->primero;
-    int median = 0;
-    
-    for (int i = 0; i < length; i++, aux = aux->getSig())
-        median += aux->getInfo();
-        
-    return median / length;
 }
 
 #endif

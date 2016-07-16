@@ -12,22 +12,22 @@
  
 #include <iostream>
 #include <string>
-#include "../EstructurasLineales/List.hpp"
+#include <list>
 #include "../EstructurasJerarquicas/BST.hpp"
 
 using namespace std;
 
 int main(int argc, char **argv)
 {
-    Lista<int> porden, inorden;
+    
     Traverse orden;
     string s;
     bool enter = false;
-    BST<int> *tree;
     int numeroIn, N;
         
     while (cin >> s)
     {
+        list<int> porden, inorden;
         if (enter)
             cout << endl;
         else
@@ -53,16 +53,12 @@ int main(int argc, char **argv)
             inorden.push_back(numeroIn);
         }
         
-        tree = new BST<int>(porden, inorden, orden);
+        BST<int> tree(porden, inorden, orden);
         
-        if (tree->isBST())
+        if (tree.bst())
             cout << "ES binario de busqueda.";
         else
             cout << "NO es binario de busqueda.";
-        
-        porden.clear();
-        inorden.clear();
-        delete tree;
     }
     
     return 0;

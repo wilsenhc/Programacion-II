@@ -1,7 +1,11 @@
 #ifndef _BINARY_SEARCH_TREE_HPP_
 #define _BINARY_SEARCH_TREE_HPP_
-#include "../EstructurasLineales/List.hpp"
+#include <limits>
+#include <list>
 #include "BinaryTree.hpp"
+
+using std::list;
+using std::numeric_limits;
 
 template<class T>
 class BST : public BinaryTree<T>
@@ -11,34 +15,34 @@ class BST : public BinaryTree<T>
         BST(T e) : BinaryTree<T>(e) { };
         BST(NodeBT<T> *p) : BinaryTree<T>(p) { };
         BST(const BST<T> &p) : BinaryTree<T>(p) { };
-        BST(Lista<T> p, Lista<T> in, Traverse t) : BinaryTree<T>(p, in, t) { };
+        BST(list<T> p, list<T> in, Traverse t) : BinaryTree<T>(p, in, t) { };
     
-        bool isBST() const;
+        bool bst() const;
         T floor(T) const;   // TODO: Implement
         T min() const { return min(this->_root); }
         T max() const { return max(this->_root); }
-        void insert(T);
+        void push(T);
         bool search(T e) const { return search(e, this->_root); }
-        void del(T);
-        void delMin();
-        void delMax();
+        void erase(T);
+        void erase_min();
+        void erase_max();
         
     private:
-        bool isBST(NodeBT<T>*) const;
+        bool bst(NodeBT<T>*, int, int) const;
         T floor(T, NodeBT<T>*) const;   // TODO
         T min(NodeBT<T>*) const;
         T max(NodeBT<T>*) const;
-        NodeBT<T>* insert(T, NodeBT<T>*);
+        NodeBT<T>* push(T, NodeBT<T>*);
         bool search(T, NodeBT<T>*) const;
-        NodeBT<T>* del(T, NodeBT<T>*);
-        NodeBT<T>* delMin(NodeBT<T>*);
-        NodeBT<T>* delMax(NodeBT<T>*);
+        NodeBT<T>* erase(T, NodeBT<T>*);
+        NodeBT<T>* erase_min(NodeBT<T>*);
+        NodeBT<T>* erase_max(NodeBT<T>*);
 };
 
 template<class T>
-bool BST<T>::isBST() const
+bool BST<T>::bst() const
 {
-    return isBST(this->_root);
+    return bst(this->_root, numeric_limits<T>::min(), numeric_limits<T>::max());
 }
 
 template<class T>
@@ -48,48 +52,39 @@ T BST<T>::floor(T e) const
 }
 
 template<class T>
-void BST<T>::insert(T e)
+void BST<T>::push(T e)
 {
-    this->_root = insert(e, this->_root);
+    this->_root = push(e, this->_root);
 }
 
 template<class T>
-void BST<T>::del(T e)
+void BST<T>::erase(T e)
 {
     if (search(e))
-        this->_root = del(e, this->_root);
+        this->_root = erase(e, this->_root);
 }
 
 template<class T>
-void BST<T>::delMin()
+void BST<T>::erase_min()
 {
-    this->_root = delMin(this->_root);
+    this->_root = erase_min(this->_root);
 }
 
 template<class T>
-void BST<T>::delMax()
+void BST<T>::erase_max()
 {
-    this->_root = delMax(this->_root);
+    this->_root = erase_max(this->_root);
 }
 
 // =====================================================================
 template<class T>
-bool BST<T>::isBST(NodeBT<T> *p) const
+bool BST<T>::bst(NodeBT<T> *p, int min, int max) const
 {
     if (p != NULL)
-    {
-        bool max = true;
-        bool min = true;
-        
-        if (p->getLeft())
-            max = this->max(p->getLeft()) < p->getKey();
-        
-        if (p->getRight())
-            min = this->min(p->getRight()) > p->getKey();
-            
-        return max && min
-                && isBST(p->getLeft())
-                && isBST(p->getRight());
+    {        
+        return p->getKey() > min && p->getKey() < max
+               && bst(p->getLeft(), min, p->getKey())
+               && bst(p->getRight(), p->getKey(), max);
     }
     return true;
 }
@@ -119,14 +114,14 @@ T BST<T>::max(NodeBT<T> *p) const
 }
 
 template<class T>
-NodeBT<T>* BST<T>::insert(T e, NodeBT<T> *p)
+NodeBT<T>* BST<T>::push(T e, NodeBT<T> *p)
 {
     if (p == NULL) return new NodeBT<T>(e);
     
     if (e < p->getKey())
-        p->setLeft(insert(e, p->getLeft()));
+        p->setLeft(push(e, p->getLeft()));
     else if (e > p->getKey())
-        p->setRight(insert(e, p->getRight()));
+        p->setRight(push(e, p->getRight()));
     else
         p->setKey(e);
         
@@ -149,12 +144,12 @@ bool BST<T>::search(T e, NodeBT<T> *p) const
 }
 
 template<class T>
-NodeBT<T>* BST<T>::del(T e, NodeBT<T> *p)
+NodeBT<T>* BST<T>::erase(T e, NodeBT<T> *p)
 {
     if (p == NULL) return NULL;
     
-    if (e < p->getKey()) p->setLeft(del(e, p->getLeft()));
-    else if (e > p->getKey()) p->setRight(del(e, p->getRight()));
+    if (e < p->getKey()) p->setLeft(erase(e, p->getLeft()));
+    else if (e > p->getKey()) p->setRight(erase(e, p->getRight()));
     else
     {
         if (p->getRight() == NULL) return p->getLeft();
@@ -162,17 +157,17 @@ NodeBT<T>* BST<T>::del(T e, NodeBT<T> *p)
         
         NodeBT<T> *t = p;
         p->setKey(min(t->getRight()));
-        p->setRight(delMin(t->getRight()));
+        p->setRight(erase_min(t->getRight()));
         p->setLeft(t->getLeft());
     }
     return p;
 }
 
 template<class T>
-NodeBT<T>* BST<T>::delMin(NodeBT<T> *root)
+NodeBT<T>* BST<T>::erase_min(NodeBT<T> *root)
 {
     if (root->getLeft() != NULL)
-        root->setLeft(delMin(root->getLeft()));
+        root->setLeft(erase_min(root->getLeft()));
     else
     {
         NodeBT<T> *p = root->getRight();
@@ -183,10 +178,10 @@ NodeBT<T>* BST<T>::delMin(NodeBT<T> *root)
 }
 
 template<class T>
-NodeBT<T>* BST<T>::delMax(NodeBT<T> *root)
+NodeBT<T>* BST<T>::erase_max(NodeBT<T> *root)
 {
     if (root->getRight() != NULL)
-        root->setRight(delMin(root->getRight()));
+        root->setRight(erase_min(root->getRight()));
     else
     {
         NodeBT<T> *p = root->getLeft();

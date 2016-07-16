@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 #ifndef _SINTAX_TREE_HPP_
 #define _SINTAX_TREE_HPP_
+#include <list>
 #include <string>
 #include <sstream>
-#include "../EstructurasLineales/List.hpp"
 #include "BinaryTree.hpp"
 
 using namespace std;
@@ -17,7 +17,7 @@ class SintaxTree : public BinaryTree<string>
 		SintaxTree() : BinaryTree<string>() { };
         SintaxTree(NodeBT<string> *p) : BinaryTree<string>(p) { };
         SintaxTree(const SintaxTree &p) : BinaryTree<string>(p) { };
-        SintaxTree(Lista<string> p, Lista<string> in, Traverse t) : BinaryTree<string>(p, in, t) { };
+        SintaxTree(list<string> p, list<string> in, Traverse t) : BinaryTree<string>(p, in, t) { };
         
         float solve() const;
         
