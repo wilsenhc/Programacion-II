@@ -11,20 +11,23 @@ Cabe destacar que ese curso fue mi primera experiencia como programador utilizan
 El repositorio consta de un conjunto de **librerías**, **soluciones a talleres** anteriores e igualmente aquellos que formaron parte de la evaluación de mi curso y el **proyecto final** del curso distribuidos en distintas categorías que constituyen los tres tipos de estructuras de datos trabajadas en el curso.
 
 #### Estructuras Lineales
-* Lista<T> / List<T>
-* Pila<T> / Stack<T>
-* Cola<T> / Queue<T>
-
+```
+Lista<T> / List<T>
+Pila<T> / Stack<T>
+Cola<T> / Queue<T>
+```
 #### Estructuras Jerárquicas
-* Arbol<T> / Tree<T>
-* ArbolBinario<T> / BinaryTree<T>
-* ArbolBinarioDeBusqueda<T> / BST<T>
-* ArbolDeSintaxis<T> / SintaxTree<T>
-* ArbolAVL<T> / AVL<T>
-
+```
+Arbol<T> / Tree<T>
+ArbolBinario<T> / BinaryTree<T>
+ArbolBinarioDeBusqueda<T> / BST<T>
+ArbolDeSintaxis<T> / SintaxTree<T>
+ArbolAVL<T> / AVL<T>
+```
 #### Estructuras Multienlazadas
-* Grafo<T, C> / Graph<T, C>
-
+```
+Grafo<T, C> / Graph<T, C>
+```
 #### Talleres I, II y III
 #### Proyecto final
 
