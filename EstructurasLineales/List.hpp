@@ -93,7 +93,7 @@ template<class T>
 void List<T>::insert(T e, int pos)
 {
     if (pos < 1 || pos > length + 2)
-        std::cout << "Posicion invalida" << std::endl;
+        throw "Posicion invalida";
     else
     {
         Node<T> *nuevo, *actual, *siguiente;
@@ -139,7 +139,7 @@ template<class T>
 T List<T>::get(int pos) const
 {
     if (pos < 1 || pos > length + 1)
-        std::cout << "Posicion invalida" << std::endl;
+        throw "Posicion invalida";
     else
     {
         if (pos == 1)
@@ -297,10 +297,10 @@ T List<T>::pop_back()
 template<class T>
 void List<T>::change(T e, int pos)
 {
-    if (pos < 1 || pos > length)
-        std::cout << "Posicion invalida" << std::endl;
-    else if (this->empty())
-        std::cout << "Lista vacia" << std::endl;
+    if (this->empty())
+        throw "Lista vacia";
+    else if (pos < 1 || pos > length)
+        throw "Posicion invalida";
     else
     {
         if (pos == 1)
@@ -326,10 +326,10 @@ void List<T>::change(T e, int pos)
 template<class T>
 void List<T>::erase(int pos)
 {
-    if (pos < 1 || pos > length)
-        std::cout << "Posicion invalida" << std::endl;
-    else if (this->empty())
-        std::cout << "Lista vacia" << std::endl;
+    if (this->empty())
+        throw "Lista vacia";
+    else if (pos < 1 || pos > length)
+        throw "Posicion invalida";
     else
     {
         Node<T> *ant, *act, *sig;
