@@ -52,7 +52,7 @@ int main(int argc, char **argv)
         QuadTree qt1(cadena1), qt2(cadena2), qt3;
         qt3.Union(qt1, qt2);
         
-        cout << "Hay " << qt3.pixels_en_negro(MAX_ALT) << " pixels en negro." << endl;
+        cout << "Hay " << qt3.pixels_en_negro(MAX_ALT) << " pixels negro." << endl;
         
         
     }
