@@ -24,7 +24,7 @@ class Queue
         bool empty() const { return length == 0; };
         void push(T);
         void pop();
-        T front() const { return primero->getInfo(); };
+        T front() const { return primero->key(); };
         void clear();
 };
 
@@ -38,18 +38,18 @@ Queue<T>::Queue(const Queue<T>& in)
     if (in.primero != NULL)
     {
         primero = new Node<T>();
-        primero->setInfo(in.primero->getInfo());
-        Node<T> *inPivot = in.primero->getSig();
+        primero->set_key(in.primero->key());
+        Node<T> *inPivot = in.primero->next();
         Node<T> *thisPivot = this->primero;
         Node<T> *add;
 
         while (inPivot != NULL)
         {
             add = new Node<T>();
-            add->setInfo(inPivot->getInfo());
-            thisPivot->setSig(add);
-            thisPivot = thisPivot->getSig();
-            inPivot = inPivot->getSig();
+            add->set_key(inPivot->key());
+            thisPivot->set_next(add);
+            thisPivot = thisPivot->next();
+            inPivot = inPivot->next();
         }
         ultimo = add;
     }
@@ -73,12 +73,12 @@ template<class T>
 void Queue<T>::push(T e)
 {
     Node<T> *nuevo = new Node<T>();
-    nuevo->setInfo(e);
+    nuevo->set_key(e);
 
     if (empty())
         primero = nuevo;
     else
-        ultimo->setSig(nuevo);
+        ultimo->set_next(nuevo);
     
     ultimo = nuevo;
     length++;
@@ -94,7 +94,7 @@ void Queue<T>::pop()
     else
     {
         del = primero;
-        primero = del->getSig();
+        primero = del->next();
         delete del;
         length--;
     }
@@ -110,13 +110,13 @@ void Queue<T>::clear()
     {
         Node<T> *actual, *next;
         actual = primero;
-        next = actual->getSig();
+        next = actual->next();
 
         for (int i = 1; i < length; i++)
         {
             delete actual;
             actual = next;
-            next = actual->getSig();
+            next = actual->next();
         }
         delete actual;
 

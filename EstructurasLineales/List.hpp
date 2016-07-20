@@ -68,16 +68,16 @@ List<T>::List(const List<T>& in)
 {
     if (in.primero != NULL)
     {
-        primero = new Node<T>(in.primero->getInfo());
-        Node<T> *inaux = in.primero->getSig();
+        primero = new Node<T>(in.primero->key());
+        Node<T> *inaux = in.primero->next();
         Node<T> *thisaux = this->primero;
         Node<T> *nuevo;
         while (inaux != NULL)
         {
-            nuevo = new Node<T>(inaux->getInfo());
-            thisaux->setSig(nuevo);
-            thisaux = thisaux->getSig();
-            inaux = inaux->getSig();
+            nuevo = new Node<T>(inaux->key());
+            thisaux->set_next(nuevo);
+            thisaux = thisaux->next();
+            inaux = inaux->next();
         }
         ultimo = nuevo;
     }
@@ -106,25 +106,25 @@ void List<T>::insert(T e, int pos)
         }
         else if (pos == 1)
         {
-            nuevo->setSig(primero);
+            nuevo->set_next(primero);
             primero = nuevo;
         }
         else if (pos == length + 1)
         {
-            ultimo->setSig(nuevo);
+            ultimo->set_next(nuevo);
             ultimo = nuevo;
         }
         else
         {
             actual = primero;
-            siguiente = actual->getSig();
+            siguiente = actual->next();
             for (int i = 2; i < pos; i++)
             {
                 actual = siguiente;
-                siguiente = siguiente->getSig();
+                siguiente = siguiente->next();
             }
-            actual->setSig(nuevo);
-            nuevo->setSig(siguiente);
+            actual->set_next(nuevo);
+            nuevo->set_next(siguiente);
         }
         length++;
     }
@@ -143,16 +143,16 @@ T List<T>::get(int pos) const
     else
     {
         if (pos == 1)
-            return primero->getInfo();
+            return primero->key();
         else if (pos == length)
-            return ultimo->getInfo();
+            return ultimo->key();
         else
         {
             Node<T> *act = primero;
             for (int i = 1; i < pos; i++)
-                act = act->getSig();
+                act = act->next();
 
-            return act->getInfo();
+            return act->key();
         }
     }
 }
@@ -171,10 +171,10 @@ int List<T>::find(T e) const
         pivot = primero;
         while (pivot != NULL)
         {
-            if (pivot->getInfo() == e)
+            if (pivot->key() == e)
                 return i;
                 
-            pivot = pivot->getSig();
+            pivot = pivot->next();
             i++;
         }
         return i;
@@ -192,7 +192,7 @@ int List<T>::find(T e) const
 template<class T>
 T List<T>::front() const
 {
-    return this->primero->getInfo();
+    return this->primero->key();
 }
 
 /**
@@ -204,19 +204,19 @@ T List<T>::front() const
 template<class T>
 T List<T>::back() const
 {
-    return this->ultimo->getInfo();
+    return this->ultimo->key();
 }
 
 template<class T>
 void List<T>::set_front(T e)
 {
-    primero->setInfo(e);
+    primero->set_key(e);
 }
 
 template<class T>
 void List<T>::set_back(T e)
 {
-    ultimo->setInfo(e);
+    ultimo->set_key(e);
 }
 
 template<class T>
@@ -225,7 +225,7 @@ void List<T>::push_front(T e)
     Node<T> *nuevo = new Node<T>(e);
     if (!empty())
     {
-        nuevo->setSig(primero);
+        nuevo->set_next(primero);
         primero = nuevo;
     }
     else
@@ -242,7 +242,7 @@ void List<T>::push_back(T e)
     Node<T> *nuevo = new Node<T>(e);
     if(!empty())
     {
-        ultimo->setSig(nuevo);
+        ultimo->set_next(nuevo);
         ultimo = nuevo;
     }
     else
@@ -260,9 +260,9 @@ T List<T>::pop_front()
     {
         Node<T> *aux;
         T e;
-        e = primero->getInfo();
+        e = primero->key();
         aux = primero;
-        primero = aux->getSig();
+        primero = aux->next();
         length--;
         delete aux;
         return e;   
@@ -280,11 +280,11 @@ T List<T>::pop_back()
         for(int i = 0; i < length; i++)
         {
             ant = act;
-            act = act->getSig();
+            act = act->next();
         }
-        ant->setSig(NULL);
+        ant->set_next(NULL);
         ultimo = ant;
-        T e = act->getInfo();
+        T e = act->key();
         delete act;
         return e;
     }
@@ -304,16 +304,16 @@ void List<T>::change(T e, int pos)
     else
     {
         if (pos == 1)
-            primero->setInfo(e);
+            primero->set_key(e);
         else if (pos == length)
-            ultimo->setInfo(e);
+            ultimo->set_key(e);
         else
         {
             Node<T> *act = primero;
             for (int i = 0; i < pos; i++)
-                act = act->getSig();
+                act = act->next();
             
-            act->setInfo(e);
+            act->set_key(e);
         }
     }
 }
@@ -336,20 +336,20 @@ void List<T>::erase(int pos)
         if (pos == 1)
         {
             act = primero;
-            primero = act->getSig();
+            primero = act->next();
         }
         else
         {
             act = primero;
-            sig = act->getSig();
+            sig = act->next();
             
             for (int i = 0; i < pos; i++)
             {
                 ant = act;
                 act = sig;
-                sig = sig->getSig();
+                sig = sig->next();
             }
-            ant->setSig(sig);
+            ant->set_next(sig);
         }
         delete act;
         length--;
@@ -366,13 +366,13 @@ void List<T>::clear()
     {
         Node<T> *actual, *next;
         actual = primero;
-        next = actual->getSig();
+        next = actual->next();
 
         for (int i = 1; i < length; i++)
         {
             delete actual;
             actual = next;
-            next = actual->getSig();
+            next = actual->next();
         }
         delete actual;
 
@@ -391,7 +391,7 @@ template<class T>
 void List<T>::reverse()
 {
     this->ultimo = _reverse(this->primero);
-    this->ultimo->setSig(NULL);
+    this->ultimo->set_next(NULL);
 }
 
 /**
@@ -431,11 +431,11 @@ List<T> List<T>::sublist(int low, int high)
                 if (i == low)
                     lista->primero = nuevo;
                 else
-                    aux2->setSig(nuevo);
+                    aux2->set_next(nuevo);
 
                 aux2 = nuevo;
             }
-            aux = aux->getSig();
+            aux = aux->next();
         }
         ultimo = nuevo;
         lista->length = abs(high - low) + 1;
@@ -457,14 +457,14 @@ void List<T>::sort()
         for (int pasada = 0; pasada < n - 1; pasada++)
         {
             Node<T> *pivot = this->primero;
-            Node<T> *pivotNext = pivot->getSig();
+            Node<T> *pivotNext = pivot->next();
             for (int j = 0; j < n - pasada - 1; j++)
             {
-                if (pivot->getInfo() > pivotNext->getInfo())
-                    Node<T>::intercambiar(pivot, pivotNext);
+                if (pivot->key() > pivotNext->key())
+                    Node<T>::swap(pivot, pivotNext);
 
                 pivot = pivotNext;
-                pivotNext = pivotNext->getSig();
+                pivotNext = pivotNext->next();
             }
         }
     }
@@ -482,16 +482,16 @@ bool List<T>::sorted() const
     if (!empty())
     {
         Node<T> *pivot = this->primero;
-        Node<T> *pivotNext = pivot->getSig();
+        Node<T> *pivotNext = pivot->next();
         int i = 0;
 
         do
         {
-            if (pivot->getInfo() > pivotNext->getInfo())
+            if (pivot->key() > pivotNext->key())
                 ordenada = false;
 
             pivot = pivotNext;
-            pivotNext = pivotNext->getSig();
+            pivotNext = pivotNext->next();
             i++;
         } while (i < length && pivotNext != NULL && ordenada);
 
@@ -510,11 +510,11 @@ std::ostream& operator<<(std::ostream& out, const List<T> &list)
 {
     Node<T> *Node;
     Node = list.primero;
-    for (int i = 0; i < list.length; i++, Node = Node->getSig())
+    for (int i = 0; i < list.length; i++, Node = Node->next())
         if (Node != list.ultimo)
-            out << Node->getInfo() << " ";
+            out << Node->key() << " ";
         else
-            out << Node->getInfo();
+            out << Node->key();
 
     return out;
 }
@@ -532,10 +532,10 @@ void List<T>::operator=(const List<T> & list)
         Node<T> *listPivot = list.primero;
         Node<T> *thisPivot = this->primero;
         Node<T> *nuevo;
-        for (int i = 1; i <= list.length; i++, listPivot = listPivot->getSig())
+        for (int i = 1; i <= list.length; i++, listPivot = listPivot->next())
         {
             nuevo = new Node<T>();
-            nuevo->setInfo(listPivot->getInfo());
+            nuevo->set_key(listPivot->key());
 
             if (i == 1)
             {
@@ -544,8 +544,8 @@ void List<T>::operator=(const List<T> & list)
             }
             else
             {
-                thisPivot->setSig(nuevo);
-                thisPivot = thisPivot->getSig();
+                thisPivot->set_next(nuevo);
+                thisPivot = thisPivot->next();
             }
         }
         ultimo = nuevo;
@@ -597,7 +597,7 @@ bool List<T>::operator==(const List<T> &v) const
 
             do
             {
-                esIgual = (thisPivot->getInfo() == vPivot->getInfo());
+                esIgual = (thisPivot->key() == vPivot->key());
                 i++;
             } while (i <= this->length && esIgual);
 
@@ -650,10 +650,10 @@ bool List<T>::operator<=(const List<T> &v) const
 template<class T>
 Node<T>* List<T>::_reverse(Node<T>*Node)
 {
-    if (Node->getSig() == NULL) // ¿Es el ultimo Node?
+    if (Node->next() == NULL) // ¿Es el ultimo Node?
         this->primero = Node;
     else
-        _reverse(Node->getSig())->setSig(Node);
+        _reverse(Node->next())->set_next(Node);
 
     return Node;
 }
@@ -676,11 +676,11 @@ void List<T>::_dessort()
         jPivot = this->primero;
 
         for (int j = 0; j < r; j++)
-            jPivot = jPivot->getSig();
+            jPivot = jPivot->next();
 
-        Node<T>::intercambiar(iPivot, jPivot);
+        Node<T>::swap(iPivot, jPivot);
 
-        iPivot = iPivot->getSig();
+        iPivot = iPivot->next();
     }
 }
 

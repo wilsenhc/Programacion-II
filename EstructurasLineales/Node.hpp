@@ -10,75 +10,31 @@ template<class T>
 class Node
 {
     private:
-        T info;
-        Node<T> *sig;
+        T _key;
+        Node *_next;
 
     public:
-        Node() : sig(NULL) { };
-        Node(const Node<T>& in) : info(in.info), sig(NULL) { };
-        Node(T e) : info(e), sig(NULL) { };
+        Node() : _next(NULL) { };
+        Node(const Node& in) : _key(in._key), _next(NULL) { };
+        Node(T e) : _key(e), _next(NULL) { };
         //~Node();
 
-        void setInfo(T);
-        void setSig(Node<T>*);
-        T getInfo();
-        Node<T>* getSig();
+        void set_key(T e) { _key = e; };
+        void set_next(Node *n) { _next = n; };
+        
+        T key() const { return _key; };
+        Node* next() const { return _next; };
 
 
         void operator=(const T &);
-        bool operator>(const Node<T>&);
-        bool operator<(const Node<T>&);
-        bool operator==(const Node<T>&);
-        bool operator>=(const Node<T>&);
-        bool operator<=(const Node<T>&);
+        bool operator>(const Node&);
+        bool operator<(const Node&);
+        bool operator==(const Node&);
+        bool operator>=(const Node&);
+        bool operator<=(const Node&);
 
-        static void intercambiar(Node<T> *, Node<T> *);
+        static void swap(Node*, Node*);
 };
-
-/**
- * Setter de Info.
- * @function
- * @param {T} Info
- * */
-template<class T>
-void Node<T>::setInfo(T item)
-{
-    info = item;
-}
-
-/**
- * Setter de siguiente Node.
- * @function
- * @param {Node<T>*} Apuntador a siguiente nodo
- * */
-template<class T>
-void Node<T>::setSig(Node<T> * siguiente)
-{
-    sig = siguiente;
-}
-
-/**
- * Getter de Info.
- * @function
- * @returns {T} Info Item
- * */
-template<class T>
-T Node<T>::getInfo()
-{
-    return info;
-}
-
-/**
- * Getter de siguiente Node.
- * @function
- * @returns {Node<T>*} Siguiente Node
- * */
-template<class T>
-Node<T>* Node<T>::getSig()
-{
-    return sig;
-}
-
 
 /**
  * Sobrecarga de operador de Mayor Que de Node.
@@ -87,7 +43,7 @@ template<class T>
 bool Node<T>::operator>(const Node<T> &a)
 {
     if (this != &a)
-        return (this->getInfo() > a.getInfo());
+        return (this->key() > a.key());
 
     return false;
 }
@@ -99,7 +55,7 @@ template<class T>
 bool Node<T>::operator<(const Node<T> &a )
 {
     if (this != &a)
-        return (this->getInfo() < a.getInfo());
+        return (this->key() < a.key());
 
     return false;
 }
@@ -110,7 +66,7 @@ bool Node<T>::operator<(const Node<T> &a )
 template<class T>
 bool Node<T>::operator==(const Node<T> &a)
 {
-    return (this->getInfo() == a.getInfo());
+    return (this->key() == a.key());
 }
 
 /**
@@ -136,11 +92,11 @@ bool Node<T>::operator<=(const Node<T> &a)
  * @static
  * */
 template<class T>
-void Node<T>::intercambiar(Node<T> *a, Node<T> *b)
+void Node<T>::swap(Node<T> *a, Node<T> *b)
 {
-    T aux = a->getInfo();
-    a->setInfo(b->getInfo());
-    b->setInfo(aux);
+    T aux = a->_key;
+    a->_key = b->_key;
+    b->_key = aux;
 }
 
 #endif
