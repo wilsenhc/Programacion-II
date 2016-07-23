@@ -14,11 +14,11 @@ class List
 {
     private:
         int length;
-        Node<T> *primero;
-        Node<T> *ultimo;
+        Node<T> *_first;
+        Node<T> *_last;
 
     public:
-        List() : length(0), primero(NULL), ultimo(NULL) { };
+        List() : length(0), _first(NULL), _last(NULL) { };
         List(const List<T>&);
         ~List() { this->clear(); };
 
@@ -59,18 +59,14 @@ class List
         void _dessort();
 };    
 
-/**
- * Constructor copia de Lista.
- * @constructs Lista
- * */
 template<class T>
 List<T>::List(const List<T>& in)
 {
-    if (in.primero != NULL)
+    if (in._first != NULL)
     {
-        primero = new Node<T>(in.primero->key());
-        Node<T> *inaux = in.primero->next();
-        Node<T> *thisaux = this->primero;
+        _first = new Node<T>(in._first->key());
+        Node<T> *inaux = in._first->next();
+        Node<T> *thisaux = this->_first;
         Node<T> *nuevo;
         while (inaux != NULL)
         {
@@ -79,16 +75,11 @@ List<T>::List(const List<T>& in)
             thisaux = thisaux->next();
             inaux = inaux->next();
         }
-        ultimo = nuevo;
+        _last = nuevo;
     }
     this->length = in.length;
 }
 
-/**
- * Insertar en la lista.
- * @param e El Item a insertar en lista.
- * @param pos Posicion en la lista a insertar.
- * */
 template<class T>
 void List<T>::insert(T e, int pos)
 {
@@ -101,22 +92,22 @@ void List<T>::insert(T e, int pos)
 
         if (length == 0)
         {
-            primero = nuevo;
-            ultimo = nuevo;
+            _first = nuevo;
+            _last = nuevo;
         }
         else if (pos == 1)
         {
-            nuevo->set_next(primero);
-            primero = nuevo;
+            nuevo->set_next(_first);
+            _first = nuevo;
         }
         else if (pos == length + 1)
         {
-            ultimo->set_next(nuevo);
-            ultimo = nuevo;
+            _last->set_next(nuevo);
+            _last = nuevo;
         }
         else
         {
-            actual = primero;
+            actual = _first;
             siguiente = actual->next();
             for (int i = 2; i < pos; i++)
             {
@@ -130,11 +121,6 @@ void List<T>::insert(T e, int pos)
     }
 }
 
-/**
- * Consultar elemento de la lista
- * @function
- * @param {int} pos - Posicion a consultar
- * */
 template<class T>
 T List<T>::get(int pos) const
 {
@@ -143,12 +129,12 @@ T List<T>::get(int pos) const
     else
     {
         if (pos == 1)
-            return primero->key();
+            return _first->key();
         else if (pos == length)
-            return ultimo->key();
+            return _last->key();
         else
         {
-            Node<T> *act = primero;
+            Node<T> *act = _first;
             for (int i = 1; i < pos; i++)
                 act = act->next();
 
@@ -157,9 +143,6 @@ T List<T>::get(int pos) const
     }
 }
 
-/**
- * Buscar
- * */
 template<class T>
 int List<T>::find(T e) const
 {
@@ -168,7 +151,7 @@ int List<T>::find(T e) const
         Node<T> *pivot;
         int i = 0;
         
-        pivot = primero;
+        pivot = _first;
         while (pivot != NULL)
         {
             if (pivot->key() == e)
@@ -183,40 +166,34 @@ int List<T>::find(T e) const
     return -1; // No encontrado
 }
 
-/**
- * Get Primero.
- * Funcion miembro getter de Lista.
- * Retorna el primer Item de la Lista.
- * @returns {Item} Primer Item de la Lista.
- * */
 template<class T>
 T List<T>::front() const
 {
-    return this->primero->key();
+    if (_first)
+        return this->_first->key();
+
+    throw "Empty list"
 }
 
-/**
- * Get Ultimo.
- * Funcion miembro getter de Lista.
- * Retorna el ultimo Item de la Lista.
- * @returns {Item} Ultimo Item de la Lista.
- * */
 template<class T>
 T List<T>::back() const
 {
-    return this->ultimo->key();
+    if (_last)
+        return this->_last->key();
+    
+    throw "Empty list"
 }
 
 template<class T>
 void List<T>::set_front(T e)
 {
-    primero->set_key(e);
+    _first->set_key(e);
 }
 
 template<class T>
 void List<T>::set_back(T e)
 {
-    ultimo->set_key(e);
+    _last->set_key(e);
 }
 
 template<class T>
@@ -225,13 +202,13 @@ void List<T>::push_front(T e)
     Node<T> *nuevo = new Node<T>(e);
     if (!empty())
     {
-        nuevo->set_next(primero);
-        primero = nuevo;
+        nuevo->set_next(_first);
+        _first = nuevo;
     }
     else
     {
-        primero = nuevo;
-        ultimo = nuevo;
+        _first = nuevo;
+        _last = nuevo;
     }
     length++;
 }
@@ -242,13 +219,13 @@ void List<T>::push_back(T e)
     Node<T> *nuevo = new Node<T>(e);
     if(!empty())
     {
-        ultimo->set_next(nuevo);
-        ultimo = nuevo;
+        _last->set_next(nuevo);
+        _last = nuevo;
     }
     else
     {
-         primero = nuevo;
-         ultimo = nuevo;
+         _first = nuevo;
+         _last = nuevo;
     }
     length++;
 }
@@ -260,9 +237,9 @@ T List<T>::pop_front()
     {
         Node<T> *aux;
         T e;
-        e = primero->key();
-        aux = primero;
-        primero = aux->next();
+        e = _first->key();
+        aux = _first;
+        _first = aux->next();
         length--;
         delete aux;
         return e;   
@@ -276,14 +253,14 @@ T List<T>::pop_back()
     if (!empty())
     {
         Node<T> *ant, *act;
-        act = primero;
+        act = _first;
         for(int i = 0; i < length; i++)
         {
             ant = act;
             act = act->next();
         }
         ant->set_next(NULL);
-        ultimo = ant;
+        _last = ant;
         T e = act->key();
         delete act;
         return e;
@@ -291,9 +268,6 @@ T List<T>::pop_back()
     return 0;
 }
 
-/**
- * change
- * */
 template<class T>
 void List<T>::change(T e, int pos)
 {
@@ -304,12 +278,12 @@ void List<T>::change(T e, int pos)
     else
     {
         if (pos == 1)
-            primero->set_key(e);
+            _first->set_key(e);
         else if (pos == length)
-            ultimo->set_key(e);
+            _last->set_key(e);
         else
         {
-            Node<T> *act = primero;
+            Node<T> *act = _first;
             for (int i = 0; i < pos; i++)
                 act = act->next();
             
@@ -318,11 +292,6 @@ void List<T>::change(T e, int pos)
     }
 }
 
-/**
- * erase de lista
- * @function
- * @param {int} pos - Posicion a erase
- * */
 template<class T>
 void List<T>::erase(int pos)
 {
@@ -335,12 +304,12 @@ void List<T>::erase(int pos)
         Node<T> *ant, *act, *sig;
         if (pos == 1)
         {
-            act = primero;
-            primero = act->next();
+            act = _first;
+            _first = act->next();
         }
         else
         {
-            act = primero;
+            act = _first;
             sig = act->next();
             
             for (int i = 0; i < pos; i++)
@@ -356,16 +325,13 @@ void List<T>::erase(int pos)
     }
 }
 
-/**
- * clear lista.
- * */
 template<class T>
 void List<T>::clear()
 {
     if (!empty())
     {
         Node<T> *actual, *next;
-        actual = primero;
+        actual = _first;
         next = actual->next();
 
         for (int i = 1; i < length; i++)
@@ -377,35 +343,21 @@ void List<T>::clear()
         delete actual;
 
         length = 0;
-        primero = NULL;
-        ultimo = NULL;
+        _first = NULL;
+        _last = NULL;
     }
 }
 
-
-/**
- * Invertir List.
- * Invierte los elementos de la Lista.
- * */
 template<class T>
 void List<T>::reverse()
 {
-    this->ultimo = _reverse(this->primero);
-    this->ultimo->set_next(NULL);
+    this->_last = _reverse(this->_first);
+    this->_last->set_next(NULL);
 }
 
-/**
- * @desc sublist.
- * Genera una sublist a partir de una List inicial.
- * @function
- * @param {int} low - Posicion incial de la sublist.
- * @param {int} high - Posicion final de la sublist.
- * @returns {Lista<Item>} sublist generada.
- * */
 template<class T>
 List<T> List<T>::sublist(int low, int high)
 {
-    // Swap preventivo
     if (low > high)
     {
         int aux = low;
@@ -418,7 +370,7 @@ List<T> List<T>::sublist(int low, int high)
     if ((low >= 1 && low <= length) && (high >= 1 && high <= length))
     {
 
-        Node<T> *aux = primero;
+        Node<T> *aux = _first;
         Node<T> *aux2 = NULL;
         Node<T> *nuevo;
 
@@ -429,7 +381,7 @@ List<T> List<T>::sublist(int low, int high)
                 nuevo = new Node<T>(*aux);
 
                 if (i == low)
-                    lista->primero = nuevo;
+                    lista->_first = nuevo;
                 else
                     aux2->set_next(nuevo);
 
@@ -437,17 +389,12 @@ List<T> List<T>::sublist(int low, int high)
             }
             aux = aux->next();
         }
-        ultimo = nuevo;
+        _last = nuevo;
         lista->length = abs(high - low) + 1;
     }
     return *lista;
 }
 
-/**
- * Ordena los elementos de la lista.
- * Ordena de menor a mayor los elementos de la lista, utilizando
- * el algoritmo de ordenamiento Bubble Sort.
- * */
 template<class T>
 void List<T>::sort()
 {
@@ -456,7 +403,7 @@ void List<T>::sort()
         int n = this->length;
         for (int pasada = 0; pasada < n - 1; pasada++)
         {
-            Node<T> *pivot = this->primero;
+            Node<T> *pivot = this->_first;
             Node<T> *pivotNext = pivot->next();
             for (int j = 0; j < n - pasada - 1; j++)
             {
@@ -470,18 +417,13 @@ void List<T>::sort()
     }
 }
 
-/**
- * Indica si la lista esta ordenada.
- * @function
- * @returns {bool} TRUE sí esta ordenada
- * */
 template<class T>
 bool List<T>::sorted() const
 {
     bool ordenada = true;
     if (!empty())
     {
-        Node<T> *pivot = this->primero;
+        Node<T> *pivot = this->_first;
         Node<T> *pivotNext = pivot->next();
         int i = 0;
 
@@ -499,19 +441,13 @@ bool List<T>::sorted() const
     return ordenada;
 }
 
-/**
- * Sobrecarga de operador de ostream (Out Stream) para Lista.
- * Permite mostrar por pantalla el contenido de la lista mediante el uso del operador '<<'
- * Necesita que el 'Item' a sobrecargar igualmente pueda ser mostrado por pantalla
- * utilizando este mismo operador.
- * */
 template<class T>
 std::ostream& operator<<(std::ostream& out, const List<T> &list)
 {
     Node<T> *Node;
-    Node = list.primero;
+    Node = list._first;
     for (int i = 0; i < list.length; i++, Node = Node->next())
-        if (Node != list.ultimo)
+        if (Node != list._last)
             out << Node->key() << " ";
         else
             out << Node->key();
@@ -519,18 +455,13 @@ std::ostream& operator<<(std::ostream& out, const List<T> &list)
     return out;
 }
 
-/**
- * Sobrecarga de operador de Asignacion para Lista.
- * Permite hacer una copia de una lista mediante el uso del operador '='.
- * Ejemplo: Lista2 = Lista1.sublist(a, b).
- * */
 template<class T>
 void List<T>::operator=(const List<T> & list)
 {
     if (this != &list)
     {
-        Node<T> *listPivot = list.primero;
-        Node<T> *thisPivot = this->primero;
+        Node<T> *listPivot = list._first;
+        Node<T> *thisPivot = this->_first;
         Node<T> *nuevo;
         for (int i = 1; i <= list.length; i++, listPivot = listPivot->next())
         {
@@ -539,7 +470,7 @@ void List<T>::operator=(const List<T> & list)
 
             if (i == 1)
             {
-                this->primero = nuevo;
+                this->_first = nuevo;
                 thisPivot = nuevo;
             }
             else
@@ -548,16 +479,11 @@ void List<T>::operator=(const List<T> & list)
                 thisPivot = thisPivot->next();
             }
         }
-        ultimo = nuevo;
+        _last = nuevo;
         this->length = list.length;
     }
 }
 
-/**
- * Sobrecarga de operador de Mayor Que para Lista.
- * Indica si una Lista tiene o no mas elementos que otra, utilizando
- * el operador '>'.
- * */
 template<class T>
 bool List<T>::operator>(const List<T> &v) const
 {
@@ -567,22 +493,12 @@ bool List<T>::operator>(const List<T> &v) const
     return false;
 }
 
-/**
- * Sobrecarga de operador de Menor Que para Lista.
- * Indica si una Lista tiene o no menos elementos que otra, utilizando
- * el operador '<'.
- * */
 template<class T>
 bool List<T>::operator<(const List<T> &v) const
 {
     return !(*this > v);
 }
 
-/**
- * Sobrecarga de operador de Igual Que para Lista.
- * Indica si una Lista tiene o no los mismos elementos que otra,
- * utilizando el operador '=='.
- * */
 template<class T>
 bool List<T>::operator==(const List<T> &v) const
 {
@@ -590,8 +506,8 @@ bool List<T>::operator==(const List<T> &v) const
     {
         if (this->length == v.length)
         {
-            Node<T> *thisPivot = this->primero;
-            Node<T> *vPivot = v.primero;
+            Node<T> *thisPivot = this->_first;
+            Node<T> *vPivot = v._first;
             bool esIgual;
             int i = 0;
 
@@ -610,12 +526,6 @@ bool List<T>::operator==(const List<T> &v) const
     return true;
 }
 
-
-/**
- * Sobrecarga de operador de Mayor o Igual Que para Lista.
- * Indica si una Lista tiene mas elementos o es igual que otra,
- * utilizando el operador '>='.
- * */
 template<class T>
 bool List<T>::operator>=(const List<T> &v) const
 {
@@ -625,12 +535,6 @@ bool List<T>::operator>=(const List<T> &v) const
     return true;
 }
 
-
-/**
- * Sobrecarga de operador de Menor o Igual Que para Lista.
- * Indica si una Lista tiene menos elementos o es igual que otra,
- * utilizando el operador '<='.
- * */
 template<class T>
 bool List<T>::operator<=(const List<T> &v) const
 {
@@ -640,40 +544,27 @@ bool List<T>::operator<=(const List<T> &v) const
     return true;
 }
 
-/**
- * Invertir lista.
- * Helper Method para Invertir la List.
- * Invierte los elementos de la List recursivamente.
- * Esta funcion debe mantenerse como privada.
- * @private
- * */
 template<class T>
-Node<T>* List<T>::_reverse(Node<T>*Node)
+Node<T>* List<T>::_reverse(Node<T> *arg)
 {
-    if (Node->next() == NULL) // ¿Es el ultimo Node?
-        this->primero = Node;
+    if (arg->next() == NULL)
+        this->_first = arg;
     else
-        _reverse(Node->next())->set_next(Node);
+        _reverse(arg->next())->set_next(arg);
 
-    return Node;
+    return arg;
 }
 
-/**
- * Dessort la lista dada.
- * Helper Method para el Algoritmo de QuickSort.
- * Privado porque no le veo uso fuera del algoritmo de QuickSort.
- * Su nivel de acceso puede ser modificado sí es necesario.
- * @private */
 template<class T>
 void List<T>::_dessort()
 {
     std::srand(time(NULL));
-    Node<T> *iPivot = this->primero;
+    Node<T> *iPivot = this->_first;
     Node<T> *jPivot;
     for (int i = 0; i < this->length; i++)
     {
         int r = std::rand() % (i + 1);
-        jPivot = this->primero;
+        jPivot = this->_first;
 
         for (int j = 0; j < r; j++)
             jPivot = jPivot->next();
