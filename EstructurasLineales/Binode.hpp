@@ -11,19 +11,19 @@ class Binode
 {
     private:
         T _key;
-        Binode *_last, *_next;
+        Binode *_prev, *_next;
 
     public:
-        Binode() : _last(NULL), _next(NULL) {};
-        Binode(const Binode& in) : _key(in._key), _last(NULL), _next(NULL) {};
-        Binode(T e) : _key(e), _last(NULL), _next(NULL) {};
+        Binode() : _prev(NULL), _next(NULL) {};
+        Binode(const Binode& in) : _key(in._key), _prev(NULL), _next(NULL) {};
+        Binode(T e) : _key(e), _prev(NULL), _next(NULL) {};
 
         void set_key(T e) { _key = e; };
-        void set_last(Binode *l) { _last = l; };
+        void set_prev(Binode *l) { _prev = l; };
         void set_next(Binode *n) { _next = n; };
 
         T key() const { return _key; };
-        Binode* last() const { return _last; };
+        Binode* prev() const { return _prev; };
         Binode* next() const { return _next; };
 
         static void swap(Binode*, Binode*);
