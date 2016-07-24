@@ -3,36 +3,26 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 #include <iostream>
-#include "List.hpp"
+#include "Bilist.hpp"
 
 using namespace std;
 
-void a(List<int> b)
+void a(Bilist<int> b)
 {
-	cout << "ENTRADA A VOID" << endl << endl;
-	cout << b << endl;
-	
-	b.clear();
-	
-	cout << b << endl;
-	cout << "SALE VOID" << endl << endl;
+	b.erase(5);
+    b.pop_front();
+    b.pop_back();
+    cout << "A END" << endl;
 }
 
 int main(int argc, char **argv)
 {
-    List<int> l;
+    Bilist<int> l;
 
     for (int i = 1; i <= 10; i++)
-        l.insertar(i, i);
+        l.push_back(i);
 
-    l.invertir();
-    l.sort();
-
-    cout << l << endl;
-
-	a(l);
-	
-	cout << l << endl;
+    a(l);
 
     return 0;
 }
