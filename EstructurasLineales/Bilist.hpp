@@ -204,4 +204,25 @@ void Bilist<T>::clear()
     _length = 0;
 }
 
+template<class T>
+void Bilist<T>::reverse()
+{
+    Binode<T> *current = _first;
+    Binode<T> *temp = NULL;
+
+    if (current)
+        _last = _first;
+
+    while (current)
+    {
+        temp = current->prev();
+        current->set_prev(current->next());
+        current->set_next(temp);
+        current = current->prev();
+    }
+    
+    if (temp)
+        _first = temp->prev();
+}
+
 #endif
