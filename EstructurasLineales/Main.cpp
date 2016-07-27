@@ -9,7 +9,7 @@ using namespace std;
 
 void a(Bilist<int> b)
 {
-	b.erase(5);
+    b.erase(5);
     b.pop_front();
     b.pop_back();
     cout << "A END" << endl;
@@ -23,6 +23,8 @@ int main(int argc, char **argv)
         l.push_back(i);
 
     a(l);
+    
+    l.reverse();
 
     return 0;
 }
