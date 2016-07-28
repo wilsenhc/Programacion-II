@@ -189,6 +189,30 @@ void Bilist<T>::erase(int index)
 }
 
 template<class T>
+void Bilist<T>::change(T e, int index)
+{
+    if (empty())
+        throw "Empty list";
+    else if (index < 1 || index > _length + 1)
+        throw "Index out of bounds";
+    else
+    {
+        if (index == 1)
+            _first->set_key(e);
+        else if (index == _length)
+            _last->set_key(e);
+        else
+        {
+            Binode<T> *pivot = _first;
+            for (int i = 1; i < index; i++)
+                pivot = pivot->next();
+            
+            pivot->set_key(e);
+        }
+    }
+}
+
+template<class T>
 void Bilist<T>::clear()
 {
     Binode<T> *pivot = _first;
