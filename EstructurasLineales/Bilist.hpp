@@ -70,6 +70,29 @@ Bilist<T>::Bilist(const Bilist& arg)
 }
 
 template<class T>
+bool Bilist<T>::sorted() const
+{
+    bool isSorted = true;
+    if (!empty())
+    {
+        Binode<T> *current = _first;
+        Binode<T> *next = current->next();
+        int i = 0;
+
+        do
+        {
+            if (current->key() > next->key())
+                isSorted = false;
+
+            current = next;
+            next = next->next();
+            i++;
+        } while (i < _length && next && isSorted)
+    }
+    return isSorted;
+}
+
+template<class T>
 T Bilist<T>::front() const
 {
     if (_first)
