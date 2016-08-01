@@ -34,6 +34,7 @@ class Bilist
         void clear();
         void reverse();
         void sort();
+        void bubblesort();
 
         void operator=(const Bilist&);
         bool operator>(const Bilist&);
@@ -41,6 +42,7 @@ class Bilist
         bool operator==(const Bilist&);
         bool operator>=(const Bilist&);
         bool operator<=(const Bilist&);
+        
 };
 
 template<class T>
@@ -271,5 +273,27 @@ void Bilist<T>::reverse()
     if (temp)
         _first = temp->prev();
 }
+
+template<class T>
+void Bilist<T>::bubblesort()
+{
+    if (!sorted())
+    {
+        for(int p = 0, n = _length; p < n - 1; p++)
+        {
+            Binode<T> *pivot = _first;
+            Binode<T> *next = pivot->next();
+            for (int j = 0; j < n - p - 1; j++)
+            {
+                if (pivot->key() > next->key())
+                    Binode<T>::swap(pivot, next);
+                
+                pivot = next;
+                next = next->next();
+            }
+        }
+    }
+}
+
 
 #endif
