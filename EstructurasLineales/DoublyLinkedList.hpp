@@ -2,22 +2,22 @@
  *  Copyright (c) Wilsen Hernandez. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-#ifndef _BILIST_HPP_
-#define _BILIST_HPP_
+#ifndef _DOUBLY_LINKED_LIST_HPP_
+#define _DOUBLY_LINKED_LIST_HPP_
 #include <iostream>
 #include "Binode.hpp"
 
 template<class T>
-class Bilist
+class DoublyLinkedList
 {
     private:
         Binode<T> *_first, *_last;
         int _length;
 
     public:
-        Bilist() : _first(NULL), _last(NULL), _length(0) {};
-        Bilist(const Bilist&);
-        ~Bilist() { clear(); };
+        DoublyLinkedList() : _first(NULL), _last(NULL), _length(0) {};
+        DoublyLinkedList(const DoublyLinkedList&);
+        ~DoublyLinkedList() { clear(); };
 
         bool empty() const { return _length == 0; };
         int size() const { return _length; };
@@ -33,20 +33,21 @@ class Bilist
         void change(T, int);
         void clear();
         void reverse();
-        void sort();
+        void sort(); // TODO
         void bubblesort();
+        void quicksort(); // TODO
 
-        void operator=(const Bilist&);
-        bool operator>(const Bilist&);
-        bool operator<(const Bilist&);
-        bool operator==(const Bilist&);
-        bool operator>=(const Bilist&);
-        bool operator<=(const Bilist&);
+        void operator=(const DoublyLinkedList&);
+        bool operator>(const DoublyLinkedList&);
+        bool operator<(const DoublyLinkedList&);
+        bool operator==(const DoublyLinkedList&);
+        bool operator>=(const DoublyLinkedList&);
+        bool operator<=(const DoublyLinkedList&);
         
 };
 
 template<class T>
-Bilist<T>::Bilist(const Bilist& arg)
+DoublyLinkedList<T>::DoublyLinkedList(const DoublyLinkedList& arg)
 {
     Binode<T> *argpivot = arg._first;
     Binode<T> *iprev = NULL;
@@ -72,7 +73,7 @@ Bilist<T>::Bilist(const Bilist& arg)
 }
 
 template<class T>
-bool Bilist<T>::sorted() const
+bool DoublyLinkedList<T>::sorted() const
 {
     bool isSorted = true;
     if (!empty())
@@ -95,7 +96,7 @@ bool Bilist<T>::sorted() const
 }
 
 template<class T>
-T Bilist<T>::front() const
+T DoublyLinkedList<T>::front() const
 {
     if (_first)
         return _first->key();
@@ -104,7 +105,7 @@ T Bilist<T>::front() const
 }
 
 template<class T>
-T Bilist<T>::back() const
+T DoublyLinkedList<T>::back() const
 {
     if(_last)
         return _last->key();
@@ -113,7 +114,7 @@ T Bilist<T>::back() const
 }
 
 template<class T>
-void Bilist<T>::push_front(T e)
+void DoublyLinkedList<T>::push_front(T e)
 {
     Binode<T> *add = new Binode<T>(e);
     
@@ -130,7 +131,7 @@ void Bilist<T>::push_front(T e)
 }
 
 template<class T>
-void Bilist<T>::push_back(T e)
+void DoublyLinkedList<T>::push_back(T e)
 {
     Binode<T> *add = new Binode<T>(e);
     
@@ -147,7 +148,7 @@ void Bilist<T>::push_back(T e)
 }
 
 template<class T>
-void Bilist<T>::pop_front()
+void DoublyLinkedList<T>::pop_front()
 {
     if (!empty())
     {
@@ -162,7 +163,7 @@ void Bilist<T>::pop_front()
 }
 
 template<class T>
-void Bilist<T>::pop_back()
+void DoublyLinkedList<T>::pop_back()
 {
     if (!empty())
     {
@@ -177,7 +178,7 @@ void Bilist<T>::pop_back()
 }
 
 template<class T>
-void Bilist<T>::erase(int index)
+void DoublyLinkedList<T>::erase(int index)
 {
     if (empty())
         throw "Empty list";
@@ -214,7 +215,7 @@ void Bilist<T>::erase(int index)
 }
 
 template<class T>
-void Bilist<T>::change(T e, int index)
+void DoublyLinkedList<T>::change(T e, int index)
 {
     if (empty())
         throw "Empty list";
@@ -238,7 +239,7 @@ void Bilist<T>::change(T e, int index)
 }
 
 template<class T>
-void Bilist<T>::clear()
+void DoublyLinkedList<T>::clear()
 {
     Binode<T> *pivot = _first;
     Binode<T> *aux;
@@ -254,7 +255,7 @@ void Bilist<T>::clear()
 }
 
 template<class T>
-void Bilist<T>::reverse()
+void DoublyLinkedList<T>::reverse()
 {
     Binode<T> *current = _first;
     Binode<T> *temp = NULL;
@@ -275,7 +276,7 @@ void Bilist<T>::reverse()
 }
 
 template<class T>
-void Bilist<T>::bubblesort()
+void DoublyLinkedList<T>::bubblesort()
 {
     if (!sorted())
     {
@@ -294,6 +295,5 @@ void Bilist<T>::bubblesort()
         }
     }
 }
-
 
 #endif
