@@ -14,6 +14,7 @@ El repositorio consta de un conjunto de **librerías**, **soluciones a talleres*
 * Lista<T> / [List<T>](EstructurasLineales/List.hpp)
 * Pila<T> / [Stack<T>](EstructurasLineales/Stack.hpp)
 * Cola<T> / [Queue<T>](EstructurasLineales/Queue.hpp)
+* ListaDoblementeEnlazada<T> / [DoublyLinkedList<T>](EstructurasLineales/DoublyLinkedList.hpp)
 
 #### [Estructuras Jerárquicas](EstructurasJerarquicas/)
 * Arbol<T> / [Tree<T>](EstructurasJerarquicas/Tree.hpp)
