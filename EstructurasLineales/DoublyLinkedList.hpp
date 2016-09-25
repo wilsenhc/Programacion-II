@@ -33,9 +33,9 @@ class DoublyLinkedList
         void change(T, int);
         void clear();
         void reverse();
-        void sort(); // TODO
+        void sort();
         void bubblesort();
-        void quicksort(); // TODO
+        void quicksort();
 
         void operator=(const DoublyLinkedList&);
         bool operator>(const DoublyLinkedList&);
@@ -280,6 +280,15 @@ void DoublyLinkedList<T>::reverse()
     
     if (temp)
         _first = temp->prev();
+}
+
+template<class T>
+void DoublyLinkedList<T>::sort()
+{
+    if (_length <= 20)
+        this->bubblesort();
+    else
+        this->quicksort();
 }
 
 template<class T>
