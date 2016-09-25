@@ -44,6 +44,13 @@ class DoublyLinkedList
         bool operator>=(const DoublyLinkedList&);
         bool operator<=(const DoublyLinkedList&);
         
+        template<class Ts>
+        friend std::ostream& operator<<(std::ostream&, const DoublyLinkedList<Ts> &);
+
+    private:
+        void quicksort(int, int, Binode<T>*, Binode<T>*);
+        Binode<T>* quicksort_divide(int, int, Binode<T>*, Binode<T>*, int&);
+        
 };
 
 template<class T>
@@ -90,7 +97,7 @@ bool DoublyLinkedList<T>::sorted() const
             current = next;
             next = next->next();
             i++;
-        } while (i < _length && next && isSorted)
+        } while (i < _length && next && isSorted);
     }
     return isSorted;
 }
@@ -294,6 +301,82 @@ void DoublyLinkedList<T>::bubblesort()
             }
         }
     }
+}
+
+template<class T>
+void DoublyLinkedList<T>::quicksort()
+{
+    if (!sorted())
+    {
+        quicksort(1, _length, _first, _last);
+    }
+}
+
+template<class T>
+void DoublyLinkedList<T>::quicksort(int start, int end, Binode<T>* nStart, Binode<T>* nEnd)
+{
+    int pivot;
+    Binode<T> *nPivot = NULL;
+
+    if (start < end)
+    {
+        nPivot = quicksort_divide(start, end, nStart, nEnd, pivot);
+
+        // Recursive calls from here
+        quicksort(start, pivot - 1, nStart, nPivot->prev());
+
+        quicksort(pivot + 1, end, nPivot->next(), nEnd);
+    }
+}
+
+template<class T>
+Binode<T>* DoublyLinkedList<T>::quicksort_divide(int start, int end, Binode<T>* nStart, Binode<T>* nEnd, int& pivot)
+{
+    int left, right;
+    Binode<T> *nLeft, *nRight;
+
+    T ppivot = nStart->key();
+    left = start;
+    right = end;
+    nLeft = nStart;
+    nRight = nEnd;
+
+    while(left < right)
+    {
+        while(nRight->key() > ppivot)
+        {
+            nRight = nRight->prev();
+            right--;
+        }
+
+        while((left < right) && (nLeft->key() <= ppivot))
+        {
+            nLeft = nLeft->next();
+            left++;
+        }
+
+        if(left < right)
+            Binode<T>::swap(nLeft, nRight);
+    }
+
+    Binode<T>::swap(nRight, nStart);
+
+    pivot = right;
+    return nRight;
+}
+
+template<class T>
+std::ostream& operator<<(std::ostream& out, const DoublyLinkedList<T> &list)
+{
+    Binode<T> *Node;
+    Node = list._first;
+    for (int i = 0; i < list._length; i++, Node = Node->next())
+        if (Node != list._last)
+            out << Node->key() << " ";
+        else
+            out << Node->key();
+
+    return out;
 }
 
 #endif

@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 #include <iostream>
-#include "Bilist.hpp"
+#include "DoublyLinkedList.hpp"
 
 using namespace std;
 
-void a(Bilist<int> b)
+void a(DoublyLinkedList<int> b)
 {
     b.erase(5);
     b.pop_front();
@@ -17,7 +17,7 @@ void a(Bilist<int> b)
 
 int main(int argc, char **argv)
 {
-    Bilist<int> l;
+    DoublyLinkedList<int> l;
 
     for (int i = 1; i <= 10; i++)
         l.push_back(i);
@@ -25,6 +25,12 @@ int main(int argc, char **argv)
     a(l);
     
     l.reverse();
+    
+    cout << l << endl;
+    
+    l.quicksort();
+    cout << l << endl;
+
 
     return 0;
 }
