@@ -11,21 +11,21 @@ Cabe destacar que ese curso fue mi primera experiencia como programador utilizan
 El repositorio consta de un conjunto de **librerías**, **soluciones a talleres** anteriores e igualmente aquellos que formaron parte de la evaluación de mi curso y el **proyecto final** del curso distribuidos en distintas categorías que constituyen los tres tipos de estructuras de datos trabajadas en el curso.
 
 #### [Estructuras Lineales](EstructurasLineales/)
-* Lista<T> / [List<T>](EstructurasLineales/List.hpp)
-* Pila<T> / [Stack<T>](EstructurasLineales/Stack.hpp)
-* Cola<T> / [Queue<T>](EstructurasLineales/Queue.hpp)
-* ListaDoblementeEnlazada<T> / [DoublyLinkedList<T>](EstructurasLineales/DoublyLinkedList.hpp)
-* ColaDoblementeTerminada<T> / [Deque<T>](EstructurasLineales/Deque.hpp)
+* Lista<T> / [List<T>.hpp](EstructurasLineales/List.hpp)
+* Pila<T> / [Stack<T>.hpp](EstructurasLineales/Stack.hpp)
+* Cola<T> / [Queue<T>.hpp](EstructurasLineales/Queue.hpp)
+* ListaDoblementeEnlazada<T> / [DoublyLinkedList<T>.hpp](EstructurasLineales/DoublyLinkedList.hpp)
+* ColaDoblementeTerminada<T> / [Deque<T>.hpp](EstructurasLineales/Deque.hpp)
 
 #### [Estructuras Jerárquicas](EstructurasJerarquicas/)
-* Arbol<T> / [Tree<T>](EstructurasJerarquicas/Tree.hpp)
-* ArbolBinario<T> / [BinaryTree<T>](EstructurasJerarquicas/BinaryTree.hpp)
-* ArbolBinarioDeBusqueda<T> / [BST<T>](EstructurasJerarquicas/BST.hpp)
-* ArbolDeSintaxis<T> / [SintaxTree<T>](EstructurasJerarquicas/SintaxTree.hpp)
-* ArbolAVL<T> / [AVL<T>](EstructurasJerarquicas/AVL.hpp)
+* Arbol<T> / [Tree<T>.hpp](EstructurasJerarquicas/Tree.hpp)
+* ArbolBinario<T> / [BinaryTree<T>.hpp](EstructurasJerarquicas/BinaryTree.hpp)
+* ArbolBinarioDeBusqueda<T> / [BST<T>.hpp](EstructurasJerarquicas/BST.hpp)
+* ArbolDeSintaxis<T> / [SintaxTree<T>.hpp](EstructurasJerarquicas/SintaxTree.hpp)
+* ArbolAVL<T> / [AVL<T>.hpp](EstructurasJerarquicas/AVL.hpp)
 
 #### [Estructuras Multienlazadas](EstructurasMultienlazadas/)
-* Grafo<T,C> / [Graph<T,C>](EstructurasMultienlazadas/Graph.hpp)
+* Grafo<T,C> / [Graph<T,C>.hpp](EstructurasMultienlazadas/Graph.hpp)
 
 #### Talleres I, II y III
 #### Proyecto final
