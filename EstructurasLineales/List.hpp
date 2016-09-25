@@ -529,6 +529,7 @@ void List<T>::operator=(const List<T> & list)
 {
     if (this != &list)
     {
+        this->clear();
         Node<T> *listPivot = list.primero;
         Node<T> *thisPivot = this->primero;
         Node<T> *nuevo;
@@ -593,12 +594,14 @@ bool List<T>::operator==(const List<T> &v) const
             Node<T> *thisPivot = this->primero;
             Node<T> *vPivot = v.primero;
             bool esIgual;
-            int i = 0;
+            int i = 1;
 
             do
             {
                 esIgual = (thisPivot->key() == vPivot->key());
                 i++;
+                thisPivot = thisPivot->next();
+                vPivot = vPivot->next();
             } while (i <= this->length && esIgual);
 
             return esIgual;
