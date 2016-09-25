@@ -38,11 +38,11 @@ class DoublyLinkedList
         void quicksort();
 
         void operator=(const DoublyLinkedList&);
-        bool operator>(const DoublyLinkedList&);
-        bool operator<(const DoublyLinkedList&);
-        bool operator==(const DoublyLinkedList&);
-        bool operator>=(const DoublyLinkedList&);
-        bool operator<=(const DoublyLinkedList&);
+        bool operator>(const DoublyLinkedList&) const;
+        bool operator<(const DoublyLinkedList&) const;
+        bool operator==(const DoublyLinkedList&) const;
+        bool operator>=(const DoublyLinkedList&) const;
+        bool operator<=(const DoublyLinkedList&) const;
         
         template<class Ts>
         friend std::ostream& operator<<(std::ostream&, const DoublyLinkedList<Ts> &);
@@ -350,21 +350,21 @@ Binode<T>* DoublyLinkedList<T>::quicksort_divide(int start, int end, Binode<T>* 
     nLeft = nStart;
     nRight = nEnd;
 
-    while(left < right)
+    while (left < right)
     {
-        while(nRight->key() > ppivot)
+        while (nRight->key() > ppivot)
         {
             nRight = nRight->prev();
             right--;
         }
 
-        while((left < right) && (nLeft->key() <= ppivot))
+        while ((left < right) && (nLeft->key() <= ppivot))
         {
             nLeft = nLeft->next();
             left++;
         }
 
-        if(left < right)
+        if (left < right)
             Binode<T>::swap(nLeft, nRight);
     }
 
@@ -372,6 +372,101 @@ Binode<T>* DoublyLinkedList<T>::quicksort_divide(int start, int end, Binode<T>* 
 
     pivot = right;
     return nRight;
+}
+
+template<class T>
+void DoublyLinkedList<T>::operator=(const DoublyLinkedList<T> &list)
+{
+    if (this != &list)
+    {
+        this->clear();
+        Binode<T> *listPivot = list._first;
+        Binode<T> *thisPivot = this->_first;
+        Binode<T> *nuevo;
+        
+        for (int i = 1; i <= list._length; i++, listPivot = listPivot->next())
+        {
+            nuevo = new Binode<T>();
+            nuevo->set_key(listPivot->key());
+
+            if (i == 1)
+            {
+                this->_first = nuevo;
+                thisPivot = nuevo;
+            }
+            else
+            {
+                thisPivot->set_next(nuevo);
+                nuevo->set_prev(thisPivot);
+                thisPivot = thisPivot->next();
+            }
+        }
+        _last = nuevo;
+        this->_length = list._length;
+    }
+}
+
+template<class T>
+bool DoublyLinkedList<T>::operator>(const DoublyLinkedList<T> &v) const
+{
+    if (this != &v)
+        return (this->_length > v._length);
+
+    return false;
+}
+
+template<class T>
+bool DoublyLinkedList<T>::operator<(const DoublyLinkedList<T> &v) const
+{
+    return !(*this > v);
+}
+
+template<class T>
+bool DoublyLinkedList<T>::operator==(const DoublyLinkedList<T> &v) const
+{
+    if (this != &v)
+    {
+        if (this->_length == v._length)
+        {
+            Binode<T> *thisPivot = this->_first;
+            Binode<T> *vPivot = v._first;
+            bool isEqual;
+            int i = 1;
+
+            do
+            {
+                isEqual = (thisPivot->key() == vPivot->key());
+                i++;
+                thisPivot = thisPivot->next();
+                vPivot = vPivot->next();
+            } while(i <= this->_length && isEqual);
+
+            return isEqual;
+        }
+
+        return false;
+    }
+
+    return true;
+}
+
+template<class T>
+bool DoublyLinkedList<T>::operator>=(const DoublyLinkedList<T> &v) const
+{
+    if (this != &v)
+        return (*this > v || *this == v);
+    
+    return true;
+}
+
+
+template<class T>
+bool DoublyLinkedList<T>::operator<=(const DoublyLinkedList<T> &v) const
+{
+    if (this != &v)
+        return (*this < v || *this == v);
+
+    return true;
 }
 
 template<class T>

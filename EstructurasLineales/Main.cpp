@@ -17,7 +17,7 @@ void a(DoublyLinkedList<int> b)
 
 int main(int argc, char **argv)
 {
-    DoublyLinkedList<int> l;
+    DoublyLinkedList<int> l, J;
 
     for (int i = 1; i <= 10; i++)
         l.push_back(i);
@@ -31,6 +31,9 @@ int main(int argc, char **argv)
     l.quicksort();
     cout << l << endl;
 
+	J = l;
+	
+	cout << (l == J) << endl;
 
     return 0;
 }
