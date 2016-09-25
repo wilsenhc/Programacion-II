@@ -3,36 +3,37 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 #include <iostream>
-#include "List.hpp"
+#include "DoublyLinkedList.hpp"
 
 using namespace std;
 
-void a(List<int> b)
+void a(DoublyLinkedList<int> b)
 {
-	cout << "ENTRADA A VOID" << endl << endl;
-	cout << b << endl;
-	
-	b.clear();
-	
-	cout << b << endl;
-	cout << "SALE VOID" << endl << endl;
+    b.erase(5);
+    b.pop_front();
+    b.pop_back();
+    cout << "A END" << endl;
 }
 
 int main(int argc, char **argv)
 {
-    List<int> l;
+    DoublyLinkedList<int> l, J;
 
     for (int i = 1; i <= 10; i++)
-        l.insertar(i, i);
+        l.push_back(i);
 
-    l.invertir();
-    l.sort();
-
+    a(l);
+    
+    l.reverse();
+    
+    cout << l << endl;
+    
+    l.quicksort();
     cout << l << endl;
 
-	a(l);
+	J = l;
 	
-	cout << l << endl;
+	cout << (l == J) << endl;
 
     return 0;
 }
