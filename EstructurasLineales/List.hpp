@@ -460,14 +460,8 @@ void List<T>::operator=(const List<T> & list)
 {
     if (this != &list)
     {
-<<<<<<< HEAD
-        this->clear();
-        Node<T> *listPivot = list.primero;
-        Node<T> *thisPivot = this->primero;
-=======
         Node<T> *listPivot = list._first;
         Node<T> *thisPivot = this->_first;
->>>>>>> master
         Node<T> *nuevo;
         for (int i = 1; i <= list.length; i++, listPivot = listPivot->next())
         {
