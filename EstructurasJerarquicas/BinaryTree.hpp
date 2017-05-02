@@ -8,8 +8,10 @@
 #include <list>
 
 using std::list;
+using std::cout;
+using std::endl;
 
-enum Traverse { preorden, postorden, inorden, levels };
+enum Traverse { preorden, postorden, inorden, levels, topview };
 
 template<class T>
 class BinaryTree
@@ -31,7 +33,7 @@ class BinaryTree
         BinaryTree left();
         BinaryTree right();
         void mirror() { mirror(_root); }
-        void print(Traverse) const;
+        list<T> print(Traverse) const;
         int height() const { return _root->height() - 1; }
         void clear() { _root = clear(_root); }
         
@@ -52,6 +54,9 @@ class BinaryTree
         void list_post(list<T>&, NodeBT<T>*) const;
         void list_in(list<T>&, NodeBT<T>*) const;
         void list_lvl(list<T>&) const;
+        void list_topview(list<T>&, NodeBT<T>*) const;
+        void list_topview_left(list<T>&, NodeBT<T>*) const;
+        void list_topview_right(list<T>&, NodeBT<T> *) const;
 };
 
 template<class T>
@@ -82,28 +87,30 @@ BinaryTree<T>::BinaryTree(list<T> ordenA, list<T> ordenB, Traverse e)
 template<class T>
 BinaryTree<T> BinaryTree<T>::left()
 {
-    BinaryTree<T> tree(copyBinTree(_root->left()));
+    BinaryTree<T> tree(copyBinTree(_root->getLeft()));
     return tree;
 }
 
 template<class T>
 BinaryTree<T> BinaryTree<T>::right()
 {
-    BinaryTree<T> tree(copyBinTree(_root->right()));
+    BinaryTree<T> tree(copyBinTree(_root->getRight()));
     return tree;
 }
 
 template<class T>
-void BinaryTree<T>::print(Traverse e) const
+list<T> BinaryTree<T>::print(Traverse e) const
 {
     list<T> L;
+    
     if (e == preorden) list_pre(L, _root);
     else if (e == postorden) list_post(L, _root);
     else if (e == inorden) list_in(L, _root);
     else if (e == levels) list_lvl(L);
+    else if (e == topview) list_topview(L, _root);
     
-    if (!L.empty())
-        std::cout << L << std::endl;
+    return L;
+        
 }
 
 template<class T>
@@ -131,7 +138,7 @@ template<class T>
 bool BinaryTree<T>::full(NodeBT<T> *p) const
 {
     if (p->isFullNode())
-        return full(p->left()) && full(p->right());
+        return full(p->getLeft()) && full(p->getRight());
     else if (p->isLeaf())
         return true;
         
@@ -143,11 +150,11 @@ void BinaryTree<T>::mirror(NodeBT<T>* p)
 {
     if (p != NULL)
     {
-        mirror(p->left());
-        mirror(p->right());
+        mirror(p->getLeft());
+        mirror(p->getRight());
         
-        NodeBT<T>* t = p->left();
-        p->setLeft(p->right());
+        NodeBT<T>* t = p->getLeft();
+        p->setLeft(p->getRight());
         p->setRight(t);
     }
 }
@@ -202,7 +209,7 @@ template<class T>
 NodeBT<T>* BinaryTree<T>::copyBinTree(NodeBT<T> *p)
 {
     if (p)
-        return new NodeBT<T>(p->getKey(), copyBinTree(p->left()), copyBinTree(p->right()));
+        return new NodeBT<T>(p->getKey(), copyBinTree(p->getLeft()), copyBinTree(p->getRight()));
     
     return NULL;
 }
@@ -215,8 +222,8 @@ bool BinaryTree<T>::equal(NodeBT<T>* p, NodeBT<T>* q) const
     if (p != NULL && q != NULL)
     {
         return p->getKey() == q->getKey()
-               && equal(p->left(), q->left())
-               && equal(p->right(), q->right());
+               && equal(p->getLeft(), q->getLeft())
+               && equal(p->getRight(), q->getRight());
     }
     
     return false;
@@ -240,8 +247,8 @@ void BinaryTree<T>::list_pre(list<T> &L, NodeBT<T> *n) const
     if (n)
     {
         L.push_back(n->getKey());
-        list_pre(L, n->left());
-        list_pre(L, n->right());
+        list_pre(L, n->getLeft());
+        list_pre(L, n->getRight());
     }
 }
 
@@ -250,8 +257,8 @@ void BinaryTree<T>::list_post(list<T> &L, NodeBT<T> *n) const
 {
     if (n)
     {
-        list_post(L, n->left());
-        list_post(L, n->right());
+        list_post(L, n->getLeft());
+        list_post(L, n->getRight());
         L.push_back(n->getKey());
     }
 }
@@ -261,9 +268,9 @@ void BinaryTree<T>::list_in(list<T> &L, NodeBT<T> *n) const
 {
     if (n)
     {
-        list_in(L, n->left());
+        list_in(L, n->getLeft());
         L.push_back(n->getKey());
-        list_in(L, n->right());
+        list_in(L, n->getRight());
     }
 }
 
@@ -278,17 +285,50 @@ void BinaryTree<T>::list_lvl(list<T> &L) const
         
         while(!lvl.empty())
         {
-            NodeBT<T>* n = lvl.pop_front();
+            NodeBT<T>* n = lvl.front();
+            lvl.pop_front();
             
-            if (n->left())
-                lvl.push_back(n->left());
+            if (n->getLeft())
+                lvl.push_back(n->getLeft());
             
-            if (n->right())
-                lvl.push_back(n->right());
+            if (n->getRight())
+                lvl.push_back(n->getRight());
                 
             L.push_back(n->getKey());
         }
     }
 }
+
+template<class T>
+void BinaryTree<T>::list_topview(list<T> &L, NodeBT<T> *root) const
+{
+    if (root)
+    {
+        list_topview_left(L, root->getLeft());
+        L.push_back(root->getKey());
+        list_topview_right(L, root->getRight());
+    }
+    
+}
+
+template<class T>
+void BinaryTree<T>::list_topview_left(list<T> &L, NodeBT<T> *root) const
+{
+    if (root)
+    {
+        list_topview_left(L, root->getLeft());
+        L.push_back(root->getKey());
+    }
+}
+template<class T>
+void BinaryTree<T>::list_topview_right(list<T> &L, NodeBT<T> *root) const
+{
+    if (root)
+    {
+        L.push_back(root->getKey());
+        list_topview_right(L, root->getRight());
+    }
+}
+
 
 #endif
